@@ -1294,7 +1294,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1634719845}
   - component: {fileID: 1634719846}
-  m_Layer: 0
+  - component: {fileID: 1634719848}
+  - component: {fileID: 1634719847}
+  m_Layer: 6
   m_Name: ENV_Beach_Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1376,6 +1378,38 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!114 &1634719847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1634719844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd703cf2e4254d838b7612f4f1cfcc31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TerrainDestructionDebugTester
+  terrain: {fileID: 1634719848}
+  worldCamera: {fileID: 1655878544}
+  testingEnabled: 1
+  testRadius: 1.5
+--- !u!114 &1634719848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1634719844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f465ca0b0ca04c94ad360c66190cdbf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DestructibleTerrain2D
+  terrainRenderer: {fileID: 1634719846}
+  alphaThreshold: 0.5
+  colliderSamplingResolution: 4
+  colliderSimplificationTolerance: 0.05
 --- !u!1 &1655878542
 GameObject:
   m_ObjectHideFlags: 0
