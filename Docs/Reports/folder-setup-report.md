@@ -1,0 +1,152 @@
+# Folder Setup Report
+
+- Unity project root validation: **Passed** (Assets/, Packages/, and ProjectSettings/ exist).
+- Requested directory verification: **Passed** (136 of 136 requested directories exist).
+- Existing file check: **Passed. Pre-existing file paths, sizes, and timestamps were unchanged.** No existing files were deleted, moved, renamed, or overwritten by this setup.
+
+## Directories created
+
+- `Assets/AttackOnTroy`
+- `Assets/AttackOnTroy/Art`
+- `Assets/AttackOnTroy/Art/Characters`
+- `Assets/AttackOnTroy/Art/Characters/Achilles`
+- `Assets/AttackOnTroy/Art/Characters/Achilles/Animations`
+- `Assets/AttackOnTroy/Art/Characters/Achilles/Sprites`
+- `Assets/AttackOnTroy/Art/Characters/Cyclops`
+- `Assets/AttackOnTroy/Art/Characters/Cyclops/Heavy`
+- `Assets/AttackOnTroy/Art/Characters/Cyclops/Heavy/Animations`
+- `Assets/AttackOnTroy/Art/Characters/Cyclops/Heavy/Sprites`
+- `Assets/AttackOnTroy/Art/Characters/Cyclops/Normal`
+- `Assets/AttackOnTroy/Art/Characters/Cyclops/Normal/Animations`
+- `Assets/AttackOnTroy/Art/Characters/Cyclops/Normal/Sprites`
+- `Assets/AttackOnTroy/Art/Characters/Odysseus`
+- `Assets/AttackOnTroy/Art/Characters/Odysseus/Animations`
+- `Assets/AttackOnTroy/Art/Characters/Odysseus/Sprites`
+- `Assets/AttackOnTroy/Art/Effects`
+- `Assets/AttackOnTroy/Art/Effects/Destruction`
+- `Assets/AttackOnTroy/Art/Effects/Fire`
+- `Assets/AttackOnTroy/Art/Effects/Impact`
+- `Assets/AttackOnTroy/Art/Effects/Weather`
+- `Assets/AttackOnTroy/Art/Environment`
+- `Assets/AttackOnTroy/Art/Environment/Beach`
+- `Assets/AttackOnTroy/Art/Environment/DestructibleTerrain`
+- `Assets/AttackOnTroy/Art/Environment/Props`
+- `Assets/AttackOnTroy/Art/Environment/Scamander`
+- `Assets/AttackOnTroy/Art/Environment/TroyWall`
+- `Assets/AttackOnTroy/Art/Fonts`
+- `Assets/AttackOnTroy/Art/Materials`
+- `Assets/AttackOnTroy/Art/Projectiles`
+- `Assets/AttackOnTroy/Art/Shaders`
+- `Assets/AttackOnTroy/Art/UI`
+- `Assets/AttackOnTroy/Audio`
+- `Assets/AttackOnTroy/Audio/Mixers`
+- `Assets/AttackOnTroy/Audio/Music`
+- `Assets/AttackOnTroy/Audio/SFX`
+- `Assets/AttackOnTroy/Audio/SFX/Characters`
+- `Assets/AttackOnTroy/Audio/SFX/Environment`
+- `Assets/AttackOnTroy/Audio/SFX/UI`
+- `Assets/AttackOnTroy/Audio/SFX/Weapons`
+- `Assets/AttackOnTroy/Characters`
+- `Assets/AttackOnTroy/Characters/Achilles`
+- `Assets/AttackOnTroy/Characters/Achilles/Data`
+- `Assets/AttackOnTroy/Characters/Achilles/Prefabs`
+- `Assets/AttackOnTroy/Characters/Achilles/Scripts`
+- `Assets/AttackOnTroy/Characters/Odysseus`
+- `Assets/AttackOnTroy/Characters/Odysseus/Data`
+- `Assets/AttackOnTroy/Characters/Odysseus/Prefabs`
+- `Assets/AttackOnTroy/Characters/Odysseus/Scripts`
+- `Assets/AttackOnTroy/Characters/Shared`
+- `Assets/AttackOnTroy/Characters/Shared/Prefabs`
+- `Assets/AttackOnTroy/Characters/Shared/Scripts`
+- `Assets/AttackOnTroy/Combat`
+- `Assets/AttackOnTroy/Combat/Data`
+- `Assets/AttackOnTroy/Combat/Data/Projectiles`
+- `Assets/AttackOnTroy/Combat/Data/Weapons`
+- `Assets/AttackOnTroy/Combat/Prefabs`
+- `Assets/AttackOnTroy/Combat/Prefabs/DamageAreas`
+- `Assets/AttackOnTroy/Combat/Prefabs/Effects`
+- `Assets/AttackOnTroy/Combat/Prefabs/Projectiles`
+- `Assets/AttackOnTroy/Combat/Scripts`
+- `Assets/AttackOnTroy/Combat/Scripts/Aiming`
+- `Assets/AttackOnTroy/Combat/Scripts/Damage`
+- `Assets/AttackOnTroy/Combat/Scripts/Energy`
+- `Assets/AttackOnTroy/Combat/Scripts/Projectiles`
+- `Assets/AttackOnTroy/Combat/Scripts/SpecialAttacks`
+- `Assets/AttackOnTroy/Combat/Scripts/Wind`
+- `Assets/AttackOnTroy/Core`
+- `Assets/AttackOnTroy/Core/Prefabs`
+- `Assets/AttackOnTroy/Core/Scripts`
+- `Assets/AttackOnTroy/Core/Scripts/Events`
+- `Assets/AttackOnTroy/Core/Scripts/GameFlow`
+- `Assets/AttackOnTroy/Core/Scripts/Interfaces`
+- `Assets/AttackOnTroy/Core/Scripts/SaveSystem`
+- `Assets/AttackOnTroy/Core/Scripts/TurnSystem`
+- `Assets/AttackOnTroy/Core/Scripts/Utilities`
+- `Assets/AttackOnTroy/Data`
+- `Assets/AttackOnTroy/Data/Balance`
+- `Assets/AttackOnTroy/Data/Characters`
+- `Assets/AttackOnTroy/Data/Dialogue`
+- `Assets/AttackOnTroy/Data/Enemies`
+- `Assets/AttackOnTroy/Data/Levels`
+- `Assets/AttackOnTroy/Data/Settings`
+- `Assets/AttackOnTroy/Enemies`
+- `Assets/AttackOnTroy/Enemies/AI`
+- `Assets/AttackOnTroy/Enemies/AI/Data`
+- `Assets/AttackOnTroy/Enemies/AI/Scripts`
+- `Assets/AttackOnTroy/Enemies/CyclopsHeavy`
+- `Assets/AttackOnTroy/Enemies/CyclopsHeavy/Data`
+- `Assets/AttackOnTroy/Enemies/CyclopsHeavy/Prefabs`
+- `Assets/AttackOnTroy/Enemies/CyclopsHeavy/Scripts`
+- `Assets/AttackOnTroy/Enemies/CyclopsNormal`
+- `Assets/AttackOnTroy/Enemies/CyclopsNormal/Data`
+- `Assets/AttackOnTroy/Enemies/CyclopsNormal/Prefabs`
+- `Assets/AttackOnTroy/Enemies/CyclopsNormal/Scripts`
+- `Assets/AttackOnTroy/Enemies/Shared`
+- `Assets/AttackOnTroy/Enemies/Shared/Prefabs`
+- `Assets/AttackOnTroy/Enemies/Shared/Scripts`
+- `Assets/AttackOnTroy/Scenes`
+- `Assets/AttackOnTroy/Scenes/Bootstrap`
+- `Assets/AttackOnTroy/Scenes/Levels`
+- `Assets/AttackOnTroy/Scenes/Levels/Level01_Beach`
+- `Assets/AttackOnTroy/Scenes/Levels/Level02_Scamander`
+- `Assets/AttackOnTroy/Scenes/Levels/Level03_TroyWall`
+- `Assets/AttackOnTroy/Scenes/Menus`
+- `Assets/AttackOnTroy/Scenes/TestScenes`
+- `Assets/AttackOnTroy/Scenes/Transitions`
+- `Assets/AttackOnTroy/Tests`
+- `Assets/AttackOnTroy/Tests/EditMode`
+- `Assets/AttackOnTroy/Tests/PlayMode`
+- `Assets/AttackOnTroy/Tests/TestAssets`
+- `Assets/AttackOnTroy/ThirdParty`
+- `Assets/AttackOnTroy/UI`
+- `Assets/AttackOnTroy/UI/Dialogue`
+- `Assets/AttackOnTroy/UI/HUD`
+- `Assets/AttackOnTroy/UI/Icons`
+- `Assets/AttackOnTroy/UI/Prefabs`
+- `Assets/AttackOnTroy/UI/Screens`
+- `Assets/AttackOnTroy/UI/Scripts`
+- `Assets/AttackOnTroy/World`
+- `Assets/AttackOnTroy/World/Data`
+- `Assets/AttackOnTroy/World/Prefabs`
+- `Assets/AttackOnTroy/World/Prefabs/Fortifications`
+- `Assets/AttackOnTroy/World/Prefabs/Props`
+- `Assets/AttackOnTroy/World/Prefabs/Terrain`
+- `Assets/AttackOnTroy/World/Scripts`
+- `Assets/AttackOnTroy/World/Scripts/Destruction`
+- `Assets/AttackOnTroy/World/Scripts/Hazards`
+- `Assets/AttackOnTroy/World/Scripts/Movement`
+- `Assets/AttackOnTroy/World/Scripts/Terrain`
+- `Docs`
+- `Docs/Architecture`
+- `Docs/Design`
+- `Docs/Reports`
+- `Docs/Tasks`
+- `Docs/Testing`
+
+## Directories that already existed
+
+- None.
+
+## Conflicts or unexpected existing structure
+
+- None observed.
