@@ -328,6 +328,11 @@ MonoBehaviour:
   cameraController: {fileID: 1655878547}
   terrainTarget: {fileID: 1634719848}
   levelBoundsCollider: {fileID: 875917141}
+  animator: {fileID: 518471230}
+  throwStateName: Attack
+  attackTriggerName: Attack
+  releaseNormalizedTime: 0.45
+  failSafeTimeoutDuration: 1.5
   currentAngle: 45
   minAngle: 10
   maxAngle: 80
@@ -529,6 +534,11 @@ Transform:
   - {fileID: 245746861}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &518471230 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 373981532645652845, guid: b9e7557f7e0fd4b418b6f7f157ab3ab0, type: 3}
+  m_PrefabInstance: {fileID: 145007049}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &522981385
 GameObject:
   m_ObjectHideFlags: 0

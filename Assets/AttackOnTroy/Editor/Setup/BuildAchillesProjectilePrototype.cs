@@ -76,6 +76,7 @@ public static class BuildAchillesProjectilePrototype
 
         GroundedActorMotor2D motor = null;
         Collider2D playerCollider = null;
+        Animator playerAnimator = null;
         if (playerObject != null)
         {
             motor = playerObject.GetComponent<GroundedActorMotor2D>();
@@ -84,6 +85,9 @@ public static class BuildAchillesProjectilePrototype
             playerCollider = playerObject.GetComponent<Collider2D>();
             if (playerCollider == null)
                 problems.Add("Player_Achilles is missing a Collider2D.");
+            playerAnimator = playerObject.GetComponentInChildren<Animator>();
+            if (playerAnimator == null)
+                problems.Add("Player_Achilles is missing an Animator component in its hierarchy.");
         }
 
         DestructibleTerrain2D terrain = null;
@@ -179,7 +183,11 @@ public static class BuildAchillesProjectilePrototype
             playerCollider,
             cameraController,
             terrain,
-            boundsCollider);
+            boundsCollider,
+            playerAnimator,
+            "Attack",
+            "Attack",
+            0.45f);
 
         EditorUtility.SetDirty(launcher);
         EditorUtility.SetDirty(playerObject);
@@ -192,6 +200,7 @@ public static class BuildAchillesProjectilePrototype
             "- Prefab created/updated: " + PrefabPath + "\n" +
             "- ProjectileSpawnPoint placed at upper body (mirrored by FacingDirection)\n" +
             "- AchillesProjectileDebugLauncher configured on Player_Achilles\n" +
+            "- Achilles Animator and Throw animation release settings configured (State: Attack, NormalizedTime: 0.45)\n" +
             "- Camera target and terrain destruction references linked\n\n" +
             "Scene marked dirty. Inspect and save manually with Ctrl+S.",
             "OK");
