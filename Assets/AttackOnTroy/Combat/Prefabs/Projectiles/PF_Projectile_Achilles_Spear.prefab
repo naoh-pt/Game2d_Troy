@@ -26,8 +26,8 @@ Transform:
   m_GameObject: {fileID: 7895953280241334560}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.12, y: 0.12, z: 1}
+  m_LocalPosition: {x: 0.5969, y: -0.0359, z: 0}
+  m_LocalScale: {x: 0.20232926, y: 0.1299, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2572492181526837020}
@@ -81,7 +81,7 @@ SpriteRenderer:
   m_SortingLayer: 6
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 8c1fadf47666fc544b534281c2f0560c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2f2f22d242e8ea446a2bf1f1bde4ecf3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -188,8 +188,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 2, y: 0.25}
+  m_Offset: {x: 0.20162322, y: -0.025118863}
+  m_Size: {x: 3.4496531, y: 0.10099086}
   m_Direction: 1
 --- !u!114 &500502106401105236
 MonoBehaviour:
@@ -204,7 +204,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Projectile2D
   visualTransform: {fileID: 7536942083681236326}
+  impactType: 0
+  bombVisualDegreesPerSecond: 360
   maxLifetime: 10
   levelBoundsCollider: {fileID: 0}
+  directHitDamage: 25
+  embeddedDuration: 0.8
+  embedDepth: 0.08
+  areaDamage: 30
+  damageRadius: 2
+  damageLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   craterRadius: 1
   terrainTarget: {fileID: 0}
+  explosionResolveDuration: 0.45
+  explosionEffectPrefab: {fileID: 0}

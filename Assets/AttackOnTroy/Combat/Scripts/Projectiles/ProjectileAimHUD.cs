@@ -18,6 +18,7 @@ public sealed class ProjectileAimHUD : MonoBehaviour
     [SerializeField] private Image powerBarFill;
     [SerializeField] private TextMeshProUGUI windLabel;
     [SerializeField] private CanvasGroup canvasGroup;
+    [SerializeField] private TextMeshProUGUI weaponLabel;
 
     [Header("Display Settings")]
     [SerializeField] private bool dimWhenInactive = true;
@@ -27,6 +28,13 @@ public sealed class ProjectileAimHUD : MonoBehaviour
     private int lastAngle = -1;
     private float lastWind = float.NaN;
     private bool lastCanAim = true;
+    private AchillesWeapon? lastWeapon;
+
+    public void ConfigureWeaponLabel(TextMeshProUGUI label)
+    {
+        weaponLabel = label;
+        lastWeapon = null;
+    }
 
     private void Awake()
     {
@@ -86,6 +94,11 @@ public sealed class ProjectileAimHUD : MonoBehaviour
         UpdateAngle();
         UpdatePowerBar();
         UpdateWind();
+        if (weaponLabel != null && lastWeapon != launcher.SelectedWeapon)
+        {
+            lastWeapon = launcher.SelectedWeapon;
+            weaponLabel.text = launcher.SelectedWeaponName;
+        }
     }
 
     private void UpdateCanvasAlpha()

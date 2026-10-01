@@ -2,16 +2,21 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public enum AchillesWeapon { Spear, ClubBomb }
+
 /// <summary>
 /// Development launcher component attached to Player_Achilles.
 /// Provides angle adjustment, power charging, prepared wind lifecycle, spawn offset mirroring,
-/// animation-synchronized spear release during the Throw animation, presentation API, and camera follow switching.
+/// animation-synchronized selected-weapon release, presentation API, and camera follow switching.
 /// </summary>
 [DisallowMultipleComponent]
 public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private GameObject clubBombPrefab;
+    [SerializeField] private Level01TurnManager turnManager;
+    [SerializeField] private AchillesWeapon selectedWeapon = AchillesWeapon.Spear;
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private GroundedActorMotor2D motor;
     [SerializeField] private Collider2D actorCollider;
@@ -62,9 +67,18 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
     private float storedSpeed;
     private float storedWind;
     private int storedFacing;
+    private GameObject storedProjectilePrefab;
 
     private int throwStateHash;
     private int attackTriggerHash;
+
+    // Turn system integration events
+    public event Action ThrowStarted;
+    public event Action ProjectileLaunched;
+    public event Action ProjectileCompleted;
+
+    private bool turnInputEnabled = true;
+    private bool projectileCompletedFiredThisShot;
 
     #region Presentation API
     public float CurrentAngle => currentAngle;
@@ -77,8 +91,47 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
     public bool IsCharging => isCharging;
     public bool IsThrowing => isThrowInProgress;
     public bool HasActiveProjectile => activeProjectile != null;
-    public bool CanAim => !isThrowInProgress && activeProjectile == null;
+    public bool CanAim => turnInputEnabled && !isThrowInProgress && activeProjectile == null;
+    public bool TurnInputEnabled => turnInputEnabled;
+    public AchillesWeapon SelectedWeapon => selectedWeapon;
+    public string SelectedWeaponName => selectedWeapon == AchillesWeapon.ClubBomb ? "CLUB BOMB" : "SPEAR";
+    public bool CanSelectWeapon => CanAim && turnManager != null && turnManager.IsPlayerTurn;
     #endregion
+
+    /// <summary>Narrow setup API: does not touch aiming, wind, throw timing or presentation.</summary>
+    public void ConfigureWeapons(GameObject spear, GameObject bomb, Level01TurnManager turns)
+    {
+        projectilePrefab = spear;
+        clubBombPrefab = bomb;
+        turnManager = turns;
+    }
+
+    public bool TrySelectWeapon(AchillesWeapon weapon)
+    {
+        if (!CanSelectWeapon || (weapon != AchillesWeapon.Spear && weapon != AchillesWeapon.ClubBomb)) return false;
+        GameObject prefab = weapon == AchillesWeapon.ClubBomb ? clubBombPrefab : projectilePrefab;
+        Projectile2D projectile = prefab != null ? prefab.GetComponent<Projectile2D>() : null;
+        ProjectileImpactType expected = weapon == AchillesWeapon.ClubBomb ? ProjectileImpactType.ClubBomb : ProjectileImpactType.Spear;
+        if (projectile == null || projectile.ImpactType != expected) return false;
+        selectedWeapon = weapon;
+        return true;
+    }
+
+    public void SetTurnInputEnabled(bool enabled)
+    {
+        turnInputEnabled = enabled;
+
+        if (!enabled)
+        {
+            isCharging = false;
+            chargeTimer = 0f;
+        }
+
+        if (motor != null)
+        {
+            motor.SetMovementEnabled(enabled);
+        }
+    }
 
     private void Awake()
     {
@@ -163,6 +216,12 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
 
     private void Update()
     {
+        // Resolve an already-started animation even if debug input is subsequently disabled.
+        if (isThrowInProgress)
+        {
+            UpdateThrowSequence();
+            return;
+        }
 #if !UNITY_EDITOR
         if (!Debug.isDebugBuild)
             return;
@@ -171,16 +230,17 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
         if (!debugLauncherEnabled)
             return;
 
-        // Process active throw sequence if one is in progress
-        if (isThrowInProgress)
-        {
-            UpdateThrowSequence();
-            return; // Ignore aiming and charging input while throwing
-        }
+        if (!turnInputEnabled || activeProjectile != null)
+            return;
 
         Keyboard keyboard = Keyboard.current;
         if (keyboard == null)
             return;
+
+        if (keyboard.digit1Key.wasPressedThisFrame || keyboard.numpad1Key.wasPressedThisFrame)
+            TrySelectWeapon(AchillesWeapon.Spear);
+        else if (keyboard.digit2Key.wasPressedThisFrame || keyboard.numpad2Key.wasPressedThisFrame)
+            TrySelectWeapon(AchillesWeapon.ClubBomb);
 
         HandleAngleInput(keyboard);
         HandleChargeAndLaunchInput(keyboard);
@@ -234,7 +294,9 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
 
     private void RequestThrow(float speed)
     {
-        if (projectilePrefab == null)
+        if (!CanAim) return;
+        GameObject chosenPrefab = selectedWeapon == AchillesWeapon.ClubBomb ? clubBombPrefab : projectilePrefab;
+        if (chosenPrefab == null || chosenPrefab.GetComponent<Projectile2D>() == null)
         {
             Debug.LogWarning("[AchillesProjectileDebugLauncher] Cannot throw: Projectile prefab is not assigned.");
             return;
@@ -259,6 +321,7 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
         // Store shot parameters and lock facing direction
         storedAngle = currentAngle;
         storedSpeed = speed;
+        storedProjectilePrefab = chosenPrefab;
         // Prepared wind is locked in for this throw
         storedWind = preparedWind;
         storedFacing = motor != null ? motor.FacingDirection : 1;
@@ -276,7 +339,10 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
         isThrowInProgress = true;
         throwStateEntered = false;
         projectileSpawnedThisThrow = false;
+        projectileCompletedFiredThisShot = false;
         throwTimeoutTimer = minimumFallbackTimeout;
+
+        ThrowStarted?.Invoke();
     }
 
     private void UpdateThrowSequence()
@@ -351,12 +417,12 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
         Vector2 initialVelocity = launchDirection * storedSpeed;
 
         float initialAngleDeg = Mathf.Atan2(initialVelocity.y, initialVelocity.x) * Mathf.Rad2Deg;
-        Quaternion initialRotation = Quaternion.Euler(0f, 0f, initialAngleDeg);
+        Projectile2D prefabProjectile = storedProjectilePrefab.GetComponent<Projectile2D>();
+        Quaternion initialRotation = prefabProjectile.ImpactType == ProjectileImpactType.ClubBomb
+            ? Quaternion.identity : Quaternion.Euler(0f, 0f, initialAngleDeg);
 
-        GameObject projectileObject = Instantiate(projectilePrefab, spawnWorldPosition, initialRotation);
+        GameObject projectileObject = Instantiate(storedProjectilePrefab, spawnWorldPosition, initialRotation);
         Projectile2D projectile = projectileObject.GetComponent<Projectile2D>();
-        if (projectile == null)
-            projectile = projectileObject.AddComponent<Projectile2D>();
 
         activeProjectile = projectile;
 
@@ -365,6 +431,9 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
         {
             cameraController.FollowProjectile(projectile.transform);
         }
+
+        // Fire ProjectileLaunched event
+        ProjectileLaunched?.Invoke();
 
         Collider2D ownerCol = actorCollider != null ? actorCollider : GetComponent<Collider2D>();
         projectile.Launch(
@@ -376,17 +445,25 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
             OnProjectileCompleted);
 
         // Log only one concise line when firing: angle, launch speed and wind
-        Debug.Log($"[Achilles Launcher] Fired - Angle: {storedAngle:F1}°, Launch Speed: {storedSpeed:F1}, Wind: {storedWind:F2}");
+        Debug.Log($"[Achilles Launcher] Fired {projectile.ImpactType} - Angle: {storedAngle:F1}°, Launch Speed: {storedSpeed:F1}, Wind: {storedWind:F2}");
     }
 
     private void CompleteThrow()
     {
         isThrowInProgress = false;
         throwStateEntered = false;
+
+        // If the throw sequence aborted or timed out before spawning, ensure completion is signaled
+        if (!projectileSpawnedThisThrow && !projectileCompletedFiredThisShot)
+        {
+            projectileCompletedFiredThisShot = true;
+            ProjectileCompleted?.Invoke();
+        }
+
         projectileSpawnedThisThrow = false;
 
-        // Re-enable character movement on motor
-        if (motor != null)
+        // Re-enable character movement on motor only if turn input is enabled
+        if (motor != null && turnInputEnabled)
             motor.SetMovementEnabled(true);
     }
 
@@ -401,23 +478,26 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
 
     private void OnProjectileCompleted(Projectile2D projectile)
     {
-        if (activeProjectile == projectile)
-        {
-            activeProjectile = null;
-        }
+        // Latch the whole handoff, including wind and camera, not just the turn event.
+        if (this == null || projectileCompletedFiredThisShot || activeProjectile != projectile) return;
+        activeProjectile = null;
+        projectileCompletedFiredThisShot = true;
 
         // Generate the NEXT wind value only after the current projectile has completed
         GenerateNextWind();
 
-        if (cameraController != null)
+        try
         {
-            if (projectile != null && projectile.LastCompletionReason == ProjectileCompletionReason.TerrainImpact)
+            ProjectileCompleted?.Invoke();
+        }
+        finally
+        {
+            if (cameraController != null)
             {
-                cameraController.NotifyProjectileEnded(transform);
-            }
-            else
-            {
-                cameraController.FocusActor(transform);
+                if (projectile != null && projectile.LastCompletionReason == ProjectileCompletionReason.TerrainImpact)
+                    cameraController.NotifyProjectileEnded(transform);
+                else
+                    cameraController.FocusActor(transform);
             }
         }
     }

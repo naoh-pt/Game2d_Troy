@@ -1,0 +1,432 @@
+fileFormatVersion: 2
+guid: e6e75e16f18817c4e896b65d63385127
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -608617409759524055
+    second: SPR_Explosion_0
+  - first:
+      213: -5517847037182956716
+    second: SPR_Explosion_1
+  - first:
+      213: 306733818396758538
+    second: SPR_Explosion_2
+  - first:
+      213: 25617498831218785
+    second: SPR_Explosion_3
+  - first:
+      213: -4920702217491339549
+    second: SPR_Explosion_4
+  - first:
+      213: 7294731308035501534
+    second: SPR_Explosion_5
+  - first:
+      213: -3333514199867201987
+    second: SPR_Explosion_6
+  - first:
+      213: 8882727953841632174
+    second: SPR_Explosion_7
+  - first:
+      213: -7472137519184952809
+    second: SPR_Explosion_8
+  - first:
+      213: -4099922078762203680
+    second: SPR_Explosion_9
+  - first:
+      213: 1861936072853537122
+    second: SPR_Explosion_10
+  - first:
+      213: 743725116729637909
+    second: SPR_Explosion_11
+  - first:
+      213: 1639264719699434647
+    second: SPR_Explosion_12
+  - first:
+      213: 664227860489456234
+    second: SPR_Explosion_13
+  - first:
+      213: -7915643872761201003
+    second: SPR_Explosion_14
+  - first:
+      213: 9219948669869888639
+    second: SPR_Explosion_15
+  - first:
+      213: 6734746419164109230
+    second: SPR_Explosion_16
+  - first:
+      213: -3165690095355699880
+    second: SPR_Explosion_17
+  - first:
+      213: 7689057673179504862
+    second: SPR_Explosion_18
+  - first:
+      213: -8184029803583922128
+    second: SPR_Explosion_19
+  - first:
+      213: 4747433481622191971
+    second: SPR_Explosion_20
+  - first:
+      213: -7182252239085270454
+    second: SPR_Explosion_21
+  - first:
+      213: 4133558161203586915
+    second: SPR_Explosion_22
+  - first:
+      213: -2075086337838482011
+    second: SPR_Explosion_23
+  - first:
+      213: 7385133885737437563
+    second: SPR_Explosion_24
+  - first:
+      213: 8155014400053489726
+    second: SPR_Explosion_25
+  - first:
+      213: 3216077346296547025
+    second: SPR_Explosion_26
+  - first:
+      213: -233765040522623839
+    second: SPR_Explosion_27
+  - first:
+      213: -5897153519684405826
+    second: SPR_Explosion_28
+  - first:
+      213: -5811081936851123455
+    second: SPR_Explosion_29
+  - first:
+      213: 5286545743242206487
+    second: SPR_Explosion_30
+  - first:
+      213: 629812758433219705
+    second: SPR_Explosion_31
+  - first:
+      213: 4976481009672467005
+    second: SPR_Explosion_32
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: SPR_Explosion_0
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 222
+        width: 120
+        height: 104
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 92b4a2fb0b1cd87f0800000000000000
+      internalID: -608617409759524055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_Explosion_1
+      rect:
+        serializedVersion: 2
+        x: 372
+        y: 199
+        width: 157
+        height: 147
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45ba4cfba5bac63b0800000000000000
+      internalID: -5517847037182956716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_Explosion_2
+      rect:
+        serializedVersion: 2
+        x: 544
+        y: 188
+        width: 170
+        height: 172
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a02532e58ccb14400800000000000000
+      internalID: 306733818396758538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_Explosion_6
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 230
+        width: 66
+        height: 65
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d36e1373f7afcb1d0800000000000000
+      internalID: -3333514199867201987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_Explosion_33
+      rect:
+        serializedVersion: 2
+        x: 723
+        y: 185
+        width: 170
+        height: 175
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 29f36e39fb2025f438dd60c17dfe7157
+      internalID: 939205245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_Explosion_3
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 6
+        width: 171
+        height: 170
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 687385f0e721d4544887f668a78820fa
+      internalID: 25617498831218785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_Explosion_4
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 3
+        width: 177
+        height: 170
+      alignment: 9
+      pivot: {x: 0.48809314, y: 0.4814045}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c7f915ce13e7154fa14c7aaa30f270d
+      internalID: -4920702217491339549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 18de61b6f55af6844af1c8854a8c89c8
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      SPR_Explosion_0: -608617409759524055
+      SPR_Explosion_1: -5517847037182956716
+      SPR_Explosion_10: 1861936072853537122
+      SPR_Explosion_11: 743725116729637909
+      SPR_Explosion_12: 1639264719699434647
+      SPR_Explosion_13: 664227860489456234
+      SPR_Explosion_14: -7915643872761201003
+      SPR_Explosion_15: 9219948669869888639
+      SPR_Explosion_16: 6734746419164109230
+      SPR_Explosion_17: -3165690095355699880
+      SPR_Explosion_18: 7689057673179504862
+      SPR_Explosion_19: -8184029803583922128
+      SPR_Explosion_2: 306733818396758538
+      SPR_Explosion_20: 4747433481622191971
+      SPR_Explosion_21: -7182252239085270454
+      SPR_Explosion_22: 4133558161203586915
+      SPR_Explosion_23: -2075086337838482011
+      SPR_Explosion_24: 7385133885737437563
+      SPR_Explosion_25: 8155014400053489726
+      SPR_Explosion_26: 3216077346296547025
+      SPR_Explosion_27: -233765040522623839
+      SPR_Explosion_28: -5897153519684405826
+      SPR_Explosion_29: -5811081936851123455
+      SPR_Explosion_3: 25617498831218785
+      SPR_Explosion_30: 5286545743242206487
+      SPR_Explosion_31: 629812758433219705
+      SPR_Explosion_32: 4976481009672467005
+      SPR_Explosion_33: 939205245
+      SPR_Explosion_4: -4920702217491339549
+      SPR_Explosion_5: 7294731308035501534
+      SPR_Explosion_6: -3333514199867201987
+      SPR_Explosion_7: 8882727953841632174
+      SPR_Explosion_8: -7472137519184952809
+      SPR_Explosion_9: -4099922078762203680
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
