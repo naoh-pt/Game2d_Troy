@@ -4,8 +4,8 @@ using UnityEngine.InputSystem;
 
 /// <summary>
 /// Development launcher component attached to Player_Achilles.
-/// Provides angle adjustment, power charging, wind randomization, spawn offset mirroring,
-/// animation-synchronized spear release during the Throw animation, and camera follow switching.
+/// Provides angle adjustment, power charging, prepared wind lifecycle, spawn offset mirroring,
+/// animation-synchronized spear release during the Throw animation, presentation API, and camera follow switching.
 /// </summary>
 [DisallowMultipleComponent]
 public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
@@ -24,7 +24,8 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
     [SerializeField] private string throwStateName = "Attack";
     [SerializeField] private string attackTriggerName = "Attack";
     [SerializeField, Range(0.1f, 0.9f)] private float releaseNormalizedTime = 0.45f;
-    [SerializeField, Min(0.1f)] private float failSafeTimeoutDuration = 1.5f;
+    [SerializeField, Min(0.5f)] private float minimumFallbackTimeout = 1.5f;
+    [SerializeField, Min(0.1f)] private float timeoutSafetyMargin = 0.5f;
 
     [Header("Angle Settings")]
     [SerializeField, Range(10f, 80f)] private float currentAngle = 45f;
@@ -49,6 +50,9 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
     private Projectile2D activeProjectile;
     private readonly Vector3 fallbackSpawnOffset = new Vector3(0.8f, 1.2f, 0f);
 
+    // Prepared wind lifecycle
+    private float preparedWind;
+
     // Throw sequence state
     private bool isThrowInProgress;
     private bool throwStateEntered;
@@ -62,15 +66,24 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
     private int throwStateHash;
     private int attackTriggerHash;
 
+    #region Presentation API
     public float CurrentAngle => currentAngle;
+    public float CurrentCharge01 => isCharging && chargeDuration > 0f ? Mathf.Clamp01(chargeTimer / chargeDuration) : 0f;
+    public float CurrentLaunchSpeed => isCharging
+        ? Mathf.Lerp(minLaunchSpeed, maxLaunchSpeed, CurrentCharge01)
+        : minLaunchSpeed;
+    public float CurrentWind => preparedWind;
+    public int FacingDirection => motor != null ? motor.FacingDirection : 1;
     public bool IsCharging => isCharging;
-    public float ChargeFraction => Mathf.Clamp01(chargeTimer / chargeDuration);
-    public Projectile2D ActiveProjectile => activeProjectile;
-    public bool IsThrowInProgress => isThrowInProgress;
+    public bool IsThrowing => isThrowInProgress;
+    public bool HasActiveProjectile => activeProjectile != null;
+    public bool CanAim => !isThrowInProgress && activeProjectile == null;
+    #endregion
 
     private void Awake()
     {
         InitializeReferences();
+        GenerateNextWind();
     }
 
     private void OnValidate()
@@ -80,7 +93,8 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
         maxLaunchSpeed = Mathf.Max(minLaunchSpeed, maxLaunchSpeed);
         chargeDuration = Mathf.Max(0.1f, chargeDuration);
         releaseNormalizedTime = Mathf.Clamp(releaseNormalizedTime, 0.1f, 0.9f);
-        failSafeTimeoutDuration = Mathf.Max(0.1f, failSafeTimeoutDuration);
+        minimumFallbackTimeout = Mathf.Max(0.5f, minimumFallbackTimeout);
+        timeoutSafetyMargin = Mathf.Max(0.1f, timeoutSafetyMargin);
         throwStateHash = Animator.StringToHash(throwStateName);
         attackTriggerHash = Animator.StringToHash(attackTriggerName);
     }
@@ -112,6 +126,9 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
         releaseNormalizedTime = releaseNormalized;
         throwStateHash = Animator.StringToHash(throwStateName);
         attackTriggerHash = Animator.StringToHash(attackTriggerName);
+
+        if (float.IsNaN(preparedWind) || preparedWind == 0f)
+            GenerateNextWind();
     }
 
     private void InitializeReferences()
@@ -131,6 +148,17 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
 
         throwStateHash = Animator.StringToHash(throwStateName);
         attackTriggerHash = Animator.StringToHash(attackTriggerName);
+    }
+
+    private void GenerateNextWind()
+    {
+        preparedWind = UnityEngine.Random.Range(minWind, maxWind);
+    }
+
+    public Vector3 GetSpawnPosition()
+    {
+        int facing = FacingDirection;
+        return ComputeSpawnPosition(facing);
     }
 
     private void Update()
@@ -190,13 +218,13 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
         {
             if (keyboard.spaceKey.isPressed)
             {
-                chargeTimer += Time.deltaTime;
+                chargeTimer = Mathf.Min(chargeTimer + Time.deltaTime, chargeDuration);
             }
 
             if (keyboard.spaceKey.wasReleasedThisFrame)
             {
-                float fraction = Mathf.Clamp01(chargeTimer / chargeDuration);
-                float speed = Mathf.Lerp(minLaunchSpeed, maxLaunchSpeed, fraction);
+                float charge = CurrentCharge01;
+                float speed = Mathf.Lerp(minLaunchSpeed, maxLaunchSpeed, charge);
                 isCharging = false;
                 chargeTimer = 0f;
                 RequestThrow(speed);
@@ -231,7 +259,8 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
         // Store shot parameters and lock facing direction
         storedAngle = currentAngle;
         storedSpeed = speed;
-        storedWind = UnityEngine.Random.Range(minWind, maxWind);
+        // Prepared wind is locked in for this throw
+        storedWind = preparedWind;
         storedFacing = motor != null ? motor.FacingDirection : 1;
         if (storedFacing == 0)
             storedFacing = 1;
@@ -243,11 +272,11 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
         // Trigger Animator Attack state
         animator.SetTrigger(attackTriggerHash);
 
-        // Initialize throw sequence tracking
+        // Initialize throw sequence tracking with initial fallback timeout
         isThrowInProgress = true;
         throwStateEntered = false;
         projectileSpawnedThisThrow = false;
-        throwTimeoutTimer = failSafeTimeoutDuration;
+        throwTimeoutTimer = minimumFallbackTimeout;
     }
 
     private void UpdateThrowSequence()
@@ -276,8 +305,11 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
             if (inThrowState)
             {
                 throwStateEntered = true;
-                // Once entered, refresh fail-safe timer with clip duration headroom
-                throwTimeoutTimer = Mathf.Max(1.0f, failSafeTimeoutDuration);
+                // Derive safe timeout from active Throw state/clip duration and Animator playback speed
+                float clipLength = stateInfo.length > 0f ? stateInfo.length : 0.5f;
+                float effectiveSpeed = Mathf.Max(0.01f, Mathf.Abs(animator.speed * stateInfo.speed));
+                float stateDuration = clipLength / effectiveSpeed;
+                throwTimeoutTimer = Mathf.Max(minimumFallbackTimeout, stateDuration * 2.0f + timeoutSafetyMargin);
             }
             return;
         }
@@ -373,6 +405,9 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
         {
             activeProjectile = null;
         }
+
+        // Generate the NEXT wind value only after the current projectile has completed
+        GenerateNextWind();
 
         if (cameraController != null)
         {

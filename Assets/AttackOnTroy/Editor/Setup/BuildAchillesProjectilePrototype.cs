@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using TMPro;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 /// <summary>
 /// Idempotent setup tool for the Achilles projectile prototype.
@@ -189,6 +191,250 @@ public static class BuildAchillesProjectilePrototype
             "Attack",
             0.45f);
 
+        // 4c. Add or update AimGuideRenderer on ProjectileSpawnPoint
+        AimGuideRenderer aimGuide = spawnPoint.GetComponent<AimGuideRenderer>();
+        if (aimGuide == null)
+            aimGuide = Undo.AddComponent<AimGuideRenderer>(spawnPoint.gameObject);
+
+        LineRenderer lineRenderer = spawnPoint.GetComponent<LineRenderer>();
+        if (lineRenderer == null)
+            lineRenderer = Undo.AddComponent<LineRenderer>(spawnPoint.gameObject);
+
+        Material lineMaterial = AssetDatabase.GetBuiltinExtraResource<Material>("Default-Line.mat");
+        if (lineMaterial == null)
+        {
+            Shader spriteShader = Shader.Find("Sprites/Default");
+            if (spriteShader != null)
+                lineMaterial = new Material(spriteShader) { name = "M_AimGuideLine" };
+        }
+        if (lineMaterial != null)
+            lineRenderer.sharedMaterial = lineMaterial;
+
+        aimGuide.Configure(launcher, spawnPoint);
+        EditorUtility.SetDirty(aimGuide);
+        EditorUtility.SetDirty(lineRenderer);
+
+        // 4d. Ensure HUDCanvas and add or update ProjectileAimHUD
+        GameObject hudCanvasObject = FindUniqueObject(scene, "HUDCanvas", null);
+        if (hudCanvasObject == null)
+        {
+            Canvas sceneCanvas = UnityEngine.Object.FindAnyObjectByType<Canvas>();
+            if (sceneCanvas != null)
+            {
+                hudCanvasObject = sceneCanvas.gameObject;
+            }
+            else
+            {
+                GameObject uiRoot = FindUniqueObject(scene, "UI", null);
+                hudCanvasObject = new GameObject("HUDCanvas");
+                Undo.RegisterCreatedObjectUndo(hudCanvasObject, "Create HUDCanvas");
+                if (uiRoot != null)
+                    Undo.SetTransformParent(hudCanvasObject.transform, uiRoot.transform, "Parent HUDCanvas");
+            }
+        }
+
+        Canvas canvas = hudCanvasObject.GetComponent<Canvas>();
+        if (canvas == null)
+        {
+            canvas = Undo.AddComponent<Canvas>(hudCanvasObject);
+            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        }
+
+        CanvasScaler scaler = hudCanvasObject.GetComponent<CanvasScaler>();
+        if (scaler == null)
+        {
+            scaler = Undo.AddComponent<CanvasScaler>(hudCanvasObject);
+            scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            scaler.referenceResolution = new Vector2(1920, 1080);
+            scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
+            scaler.matchWidthOrHeight = 0.5f;
+        }
+
+        if (hudCanvasObject.GetComponent<GraphicRaycaster>() == null)
+        {
+            Undo.AddComponent<GraphicRaycaster>(hudCanvasObject);
+        }
+
+        Transform existingHUDTransform = hudCanvasObject.transform.Find("ProjectileAimHUD");
+        GameObject hudObject;
+        if (existingHUDTransform == null)
+        {
+            hudObject = new GameObject("ProjectileAimHUD", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image), typeof(CanvasGroup), typeof(ProjectileAimHUD));
+            Undo.RegisterCreatedObjectUndo(hudObject, "Create ProjectileAimHUD");
+            Undo.SetTransformParent(hudObject.transform, hudCanvasObject.transform, "Parent ProjectileAimHUD");
+        }
+        else
+        {
+            hudObject = existingHUDTransform.gameObject;
+            Undo.RecordObject(hudObject, "Update ProjectileAimHUD");
+        }
+
+        RectTransform hudRect = hudObject.GetComponent<RectTransform>();
+        hudRect.anchorMin = new Vector2(0f, 1f);
+        hudRect.anchorMax = new Vector2(0f, 1f);
+        hudRect.pivot = new Vector2(0f, 1f);
+        hudRect.anchoredPosition = new Vector2(30f, -30f);
+        hudRect.sizeDelta = new Vector2(250f, 115f);
+
+        Image hudBg = hudObject.GetComponent<Image>();
+        if (hudBg == null) hudBg = Undo.AddComponent<Image>(hudObject);
+        hudBg.color = new Color(0.08f, 0.10f, 0.14f, 0.80f);
+
+        CanvasGroup canvasGroup = hudObject.GetComponent<CanvasGroup>();
+        if (canvasGroup == null) canvasGroup = Undo.AddComponent<CanvasGroup>(hudObject);
+
+        ProjectileAimHUD aimHUD = hudObject.GetComponent<ProjectileAimHUD>();
+        if (aimHUD == null) aimHUD = Undo.AddComponent<ProjectileAimHUD>(hudObject);
+        Undo.RecordObject(aimHUD, "Configure ProjectileAimHUD");
+
+        // AngleText
+        Transform angleTr = hudObject.transform.Find("AngleText");
+        GameObject angleObj;
+        if (angleTr == null)
+        {
+            angleObj = new GameObject("AngleText", typeof(RectTransform), typeof(CanvasRenderer), typeof(TextMeshProUGUI));
+            Undo.RegisterCreatedObjectUndo(angleObj, "Create AngleText");
+            Undo.SetTransformParent(angleObj.transform, hudObject.transform, "Parent AngleText");
+        }
+        else
+        {
+            angleObj = angleTr.gameObject;
+        }
+        RectTransform angleRect = angleObj.GetComponent<RectTransform>();
+        angleRect.anchorMin = new Vector2(0f, 1f);
+        angleRect.anchorMax = new Vector2(1f, 1f);
+        angleRect.pivot = new Vector2(0f, 1f);
+        angleRect.anchoredPosition = new Vector2(16f, -12f);
+        angleRect.sizeDelta = new Vector2(-32f, 24f);
+
+        TextMeshProUGUI angleTMP = angleObj.GetComponent<TextMeshProUGUI>();
+        if (angleTMP == null) angleTMP = Undo.AddComponent<TextMeshProUGUI>(angleObj);
+        angleTMP.fontSize = 18f;
+        angleTMP.fontStyle = FontStyles.Bold;
+        angleTMP.color = Color.white;
+        angleTMP.text = "ANGLE: 45°";
+        if (angleTMP.font == null && TMP_Settings.defaultFontAsset != null)
+            angleTMP.font = TMP_Settings.defaultFontAsset;
+
+        // PowerBar
+        Transform powerBarTr = hudObject.transform.Find("PowerBar");
+        GameObject powerBarObj;
+        if (powerBarTr == null)
+        {
+            powerBarObj = new GameObject("PowerBar", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+            Undo.RegisterCreatedObjectUndo(powerBarObj, "Create PowerBar");
+            Undo.SetTransformParent(powerBarObj.transform, hudObject.transform, "Parent PowerBar");
+        }
+        else
+        {
+            powerBarObj = powerBarTr.gameObject;
+        }
+        RectTransform powerBarRect = powerBarObj.GetComponent<RectTransform>();
+        powerBarRect.anchorMin = new Vector2(0f, 1f);
+        powerBarRect.anchorMax = new Vector2(1f, 1f);
+        powerBarRect.pivot = new Vector2(0f, 1f);
+        powerBarRect.anchoredPosition = new Vector2(16f, -44f);
+        powerBarRect.sizeDelta = new Vector2(-32f, 20f);
+
+        Image powerBarBg = powerBarObj.GetComponent<Image>();
+        if (powerBarBg == null) powerBarBg = Undo.AddComponent<Image>(powerBarObj);
+        powerBarBg.color = new Color(0.20f, 0.22f, 0.26f, 0.95f);
+
+        // Fill
+        Transform fillTr = powerBarObj.transform.Find("Fill");
+        GameObject fillObj;
+        if (fillTr == null)
+        {
+            fillObj = new GameObject("Fill", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+            Undo.RegisterCreatedObjectUndo(fillObj, "Create Fill");
+            Undo.SetTransformParent(fillObj.transform, powerBarObj.transform, "Parent Fill");
+        }
+        else
+        {
+            fillObj = fillTr.gameObject;
+        }
+        RectTransform fillRect = fillObj.GetComponent<RectTransform>();
+        fillRect.anchorMin = Vector2.zero;
+        fillRect.anchorMax = Vector2.one;
+        fillRect.offsetMin = Vector2.zero;
+        fillRect.offsetMax = Vector2.zero;
+
+        Image fillImage = fillObj.GetComponent<Image>();
+        if (fillImage == null) fillImage = Undo.AddComponent<Image>(fillObj);
+        fillImage.color = new Color(1f, 0.65f, 0.1f, 1f);
+        Sprite uiSprite = AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/UISprite.psd");
+        if (uiSprite != null)
+        {
+            fillImage.sprite = uiSprite;
+        }
+        fillImage.type = Image.Type.Filled;
+        fillImage.fillMethod = Image.FillMethod.Horizontal;
+        fillImage.fillOrigin = (int)Image.OriginHorizontal.Left;
+        fillImage.fillClockwise = true;
+        fillImage.fillAmount = 0f;
+
+        // Label
+        Transform labelTr = powerBarObj.transform.Find("Label");
+        GameObject labelObj;
+        if (labelTr == null)
+        {
+            labelObj = new GameObject("Label", typeof(RectTransform), typeof(CanvasRenderer), typeof(TextMeshProUGUI));
+            Undo.RegisterCreatedObjectUndo(labelObj, "Create Label");
+            Undo.SetTransformParent(labelObj.transform, powerBarObj.transform, "Parent Label");
+        }
+        else
+        {
+            labelObj = labelTr.gameObject;
+        }
+        RectTransform labelRect = labelObj.GetComponent<RectTransform>();
+        labelRect.anchorMin = Vector2.zero;
+        labelRect.anchorMax = Vector2.one;
+        labelRect.offsetMin = Vector2.zero;
+        labelRect.offsetMax = Vector2.zero;
+
+        TextMeshProUGUI powerLabelTMP = labelObj.GetComponent<TextMeshProUGUI>();
+        if (powerLabelTMP == null) powerLabelTMP = Undo.AddComponent<TextMeshProUGUI>(labelObj);
+        powerLabelTMP.fontSize = 11f;
+        powerLabelTMP.fontStyle = FontStyles.Bold;
+        powerLabelTMP.alignment = TextAlignmentOptions.Center;
+        powerLabelTMP.color = new Color(1f, 1f, 1f, 0.85f);
+        powerLabelTMP.text = "POWER";
+        if (powerLabelTMP.font == null && TMP_Settings.defaultFontAsset != null)
+            powerLabelTMP.font = TMP_Settings.defaultFontAsset;
+
+        // WindText
+        Transform windTr = hudObject.transform.Find("WindText");
+        GameObject windObj;
+        if (windTr == null)
+        {
+            windObj = new GameObject("WindText", typeof(RectTransform), typeof(CanvasRenderer), typeof(TextMeshProUGUI));
+            Undo.RegisterCreatedObjectUndo(windObj, "Create WindText");
+            Undo.SetTransformParent(windObj.transform, hudObject.transform, "Parent WindText");
+        }
+        else
+        {
+            windObj = windTr.gameObject;
+        }
+        RectTransform windRect = windObj.GetComponent<RectTransform>();
+        windRect.anchorMin = new Vector2(0f, 1f);
+        windRect.anchorMax = new Vector2(1f, 1f);
+        windRect.pivot = new Vector2(0f, 1f);
+        windRect.anchoredPosition = new Vector2(16f, -74f);
+        windRect.sizeDelta = new Vector2(-32f, 24f);
+
+        TextMeshProUGUI windTMP = windObj.GetComponent<TextMeshProUGUI>();
+        if (windTMP == null) windTMP = Undo.AddComponent<TextMeshProUGUI>(windObj);
+        windTMP.fontSize = 16f;
+        windTMP.fontStyle = FontStyles.Bold;
+        windTMP.color = new Color(0.55f, 0.85f, 1f, 1f);
+        windTMP.text = "WIND: 0.0 •";
+        if (windTMP.font == null && TMP_Settings.defaultFontAsset != null)
+            windTMP.font = TMP_Settings.defaultFontAsset;
+
+        aimHUD.Configure(launcher, angleTMP, fillImage, windTMP, canvasGroup);
+        EditorUtility.SetDirty(aimHUD);
+        EditorUtility.SetDirty(hudObject);
+
         EditorUtility.SetDirty(launcher);
         EditorUtility.SetDirty(playerObject);
         EditorSceneManager.MarkSceneDirty(scene);
@@ -201,6 +447,8 @@ public static class BuildAchillesProjectilePrototype
             "- ProjectileSpawnPoint placed at upper body (mirrored by FacingDirection)\n" +
             "- AchillesProjectileDebugLauncher configured on Player_Achilles\n" +
             "- Achilles Animator and Throw animation release settings configured (State: Attack, NormalizedTime: 0.45)\n" +
+            "- AimGuideRenderer line guide configured on ProjectileSpawnPoint\n" +
+            "- ProjectileAimHUD configured under HUDCanvas (Angle, Power Bar, Prepared Wind with direction arrow)\n" +
             "- Camera target and terrain destruction references linked\n\n" +
             "Scene marked dirty. Inspect and save manually with Ctrl+S.",
             "OK");
