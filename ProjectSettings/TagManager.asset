@@ -62,14 +62,14 @@ TagManager:
   - name: Effect
     uniqueID: 3653546069
     locked: 0
+  - name: Actors
+    uniqueID: 1937457347
+    locked: 0
   - name: Foreground
     uniqueID: 1037984931
     locked: 0
   - name: UI
     uniqueID: 1200232385
-    locked: 0
-  - name: Actors
-    uniqueID: 1937457347
     locked: 0
   m_RenderingLayers:
   - Default

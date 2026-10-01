@@ -79,7 +79,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1937457347
-  m_SortingLayer: 10
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -7271277004658365188, guid: fe81ca91d59259b44a1d6b59acc9a877, type: 3}
@@ -126,6 +126,8 @@ GameObject:
   - component: {fileID: 4361141369234961966}
   - component: {fileID: 992091500363928474}
   - component: {fileID: 315799240818758872}
+  - component: {fileID: 6026580184736230777}
+  - component: {fileID: 2718393759384596805}
   m_Layer: 0
   m_Name: PF_CyclopsNormal
   m_TagString: Untagged
@@ -157,14 +159,14 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7516123747883112869}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 3
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -172,9 +174,9 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!70 &315799240818758872
 CapsuleCollider2D:
@@ -186,7 +188,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 385bbc98727758c4b88080b877c23431, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -213,3 +215,54 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 1.5375}
   m_Size: {x: 1.2503077, y: 3.075}
   m_Direction: 0
+--- !u!114 &6026580184736230777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7516123747883112869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: beff0878202c45ae9791a6d083138c6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GroundedActorMotor2D
+  body: {fileID: 992091500363928474}
+  bodyCollider: {fileID: 315799240818758872}
+  visualRenderer: {fileID: 1105420911503272606}
+  animator: {fileID: 4275244265772038662}
+  maximumSpeed: 2
+  acceleration: 12
+  deceleration: 18
+  movementEnabled: 1
+  runEnterSpeed: 0.15
+  runExitSpeed: 0.05
+  idleGraceDuration: 0.08
+  terrainLayers:
+    serializedVersion: 2
+    m_Bits: 64
+  groundCheckDistance: 0.2
+  maximumWalkableSlopeAngle: 45
+  minimumGroundNormalY: 0.5
+  maximumStepHeight: 0.35
+  slopeProbeDistance: 0.45
+  idleAntiSlide: 1
+  showGroundDebugGizmos: 0
+  debugVectorLength: 0.8
+  movementDiagnosticsEnabled: 0
+  diagnosticInterval: 0.5
+--- !u!114 &2718393759384596805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7516123747883112869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b92565884e35433099d5d6d309725417, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ActorFallRecovery2D
+  body: {fileID: 992091500363928474}
+  recoveryEnabled: 1
+  recoveryWorldY: -13.051874
