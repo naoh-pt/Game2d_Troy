@@ -9,9 +9,16 @@ public sealed class PlayerMovementDebugInput : MonoBehaviour
     [SerializeField] private GroundedActorMotor2D motor;
     [SerializeField] private bool debugInputEnabled = true;
 
+    private float externalMoveInput;
+
     public void Configure(GroundedActorMotor2D motorReference)
     {
         motor = motorReference;
+    }
+
+    public void SetExternalMoveInput(float value)
+    {
+        externalMoveInput = Mathf.Clamp(value, -1f, 1f);
     }
 
     private void Awake()
@@ -21,29 +28,20 @@ public sealed class PlayerMovementDebugInput : MonoBehaviour
 
     private void Update()
     {
-#if !UNITY_EDITOR
-        if (!Debug.isDebugBuild)
-        {
-            ClearInput();
-            return;
-        }
-#endif
-        if (!debugInputEnabled || motor == null)
-        {
-            ClearInput();
-            return;
-        }
-
+        float keyboardInput = 0f;
         Keyboard keyboard = Keyboard.current;
-        if (keyboard == null)
+        if (debugInputEnabled && keyboard != null)
         {
-            motor.SetMoveInput(0f);
-            return;
+            bool moveLeft = keyboard.aKey.isPressed || keyboard.leftArrowKey.isPressed;
+            bool moveRight = keyboard.dKey.isPressed || keyboard.rightArrowKey.isPressed;
+            keyboardInput = (moveRight ? 1f : 0f) - (moveLeft ? 1f : 0f);
         }
 
-        bool moveLeft = keyboard.aKey.isPressed || keyboard.leftArrowKey.isPressed;
-        bool moveRight = keyboard.dKey.isPressed || keyboard.rightArrowKey.isPressed;
-        motor.SetMoveInput((moveRight ? 1f : 0f) - (moveLeft ? 1f : 0f));
+        float combinedInput = Mathf.Abs(externalMoveInput) > 0.001f ? externalMoveInput : keyboardInput;
+        if (motor != null)
+        {
+            motor.SetMoveInput(combinedInput);
+        }
     }
 
     private void OnDisable()
@@ -51,8 +49,9 @@ public sealed class PlayerMovementDebugInput : MonoBehaviour
         ClearInput();
     }
 
-    private void ClearInput()
+    public void ClearInput()
     {
+        externalMoveInput = 0f;
         if (motor != null)
             motor.SetMoveInput(0f);
     }

@@ -1,17 +1,73 @@
 using System;
 using UnityEngine;
 
-/// <summary>Prototype health receiver. Does not change physics, animation or turn/death rules.</summary>
+/// <summary>
+/// Health receiver and damage responder.
+/// Tracks current health, raises health and death events, and triggers
+/// non-lethal Hurt or lethal Die animation feedback on attached/child Animator.
+/// </summary>
 [DisallowMultipleComponent]
 public sealed class ActorDamageReceiver2D : MonoBehaviour, IDamageable2D
 {
     [SerializeField, Min(1f)] private float maximumHealth = 100f;
     [SerializeField] private bool logDamage;
+
+    [Header("Animation Feedback")]
+    [SerializeField] private Animator animator;
+    [SerializeField] private string hurtTriggerName = "Hurt";
+    [SerializeField] private string deathTriggerName = "Die";
+
+    private int hurtTriggerHash;
+    private int deathTriggerHash;
+    private bool hasHurtTrigger;
+    private bool hasDeathTrigger;
+
     public float CurrentHealth { get; private set; }
     public float MaximumHealth => maximumHealth;
-    public event Action<float, Vector2, GameObject> DamageApplied;
+    public bool IsDead => CurrentHealth <= 0f;
+    public Animator TargetAnimator => animator;
 
-    private void Awake() => CurrentHealth = maximumHealth;
+    public event Action<float, Vector2, GameObject> DamageApplied;
+    public event Action<float, float> HealthChanged;
+    public event Action Died;
+
+    private void Awake()
+    {
+        CurrentHealth = maximumHealth;
+        InitializeAnimator();
+    }
+
+    public void ConfigureAnimator(Animator targetAnimator, string hurtTrigger = "Hurt", string deathTrigger = "Die")
+    {
+        animator = targetAnimator;
+        hurtTriggerName = hurtTrigger;
+        deathTriggerName = deathTrigger;
+        InitializeAnimator();
+    }
+
+    private void InitializeAnimator()
+    {
+        if (animator == null)
+            animator = GetComponentInChildren<Animator>(true);
+
+        hasHurtTrigger = false;
+        hasDeathTrigger = false;
+
+        if (animator != null && animator.runtimeAnimatorController != null)
+        {
+            hurtTriggerHash = Animator.StringToHash(hurtTriggerName);
+            deathTriggerHash = Animator.StringToHash(deathTriggerName);
+
+            AnimatorControllerParameter[] parameters = animator.parameters;
+            for (int i = 0; i < parameters.Length; i++)
+            {
+                if (parameters[i].nameHash == hurtTriggerHash && parameters[i].type == AnimatorControllerParameterType.Trigger)
+                    hasHurtTrigger = true;
+                else if (parameters[i].nameHash == deathTriggerHash && parameters[i].type == AnimatorControllerParameterType.Trigger)
+                    hasDeathTrigger = true;
+            }
+        }
+    }
 
     public void ApplyDamage(float amount, Vector2 hitPosition, GameObject source)
     {
@@ -19,6 +75,52 @@ public sealed class ActorDamageReceiver2D : MonoBehaviour, IDamageable2D
         float applied = Mathf.Min(CurrentHealth, amount);
         CurrentHealth -= applied;
         if (logDamage) Debug.Log($"[Damage] {name}: -{applied:F1}, HP {CurrentHealth:F1}/{maximumHealth:F1}", this);
+
+        if (CurrentHealth <= 0f)
+        {
+            TriggerDeathAnimation();
+            HealthChanged?.Invoke(CurrentHealth, maximumHealth);
+            Died?.Invoke();
+        }
+        else
+        {
+            TriggerHurtAnimation();
+            HealthChanged?.Invoke(CurrentHealth, maximumHealth);
+        }
+
         DamageApplied?.Invoke(applied, hitPosition, source);
+    }
+
+    public void SetHealth(float health)
+    {
+        CurrentHealth = Mathf.Clamp(health, 0f, maximumHealth);
+        if (CurrentHealth <= 0f)
+        {
+            TriggerDeathAnimation();
+            HealthChanged?.Invoke(CurrentHealth, maximumHealth);
+            Died?.Invoke();
+        }
+        else
+        {
+            HealthChanged?.Invoke(CurrentHealth, maximumHealth);
+        }
+    }
+
+    public void TriggerHurtAnimation()
+    {
+        if (animator != null && hasHurtTrigger && animator.isActiveAndEnabled)
+        {
+            animator.SetTrigger(hurtTriggerHash);
+        }
+    }
+
+    public void TriggerDeathAnimation()
+    {
+        if (animator != null && hasDeathTrigger && animator.isActiveAndEnabled)
+        {
+            if (hasHurtTrigger)
+                animator.ResetTrigger(hurtTriggerHash);
+            animator.SetTrigger(deathTriggerHash);
+        }
     }
 }

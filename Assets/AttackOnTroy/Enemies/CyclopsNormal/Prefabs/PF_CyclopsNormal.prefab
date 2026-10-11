@@ -235,6 +235,7 @@ MonoBehaviour:
   acceleration: 12
   deceleration: 18
   movementEnabled: 1
+  spriteFacesLeftByDefault: 1
   runEnterSpeed: 0.15
   runExitSpeed: 0.05
   idleGraceDuration: 0.08

@@ -12,23 +12,25 @@ public enum ProjectileCompletionReason
     Cancelled
 }
 
-public enum ProjectileImpactType { Spear, ClubBomb }
+public enum ProjectileImpactType { Spear, ClubBomb, StoneAxe, Arrow, OilJar }
 
 /// <summary>Shared flight/lifecycle; only ClubBomb's impact path can carve terrain.</summary>
 [DisallowMultipleComponent]
-[RequireComponent(typeof(Rigidbody2D), typeof(CapsuleCollider2D))]
+[RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
 public sealed class Projectile2D : MonoBehaviour
 {
     [Header("Visual")]
     [SerializeField] private Transform visualTransform;
     [SerializeField] private ProjectileImpactType impactType;
     [SerializeField] private float bombVisualDegreesPerSecond = 360f;
+    [SerializeField] private float axeVisualDegreesPerSecond = 720f;
+    [SerializeField] private float jarVisualDegreesPerSecond = 360f;
 
     [Header("Flight & Lifetime")]
     [SerializeField, Min(1f)] private float maxLifetime = 10f;
     [SerializeField] private Collider2D levelBoundsCollider;
 
-    [Header("Spear Impact (Never Destroys Terrain)")]
+    [Header("Direct Hit Impact (Spear & Arrow)")]
     [SerializeField, Min(0f)] private float directHitDamage = 25f;
     [SerializeField, Min(0f)] private float embeddedDuration = 0.8f;
     [SerializeField, Min(0f)] private float embedDepth = 0.08f;
@@ -42,8 +44,11 @@ public sealed class Projectile2D : MonoBehaviour
     [SerializeField, Min(0.05f)] private float explosionResolveDuration = 0.45f;
     [SerializeField] private ProjectileExplosionEffect explosionEffectPrefab;
 
+    [Header("Oil Jar Impact")]
+    [SerializeField] private GameObject firePatchPrefab;
+
     private Rigidbody2D body;
-    private CapsuleCollider2D projectileCollider;
+    private Collider2D projectileCollider;
     private SpriteRenderer visualRenderer;
     private float horizontalWind;
     private float lifetimeTimer;
@@ -61,6 +66,8 @@ public sealed class Projectile2D : MonoBehaviour
     private readonly List<Collider2D> overlaps = new List<Collider2D>(32);
     private readonly HashSet<IDamageable2D> damageRecipients = new HashSet<IDamageable2D>();
     private readonly HashSet<DestructibleTerrain2D> affectedTerrains = new HashSet<DestructibleTerrain2D>();
+    private readonly HashSet<Collider2D> ignoredColliders = new HashSet<Collider2D>();
+    private readonly RaycastHit2D[] sweepHits = new RaycastHit2D[8];
 
     public bool IsLaunched => isLaunched;
     public bool IsCompleted => isCompleted;
@@ -85,7 +92,7 @@ public sealed class Projectile2D : MonoBehaviour
     private void InitializeComponents()
     {
         if (body == null) body = GetComponent<Rigidbody2D>();
-        if (projectileCollider == null) projectileCollider = GetComponent<CapsuleCollider2D>();
+        if (projectileCollider == null) projectileCollider = GetComponent<Collider2D>();
         if (visualTransform == null)
         {
             Transform child = transform.Find("Visual");
@@ -117,19 +124,38 @@ public sealed class Projectile2D : MonoBehaviour
             hasCachedBounds = true;
         }
         if (terrain != null) terrainTarget = terrain;
-        if (ownerCollider != null && projectileCollider != null)
+        if (ownerCollider != null)
         {
             Collider2D[] ownerColliders = ownerCollider.GetComponentsInChildren<Collider2D>();
             for (int i = 0; i < ownerColliders.Length; i++)
+            {
                 if (ownerColliders[i] != null)
-                    Physics2D.IgnoreCollision(projectileCollider, ownerColliders[i], true);
+                {
+                    ignoredColliders.Add(ownerColliders[i]);
+                    if (projectileCollider != null)
+                        Physics2D.IgnoreCollision(projectileCollider, ownerColliders[i], true);
+                }
+            }
         }
-        if (impactType == ProjectileImpactType.ClubBomb)
+        if (impactType == ProjectileImpactType.Arrow)
         {
-            // Torque/contact forces must not rotate the physical bomb either.
+            body.gravityScale = 0f;
+            horizontalWind = 0f;
+            flightDirection = initialVelocity.sqrMagnitude > 0.001f ? initialVelocity.normalized : Vector2.right;
+        }
+        else if (impactType == ProjectileImpactType.OilJar)
+        {
+            body.gravityScale = 1f;
             body.constraints |= RigidbodyConstraints2D.FreezeRotation;
             if (visualTransform == transform)
-                Debug.LogError("Club Bomb requires a separate Visual child; root rotation will not be used.", this);
+                Debug.LogError($"{impactType} requires a separate Visual child; root rotation will not be used.", this);
+        }
+        else if (impactType == ProjectileImpactType.ClubBomb || impactType == ProjectileImpactType.StoneAxe)
+        {
+            // Torque/contact forces must not rotate the physical projectile either.
+            body.constraints |= RigidbodyConstraints2D.FreezeRotation;
+            if (visualTransform == transform)
+                Debug.LogError($"{impactType} requires a separate Visual child; root rotation will not be used.", this);
         }
         initialVisualRotation = visualTransform != null ? visualTransform.localRotation : Quaternion.identity;
         body.linearVelocity = initialVelocity;
@@ -140,8 +166,34 @@ public sealed class Projectile2D : MonoBehaviour
     private void FixedUpdate()
     {
         if (!isLaunched || isCompleted || isResolving) return;
-        if (Mathf.Abs(horizontalWind) > 0.0001f)
-            body.linearVelocityX += horizontalWind * Time.fixedDeltaTime;
+
+        if (impactType == ProjectileImpactType.Arrow)
+        {
+            // Arrow maintains constant velocity: no wind, no gravity
+            Vector2 moveDelta = body.linearVelocity * Time.fixedDeltaTime;
+            float castDist = moveDelta.magnitude;
+            if (castDist > 0.001f)
+            {
+                Vector2 castDir = moveDelta / castDist;
+                ContactFilter2D filter = new ContactFilter2D();
+                filter.SetLayerMask(~0);
+                filter.useTriggers = false;
+                int hitCount = Physics2D.Raycast(body.position, castDir, filter, sweepHits, castDist + 0.05f);
+                for (int i = 0; i < hitCount; i++)
+                {
+                    RaycastHit2D hit = sweepHits[i];
+                    if (hit.collider == null || hit.collider == projectileCollider) continue;
+                    if (ignoredColliders.Contains(hit.collider)) continue;
+                    HandleCollisionImpact(hit.collider, hit.point);
+                    return;
+                }
+            }
+        }
+        else
+        {
+            if (Mathf.Abs(horizontalWind) > 0.0001f)
+                body.linearVelocityX += horizontalWind * Time.fixedDeltaTime;
+        }
     }
 
     private void Update()
@@ -169,6 +221,30 @@ public sealed class Projectile2D : MonoBehaviour
                 visualTransform.localRotation = initialVisualRotation * Quaternion.Euler(0f, 0f, visualSpinAngle);
             return; // No root transform or Rigidbody rotation for bomb visuals.
         }
+        if (impactType == ProjectileImpactType.StoneAxe)
+        {
+            float spinDir = body.linearVelocityX >= 0f ? -1f : 1f;
+            visualSpinAngle = Mathf.Repeat(visualSpinAngle + axeVisualDegreesPerSecond * spinDir * deltaTime, 360f);
+            if (visualTransform != null && visualTransform != transform)
+                visualTransform.localRotation = initialVisualRotation * Quaternion.Euler(0f, 0f, visualSpinAngle);
+            return; // Visual spins end-over-end along flight direction.
+        }
+        if (impactType == ProjectileImpactType.OilJar)
+        {
+            float spinDir = body.linearVelocityX >= 0f ? -1f : 1f;
+            visualSpinAngle = Mathf.Repeat(visualSpinAngle + jarVisualDegreesPerSecond * spinDir * deltaTime, 360f);
+            if (visualTransform != null && visualTransform != transform)
+                visualTransform.localRotation = initialVisualRotation * Quaternion.Euler(0f, 0f, visualSpinAngle);
+            return; // Visual rotates without spinning physics root.
+        }
+        if (impactType == ProjectileImpactType.Arrow)
+        {
+            float arrowAngle = Mathf.Atan2(flightDirection.y, flightDirection.x) * Mathf.Rad2Deg;
+            if (visualTransform != null) visualTransform.rotation = Quaternion.Euler(0f, 0f, arrowAngle);
+            transform.rotation = Quaternion.Euler(0f, 0f, arrowAngle);
+            body.rotation = arrowAngle;
+            return;
+        }
         Vector2 velocity = body.linearVelocity;
         if (velocity.sqrMagnitude <= 0.001f) return;
         flightDirection = velocity.normalized;
@@ -195,20 +271,38 @@ public sealed class Projectile2D : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (!isLaunched || isCompleted || isResolving) return;
+        if (collision.collider != null && ignoredColliders.Contains(collision.collider)) return;
         Vector2 point = collision.contactCount > 0 ? collision.GetContact(0).point : body.position;
-        IDamageable2D recipient = collision.collider.GetComponentInParent<IDamageable2D>();
-        DestructibleTerrain2D terrain = collision.collider.GetComponentInParent<DestructibleTerrain2D>();
+        HandleCollisionImpact(collision.collider, point);
+    }
+
+    private void HandleCollisionImpact(Collider2D hitCollider, Vector2 point)
+    {
+        if (!isLaunched || isCompleted || isResolving) return;
+        IDamageable2D recipient = hitCollider.GetComponentInParent<IDamageable2D>();
+        DestructibleTerrain2D terrain = hitCollider.GetComponentInParent<DestructibleTerrain2D>();
         int terrainLayer = LayerMask.NameToLayer("Terrain");
-        bool terrainHit = terrain != null || (terrainLayer >= 0 && collision.gameObject.layer == terrainLayer);
+        bool terrainHit = terrain != null || (terrainLayer >= 0 && hitCollider.gameObject.layer == terrainLayer);
         ProjectileCompletionReason reason = recipient != null ? ProjectileCompletionReason.ActorImpact :
             terrainHit ? ProjectileCompletionReason.TerrainImpact : ProjectileCompletionReason.OtherImpact;
 
-        // Latch before damage, collider rebuilds, effect spawning or any callback can reenter.
+        // Latch before damage, effect spawning or any callback can reenter.
         isResolving = true;
         LastCompletionReason = reason;
         StopFlight();
+
         if (impactType == ProjectileImpactType.ClubBomb)
-            ResolveBombImpact(point, (damageLayers.value & (1 << collision.gameObject.layer)) != 0 ? recipient : null, terrain);
+        {
+            ResolveBombImpact(point, (damageLayers.value & (1 << hitCollider.gameObject.layer)) != 0 ? recipient : null, terrain);
+        }
+        else if (impactType == ProjectileImpactType.OilJar)
+        {
+            if (recipient != null)
+                ApplyDamageSafely(recipient, directHitDamage, point);
+
+            SpawnFirePatch(point);
+            Complete(reason);
+        }
         else if (recipient != null)
         {
             ApplyDamageSafely(recipient, directHitDamage, point);
@@ -216,18 +310,41 @@ public sealed class Projectile2D : MonoBehaviour
         }
         else if (terrainHit)
         {
-            EmbedSpear(point);
+            if (impactType == ProjectileImpactType.Spear || impactType == ProjectileImpactType.Arrow)
+                EmbedSpear(point);
             resolutionTimer = embeddedDuration;
             if (resolutionTimer <= 0f) Complete(reason);
         }
-        else Complete(reason);
+        else
+        {
+            Complete(reason);
+        }
+    }
+
+    private void SpawnFirePatch(Vector2 point)
+    {
+        if (firePatchPrefab == null) return;
+        try
+        {
+            GameObject patch = Instantiate(firePatchPrefab, point, Quaternion.identity);
+            FirePatch2D fire = patch.GetComponent<FirePatch2D>();
+            if (fire != null)
+            {
+                fire.SnapToGround();
+            }
+        }
+        catch (Exception exception)
+        {
+            Debug.LogException(exception, this);
+        }
     }
 
     private void StopFlight()
     {
         body.linearVelocity = Vector2.zero;
         body.angularVelocity = 0f;
-        projectileCollider.enabled = false;
+        if (projectileCollider != null)
+            projectileCollider.enabled = false;
         body.simulated = false;
     }
 

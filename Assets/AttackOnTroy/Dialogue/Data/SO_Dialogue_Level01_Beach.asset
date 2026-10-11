@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45351e6359684edba03efc507976cc0a, type: 3}
+  m_Name: SO_Dialogue_Level01_Beach
+  m_EditorClassIdentifier: Assembly-CSharp::LevelDialogueData
+  achillesOpeningLines:
+  - speakerName: Achilles
+    text: Yield the shore, brute! I am Achilles of Phthia, and no beast shall bar
+      my vanguard to Troy!
+    speakerColor: {r: 1, g: 0.85, b: 0.2, a: 1}
+  - speakerName: Cyclops
+    text: Grahaha! Shiny little Greek! Your bronze spear will snap against my stones!
+    speakerColor: {r: 0.95, g: 0.35, b: 0.25, a: 1}
+  - speakerName: Achilles
+    text: Boast while you still draw breath, monster. Let the sands decide!
+    speakerColor: {r: 1, g: 0.85, b: 0.2, a: 1}
+  odysseusOpeningLines:
+  - speakerName: Odysseus
+    text: Hold, guardian of the cliffs. I am Odysseus of Ithaca. We seek only passage
+      to the plains of Troy.
+    speakerColor: {r: 0.4, g: 0.85, b: 0.95, a: 1}
+  - speakerName: Cyclops
+    text: Clever mortal words! But stone axes make all men bleed the same! You shall
+      not pass!
+    speakerColor: {r: 0.95, g: 0.35, b: 0.25, a: 1}
+  - speakerName: Odysseus
+    text: Then let an Ithacan bow measure your defiance.
+    speakerColor: {r: 0.4, g: 0.85, b: 0.95, a: 1}
+  enemyEntries:
+  - enemyId: CyclopsNormal
+    preFirstAttackLines:
+    - speakerName: Cyclops
+      text: Feel the weight of the mountain, Greek! Dodge this!
+      speakerColor: {r: 0.95, g: 0.35, b: 0.25, a: 1}
+    tauntLines:
+    - speakerName: Cyclops
+      text: Is that all you've got? A mosquito bites harder than you!
+      speakerColor: {r: 0.95, g: 0.35, b: 0.25, a: 1}
+    - speakerName: Cyclops
+      text: Run while your legs still hold, mortal! My axe never misses twice!
+      speakerColor: {r: 0.95, g: 0.35, b: 0.25, a: 1}
+    - speakerName: Cyclops
+      text: Your shiny bronze won't save you from crushing stones! Grahaha!
+      speakerColor: {r: 0.95, g: 0.35, b: 0.25, a: 1}
+    - speakerName: Cyclops
+      text: I will grind your bones into beach dust! Taste this!
+      speakerColor: {r: 0.95, g: 0.35, b: 0.25, a: 1}
+  achillesVictoryLines:
+  - speakerName: Achilles
+    text: As the Fates decreed. The beast falls, and the path to Troy lies open!
+    speakerColor: {r: 1, g: 0.85, b: 0.2, a: 1}
+  odysseusVictoryLines:
+  - speakerName: Odysseus
+    text: Wit and precision fell the mightiest giants. Onward to Troy!
+    speakerColor: {r: 0.4, g: 0.85, b: 0.95, a: 1}

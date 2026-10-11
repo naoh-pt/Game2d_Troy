@@ -94,7 +94,32 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
     public bool CanAim => turnInputEnabled && !isThrowInProgress && activeProjectile == null;
     public bool TurnInputEnabled => turnInputEnabled;
     public AchillesWeapon SelectedWeapon => selectedWeapon;
-    public string SelectedWeaponName => selectedWeapon == AchillesWeapon.ClubBomb ? "CLUB BOMB" : "SPEAR";
+    public GameObject ProjectilePrefab => projectilePrefab;
+    public GameObject ClubBombPrefab => clubBombPrefab;
+    public Transform SpawnPoint => spawnPoint;
+    public Projectile2D SelectedProjectilePrefab
+    {
+        get
+        {
+            GameObject prefab = selectedWeapon == AchillesWeapon.ClubBomb ? clubBombPrefab : projectilePrefab;
+            return prefab != null ? prefab.GetComponent<Projectile2D>() : null;
+        }
+    }
+    public string SelectedWeaponName
+    {
+        get
+        {
+            if (selectedWeapon == AchillesWeapon.ClubBomb)
+            {
+                if (clubBombPrefab != null && (clubBombPrefab.name.IndexOf("Jar", StringComparison.OrdinalIgnoreCase) >= 0 || clubBombPrefab.name.IndexOf("Oil", StringComparison.OrdinalIgnoreCase) >= 0))
+                    return "OIL JAR";
+                return "CLUB BOMB";
+            }
+            if (projectilePrefab != null && projectilePrefab.name.IndexOf("Arrow", StringComparison.OrdinalIgnoreCase) >= 0)
+                return "ARROW";
+            return "SPEAR";
+        }
+    }
     public bool CanSelectWeapon => CanAim && turnManager != null && turnManager.IsPlayerTurn;
     #endregion
 
@@ -111,10 +136,51 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
         if (!CanSelectWeapon || (weapon != AchillesWeapon.Spear && weapon != AchillesWeapon.ClubBomb)) return false;
         GameObject prefab = weapon == AchillesWeapon.ClubBomb ? clubBombPrefab : projectilePrefab;
         Projectile2D projectile = prefab != null ? prefab.GetComponent<Projectile2D>() : null;
-        ProjectileImpactType expected = weapon == AchillesWeapon.ClubBomb ? ProjectileImpactType.ClubBomb : ProjectileImpactType.Spear;
-        if (projectile == null || projectile.ImpactType != expected) return false;
+        if (projectile == null) return false;
+        if (weapon == AchillesWeapon.ClubBomb)
+        {
+            if (projectile.ImpactType != ProjectileImpactType.ClubBomb && projectile.ImpactType != ProjectileImpactType.OilJar)
+                return false;
+        }
+        else
+        {
+            if (projectile.ImpactType != ProjectileImpactType.Spear && projectile.ImpactType != ProjectileImpactType.Arrow)
+                return false;
+        }
         selectedWeapon = weapon;
         return true;
+    }
+
+    private float externalAimInput;
+
+    public void SetAimInput(float direction)
+    {
+        externalAimInput = Mathf.Clamp(direction, -1f, 1f);
+    }
+
+    public void StartCharging()
+    {
+        if (!CanAim || activeProjectile != null || isThrowInProgress)
+            return;
+        isCharging = true;
+        chargeTimer = 0f;
+    }
+
+    public void ReleaseChargeAndThrow()
+    {
+        if (!isCharging)
+            return;
+        float charge = CurrentCharge01;
+        float speed = Mathf.Lerp(minLaunchSpeed, maxLaunchSpeed, charge);
+        isCharging = false;
+        chargeTimer = 0f;
+        RequestThrow(speed);
+    }
+
+    public void CancelCharging()
+    {
+        isCharging = false;
+        chargeTimer = 0f;
     }
 
     public void SetTurnInputEnabled(bool enabled)
@@ -125,6 +191,7 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
         {
             isCharging = false;
             chargeTimer = 0f;
+            externalAimInput = 0f;
         }
 
         if (motor != null)
@@ -198,12 +265,16 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
         }
         if (animator == null)
             animator = GetComponentInChildren<Animator>();
+        if (turnManager == null)
+            turnManager = FindAnyObjectByType<Level01TurnManager>();
+        if (cameraController == null && Camera.main != null)
+            cameraController = Camera.main.GetComponent<Level01CameraController>();
 
         throwStateHash = Animator.StringToHash(throwStateName);
         attackTriggerHash = Animator.StringToHash(attackTriggerName);
     }
 
-    private void GenerateNextWind()
+    public void GenerateNextWind()
     {
         preparedWind = UnityEngine.Random.Range(minWind, maxWind);
     }
@@ -233,8 +304,20 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
         if (!turnInputEnabled || activeProjectile != null)
             return;
 
+        // Apply external aim input (touch controls)
+        if (CanAim && Mathf.Abs(externalAimInput) > 0.001f)
+        {
+            currentAngle = Mathf.Clamp(currentAngle + externalAimInput * angleAdjustmentSpeed * Time.deltaTime, minAngle, maxAngle);
+        }
+
+        // Advance charging timer while charging (driven by keyboard space or touch throw button)
+        if (isCharging)
+        {
+            chargeTimer = Mathf.Min(chargeTimer + Time.deltaTime, chargeDuration);
+        }
+
         Keyboard keyboard = Keyboard.current;
-        if (keyboard == null)
+        if (keyboard == null || !debugLauncherEnabled)
             return;
 
         if (keyboard.digit1Key.wasPressedThisFrame || keyboard.numpad1Key.wasPressedThisFrame)
@@ -260,7 +343,6 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
 
     private void HandleChargeAndLaunchInput(Keyboard keyboard)
     {
-        // Only one active projectile allowed at a time, and cannot charge/throw while already throwing
         if (activeProjectile != null || isThrowInProgress)
         {
             isCharging = false;
@@ -270,25 +352,12 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
 
         if (keyboard.spaceKey.wasPressedThisFrame)
         {
-            isCharging = true;
-            chargeTimer = 0f;
+            StartCharging();
         }
 
-        if (isCharging)
+        if (isCharging && keyboard.spaceKey.wasReleasedThisFrame)
         {
-            if (keyboard.spaceKey.isPressed)
-            {
-                chargeTimer = Mathf.Min(chargeTimer + Time.deltaTime, chargeDuration);
-            }
-
-            if (keyboard.spaceKey.wasReleasedThisFrame)
-            {
-                float charge = CurrentCharge01;
-                float speed = Mathf.Lerp(minLaunchSpeed, maxLaunchSpeed, charge);
-                isCharging = false;
-                chargeTimer = 0f;
-                RequestThrow(speed);
-            }
+            ReleaseChargeAndThrow();
         }
     }
 
@@ -418,7 +487,7 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
 
         float initialAngleDeg = Mathf.Atan2(initialVelocity.y, initialVelocity.x) * Mathf.Rad2Deg;
         Projectile2D prefabProjectile = storedProjectilePrefab.GetComponent<Projectile2D>();
-        Quaternion initialRotation = prefabProjectile.ImpactType == ProjectileImpactType.ClubBomb
+        Quaternion initialRotation = (prefabProjectile.ImpactType == ProjectileImpactType.ClubBomb || prefabProjectile.ImpactType == ProjectileImpactType.OilJar)
             ? Quaternion.identity : Quaternion.Euler(0f, 0f, initialAngleDeg);
 
         GameObject projectileObject = Instantiate(storedProjectilePrefab, spawnWorldPosition, initialRotation);
@@ -492,7 +561,10 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
         }
         finally
         {
-            if (cameraController != null)
+            // When turnManager is active, Level01TurnManager controls camera transitions between turns
+            // (e.g. focusing Cyclops during preparation/turn, or focusing defeated actor on battle end).
+            // Only fall back to focusing Achilles if running in standalone debug mode without a turn manager.
+            if (turnManager == null && cameraController != null)
             {
                 if (projectile != null && projectile.LastCompletionReason == ProjectileCompletionReason.TerrainImpact)
                     cameraController.NotifyProjectileEnded(transform);
@@ -511,6 +583,7 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
 
         isCharging = false;
         chargeTimer = 0f;
+        externalAimInput = 0f;
     }
 
     private void OnDestroy()

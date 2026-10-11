@@ -20,6 +20,8 @@ public sealed class GroundedActorMotor2D : MonoBehaviour
     [SerializeField, Min(0f)] private float acceleration = 18f;
     [SerializeField, Min(0f)] private float deceleration = 24f;
     [SerializeField] private bool movementEnabled = true;
+    [Tooltip("True if source sprite artwork natively faces left when un-flipped (e.g. Cyclops). False if it natively faces right (e.g. Achilles).")]
+    [SerializeField] private bool spriteFacesLeftByDefault;
 
     [Header("Locomotion Animation (Actual Displacement)")]
     [SerializeField, Min(0.001f)] private float runEnterSpeed = 0.15f;
@@ -86,6 +88,11 @@ public sealed class GroundedActorMotor2D : MonoBehaviour
 
     public bool IsGrounded { get; private set; }
     public int FacingDirection => facingDirection;
+    public bool SpriteFacesLeftByDefault
+    {
+        get => spriteFacesLeftByDefault;
+        set => spriteFacesLeftByDefault = value;
+    }
 
     private void Awake() => Initialize();
     private void OnEnable() => Initialize();
@@ -309,7 +316,9 @@ public sealed class GroundedActorMotor2D : MonoBehaviour
         terrainFilter = new ContactFilter2D();
         terrainFilter.SetLayerMask(terrainLayers);
         terrainFilter.useTriggers = false;
-        facingDirection = visualRenderer != null && visualRenderer.flipX ? -1 : 1;
+        facingDirection = spriteFacesLeftByDefault
+            ? (visualRenderer != null && visualRenderer.flipX ? 1 : -1)
+            : (visualRenderer != null && visualRenderer.flipX ? -1 : 1);
         hasSpeedParameter = AnimatorHasSpeedParameter(animator);
         initialized = body != null && bodyCollider != null;
     }
@@ -592,11 +601,11 @@ public sealed class GroundedActorMotor2D : MonoBehaviour
                (terrainLayers.value & (1 << hit.collider.gameObject.layer)) != 0;
     }
 
-    private void SetFacing(int direction)
+    public void SetFacing(int direction)
     {
         facingDirection = direction >= 0 ? 1 : -1;
         if (visualRenderer != null)
-            visualRenderer.flipX = facingDirection < 0;
+            visualRenderer.flipX = spriteFacesLeftByDefault ? (facingDirection > 0) : (facingDirection < 0);
     }
 
     private float RequiredGroundNormalY => Mathf.Max(

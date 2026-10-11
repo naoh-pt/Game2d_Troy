@@ -1,0 +1,899 @@
+fileFormatVersion: 2
+guid: 8aeb63730afbf124ea9de76dbf2b8ad7
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6736248082148511609
+    second: SPR_UI_AimPanel_0
+  - first:
+      213: 2746805626538962293
+    second: SPR_UI_AimPanel_1
+  - first:
+      213: 3089595522991670167
+    second: SPR_UI_AimPanel_2
+  - first:
+      213: -8183833432661534908
+    second: SPR_UI_AimPanel_3
+  - first:
+      213: 6326625165377667350
+    second: SPR_UI_AimPanel_4
+  - first:
+      213: 2485676158544742498
+    second: SPR_UI_AimPanel_5
+  - first:
+      213: 4347434482521061278
+    second: SPR_UI_AimPanel_6
+  - first:
+      213: 335417115390158612
+    second: SPR_UI_AimPanel_7
+  - first:
+      213: 8207949034717312133
+    second: SPR_UI_AimPanel_8
+  - first:
+      213: -6031594413313699345
+    second: SPR_UI_AimPanel_9
+  - first:
+      213: -1254870444776656509
+    second: SPR_UI_AimPanel_10
+  - first:
+      213: -1819365199993284767
+    second: SPR_UI_AimPanel_11
+  - first:
+      213: 2870966462660345497
+    second: SPR_UI_AimPanel_12
+  - first:
+      213: 1760183209323057419
+    second: SPR_UI_AimPanel_13
+  - first:
+      213: -4951430601818859550
+    second: SPR_UI_AimPanel_14
+  - first:
+      213: -6818497560933407106
+    second: SPR_UI_AimPanel_15
+  - first:
+      213: 6784612939338043278
+    second: SPR_UI_AimPanel_16
+  - first:
+      213: 2022177928351666778
+    second: SPR_UI_AimPanel_17
+  - first:
+      213: 7970788375968770458
+    second: SPR_UI_AimPanel_18
+  - first:
+      213: 5261048968052046657
+    second: SPR_UI_AimPanel_19
+  - first:
+      213: 6999488070556419960
+    second: SPR_UI_AimPanel_20
+  - first:
+      213: 2056213585685221247
+    second: SPR_UI_AimPanel_21
+  - first:
+      213: 8912531840499671715
+    second: SPR_UI_AimPanel_22
+  - first:
+      213: -1581158349153349101
+    second: SPR_UI_AimPanel_23
+  - first:
+      213: -6472583563816748781
+    second: SPR_UI_AimPanel_24
+  - first:
+      213: 1513985635029707138
+    second: SPR_UI_AimPanel_25
+  - first:
+      213: 8468257444393988135
+    second: SPR_UI_AimPanel_26
+  - first:
+      213: -2223445979174217729
+    second: SPR_UI_AimPanel_27
+  - first:
+      213: -5811847496691679522
+    second: SPR_UI_AimPanel_28
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: SPR_UI_AimPanel_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1794
+        height: 864
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 780b1a83f0a0482a0800000000000000
+      internalID: -6736248082148511609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_UI_AimPanel_1
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 845
+        width: 6
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57d26e40a2d9e1620800000000000000
+      internalID: 2746805626538962293
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_UI_AimPanel_2
+      rect:
+        serializedVersion: 2
+        x: 233
+        y: 847
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7934e8f32c270ea20800000000000000
+      internalID: 3089595522991670167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_UI_AimPanel_3
+      rect:
+        serializedVersion: 2
+        x: 815
+        y: 114
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4475e315ade2d6e80800000000000000
+      internalID: -8183833432661534908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_UI_AimPanel_4
+      rect:
+        serializedVersion: 2
+        x: 1214
+        y: 120
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61102696110bcc750800000000000000
+      internalID: 6326625165377667350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_UI_AimPanel_5
+      rect:
+        serializedVersion: 2
+        x: 811
+        y: 94
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26887b8eb45ee7220800000000000000
+      internalID: 2485676158544742498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_UI_AimPanel_6
+      rect:
+        serializedVersion: 2
+        x: 813
+        y: 89
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e97b3fec0a0355c30800000000000000
+      internalID: 4347434482521061278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_UI_AimPanel_7
+      rect:
+        serializedVersion: 2
+        x: 1160
+        y: 93
+        width: 15
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 417aa6ed614a7a400800000000000000
+      internalID: 335417115390158612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_UI_AimPanel_8
+      rect:
+        serializedVersion: 2
+        x: 942
+        y: 64
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 584f5d4d82e78e170800000000000000
+      internalID: 8207949034717312133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_UI_AimPanel_9
+      rect:
+        serializedVersion: 2
+        x: 1286
+        y: 68
+        width: 12
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe1d43d76d87b4ca0800000000000000
+      internalID: -6031594413313699345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_UI_AimPanel_10
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 51
+        width: 9
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 38173f3aafdc59ee0800000000000000
+      internalID: -1254870444776656509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_UI_AimPanel_11
+      rect:
+        serializedVersion: 2
+        x: 298
+        y: 49
+        width: 7
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16751b17df050c6e0800000000000000
+      internalID: -1819365199993284767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_UI_AimPanel_12
+      rect:
+        serializedVersion: 2
+        x: 958
+        y: 55
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 99efde869c8b7d720800000000000000
+      internalID: 2870966462660345497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_UI_AimPanel_13
+      rect:
+        serializedVersion: 2
+        x: 964
+        y: 58
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b01de439d4d6d6810800000000000000
+      internalID: 1760183209323057419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_UI_AimPanel_14
+      rect:
+        serializedVersion: 2
+        x: 368
+        y: 39
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e79698f91cf84bb0800000000000000
+      internalID: -4951430601818859550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_UI_AimPanel_15
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 45
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e7662b22894df51a0800000000000000
+      internalID: -6818497560933407106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_UI_AimPanel_16
+      rect:
+        serializedVersion: 2
+        x: 824
+        y: 49
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8f43cb9589c72e50800000000000000
+      internalID: 6784612939338043278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_UI_AimPanel_17
+      rect:
+        serializedVersion: 2
+        x: 1343
+        y: 47
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a525904ac18301c10800000000000000
+      internalID: 2022177928351666778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_UI_AimPanel_18
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 37
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a996e610ccded9e60800000000000000
+      internalID: 7970788375968770458
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_UI_AimPanel_19
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 31
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14b7da68920030940800000000000000
+      internalID: 5261048968052046657
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_UI_AimPanel_20
+      rect:
+        serializedVersion: 2
+        x: 362
+        y: 41
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8778917b05d232160800000000000000
+      internalID: 6999488070556419960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_UI_AimPanel_21
+      rect:
+        serializedVersion: 2
+        x: 1496
+        y: 13
+        width: 21
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7f8915ac53298c10800000000000000
+      internalID: 2056213585685221247
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_UI_AimPanel_22
+      rect:
+        serializedVersion: 2
+        x: 1631
+        y: 33
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a267520d7cafab70800000000000000
+      internalID: 8912531840499671715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_UI_AimPanel_23
+      rect:
+        serializedVersion: 2
+        x: 1264
+        y: 31
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3125219dbd89e0ae0800000000000000
+      internalID: -1581158349153349101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_UI_AimPanel_24
+      rect:
+        serializedVersion: 2
+        x: 1427
+        y: 18
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 319bbabba83cc26a0800000000000000
+      internalID: -6472583563816748781
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_UI_AimPanel_25
+      rect:
+        serializedVersion: 2
+        x: 1447
+        y: 0
+        width: 50
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2896df2e9e1c20510800000000000000
+      internalID: 1513985635029707138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_UI_AimPanel_26
+      rect:
+        serializedVersion: 2
+        x: 1641
+        y: 29
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72039a7674b458570800000000000000
+      internalID: 8468257444393988135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_UI_AimPanel_27
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 15
+        width: 14
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff7dc0a89abb421e0800000000000000
+      internalID: -2223445979174217729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_UI_AimPanel_28
+      rect:
+        serializedVersion: 2
+        x: 362
+        y: 16
+        width: 11
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: edef2f68e7b285fa0800000000000000
+      internalID: -5811847496691679522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      SPR_UI_AimPanel_0: -6736248082148511609
+      SPR_UI_AimPanel_1: 2746805626538962293
+      SPR_UI_AimPanel_10: -1254870444776656509
+      SPR_UI_AimPanel_11: -1819365199993284767
+      SPR_UI_AimPanel_12: 2870966462660345497
+      SPR_UI_AimPanel_13: 1760183209323057419
+      SPR_UI_AimPanel_14: -4951430601818859550
+      SPR_UI_AimPanel_15: -6818497560933407106
+      SPR_UI_AimPanel_16: 6784612939338043278
+      SPR_UI_AimPanel_17: 2022177928351666778
+      SPR_UI_AimPanel_18: 7970788375968770458
+      SPR_UI_AimPanel_19: 5261048968052046657
+      SPR_UI_AimPanel_2: 3089595522991670167
+      SPR_UI_AimPanel_20: 6999488070556419960
+      SPR_UI_AimPanel_21: 2056213585685221247
+      SPR_UI_AimPanel_22: 8912531840499671715
+      SPR_UI_AimPanel_23: -1581158349153349101
+      SPR_UI_AimPanel_24: -6472583563816748781
+      SPR_UI_AimPanel_25: 1513985635029707138
+      SPR_UI_AimPanel_26: 8468257444393988135
+      SPR_UI_AimPanel_27: -2223445979174217729
+      SPR_UI_AimPanel_28: -5811847496691679522
+      SPR_UI_AimPanel_3: -8183833432661534908
+      SPR_UI_AimPanel_4: 6326625165377667350
+      SPR_UI_AimPanel_5: 2485676158544742498
+      SPR_UI_AimPanel_6: 4347434482521061278
+      SPR_UI_AimPanel_7: 335417115390158612
+      SPR_UI_AimPanel_8: 8207949034717312133
+      SPR_UI_AimPanel_9: -6031594413313699345
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
