@@ -11,5 +11,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/AttackOnTroy/Scenes/Levels/Level01_Beach/SCN_Level01_Beach.unity
     guid: 314f963807cfc2c43a975f9eb26d518e
+  - enabled: 1
+    path: Assets/AttackOnTroy/Scenes/Levels/Level02_Scamander/SCN_Level02_Scamander.unity
+    guid: 6fdfc390728c475ca11a369ca718b1e8
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

@@ -5,22 +5,36 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /// <summary>
-/// Screen HUD component managing player (Achilles) and enemy (Cyclops Normal) health bars,
-/// numeric current/max HP labels, and the post-battle Victory/Defeat result panel with Restart.
-/// Built using standard Unity UI Image components and the existing Greek TMP font.
+/// Screen HUD component managing player and enemy health bars,
+/// numeric HP/SP labels, in-game Pause system, and the post-battle Victory/Defeat result panel.
+/// Built using standard Unity UI Image/Button components and the Greek TMP font.
 /// </summary>
 [DisallowMultipleComponent]
 public sealed class Level01BattleUI : MonoBehaviour
 {
-    [Header("Player HP (Achilles)")]
+    [Header("Player HP (Achilles / Odysseus)")]
     [SerializeField] private Image playerHpFill;
     [SerializeField] private TextMeshProUGUI playerHpText;
     [SerializeField] private TextMeshProUGUI playerNameText;
+
+    [Header("Player Energy (SP)")]
+    [SerializeField] private Image playerEnergyFill;
+    [SerializeField] private TextMeshProUGUI playerEnergyText;
+    [SerializeField] private PlayerEnergySystem energySystem;
 
     [Header("Enemy HP (Cyclops)")]
     [SerializeField] private Image cyclopsHpFill;
     [SerializeField] private TextMeshProUGUI cyclopsHpText;
     [SerializeField] private TextMeshProUGUI cyclopsNameText;
+
+    [Header("HUD Pause Button")]
+    [SerializeField] private Button pauseButton;
+
+    [Header("Pause Panel")]
+    [SerializeField] private GameObject pausePanel;
+    [SerializeField] private Button resumeButton;
+    [SerializeField] private Button pauseRestartButton;
+    [SerializeField] private Button pauseHomeButton;
 
     [Header("Battle Result Panel")]
     [SerializeField] private GameObject resultPanel;
@@ -28,30 +42,55 @@ public sealed class Level01BattleUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI resultSubtitleText;
     [SerializeField] private Button restartButton;
     [SerializeField] private TextMeshProUGUI restartButtonText;
+    [SerializeField] private Button nextLevelButton;
+    [SerializeField] private Button homeButton;
 
     [Header("Font Reference")]
     [SerializeField] private TMP_FontAsset fontAsset;
 
     private static Sprite cachedWhiteSprite;
+    private bool isPaused;
 
     public Image PlayerHpFill => playerHpFill;
     public TextMeshProUGUI PlayerHpText => playerHpText;
     public Image CyclopsHpFill => cyclopsHpFill;
     public TextMeshProUGUI CyclopsHpText => cyclopsHpText;
     public GameObject ResultPanel => resultPanel;
+    public GameObject PausePanel => pausePanel;
+    public Button PauseButton => pauseButton;
+    public Button NextLevelButton => nextLevelButton;
+    public Button HomeButton => homeButton;
+    public bool IsPaused => isPaused;
+    public static bool IsGamePaused { get; private set; }
 
     private void Awake()
     {
         EnsureEventSystemExists();
-        if (playerHpFill == null || cyclopsHpFill == null || resultPanel == null)
-        {
-            TryAutoFindReferences();
-        }
+        Time.timeScale = 1f;
+        isPaused = false;
+        IsGamePaused = false;
+
+        TryAutoFindReferences();
         EnsureFillSprites();
-        HookRestartButton();
+        HookAllButtons();
+
+        if (energySystem == null)
+            energySystem = FindAnyObjectByType<PlayerEnergySystem>();
+        if (energySystem != null)
+            SetEnergySystem(energySystem);
+
         if (resultPanel != null)
-        {
             resultPanel.SetActive(false);
+        if (pausePanel != null)
+            pausePanel.SetActive(false);
+    }
+
+    private void Update()
+    {
+        var keyboard = UnityEngine.InputSystem.Keyboard.current;
+        if (keyboard != null && (keyboard.escapeKey.wasPressedThisFrame || keyboard.pKey.wasPressedThisFrame))
+        {
+            TogglePause();
         }
     }
 
@@ -97,6 +136,41 @@ public sealed class Level01BattleUI : MonoBehaviour
             }
         }
 
+        if (pauseButton == null)
+        {
+            Transform pbTr = transform.Find("ButtonPause");
+            if (pbTr == null && transform.parent != null) pbTr = transform.parent.Find("ButtonPause");
+            if (pbTr != null) pauseButton = pbTr.GetComponent<Button>();
+        }
+
+        if (pausePanel == null)
+        {
+            Transform ppTr = transform.Find("PausePanel");
+            if (ppTr == null && transform.parent != null) ppTr = transform.parent.Find("PausePanel");
+            if (ppTr != null) pausePanel = ppTr.gameObject;
+        }
+
+        if (pausePanel != null)
+        {
+            Transform dialog = pausePanel.transform.Find("DialogFrame");
+            Transform targetRoot = dialog != null ? dialog : pausePanel.transform;
+            if (resumeButton == null)
+            {
+                Transform btn = targetRoot.Find("ResumeButton");
+                if (btn != null) resumeButton = btn.GetComponent<Button>();
+            }
+            if (pauseRestartButton == null)
+            {
+                Transform btn = targetRoot.Find("RestartButton");
+                if (btn != null) pauseRestartButton = btn.GetComponent<Button>();
+            }
+            if (pauseHomeButton == null)
+            {
+                Transform btn = targetRoot.Find("HomeButton");
+                if (btn != null) pauseHomeButton = btn.GetComponent<Button>();
+            }
+        }
+
         Transform rPanel = transform.Find("ResultPanel");
         if (rPanel != null)
         {
@@ -115,6 +189,16 @@ public sealed class Level01BattleUI : MonoBehaviour
             {
                 Transform btnTr = rPanel.Find("RestartButton");
                 if (btnTr != null) restartButton = btnTr.GetComponent<Button>();
+            }
+            if (homeButton == null)
+            {
+                Transform btnTr = rPanel.Find("HomeButton");
+                if (btnTr != null) homeButton = btnTr.GetComponent<Button>();
+            }
+            if (nextLevelButton == null)
+            {
+                Transform btnTr = rPanel.Find("NextLevelButton");
+                if (btnTr != null) nextLevelButton = btnTr.GetComponent<Button>();
             }
         }
     }
@@ -153,12 +237,12 @@ public sealed class Level01BattleUI : MonoBehaviour
             fontAsset = font;
 
         EnsureFillSprites();
-        HookRestartButton();
+        HookAllButtons();
 
         if (resultPanel != null)
-        {
             resultPanel.SetActive(false);
-        }
+        if (pausePanel != null)
+            pausePanel.SetActive(false);
     }
 
     public void UpdatePlayerHealth(float current, float max)
@@ -195,6 +279,40 @@ public sealed class Level01BattleUI : MonoBehaviour
         }
     }
 
+    public void SetEnergySystem(PlayerEnergySystem system)
+    {
+        if (energySystem != null)
+        {
+            energySystem.EnergyChanged -= UpdatePlayerEnergy;
+        }
+
+        energySystem = system;
+
+        if (energySystem != null)
+        {
+            energySystem.EnergyChanged -= UpdatePlayerEnergy;
+            energySystem.EnergyChanged += UpdatePlayerEnergy;
+            UpdatePlayerEnergy(energySystem.CurrentEnergy, energySystem.MaxEnergy);
+        }
+    }
+
+    public void UpdatePlayerEnergy(float current, float max)
+    {
+        float clampedCurrent = Mathf.Max(0f, current);
+        float clampedMax = Mathf.Max(1f, max);
+        float fill01 = Mathf.Clamp01(clampedCurrent / clampedMax);
+
+        if (playerEnergyFill != null)
+        {
+            playerEnergyFill.fillAmount = fill01;
+        }
+
+        if (playerEnergyText != null)
+        {
+            playerEnergyText.text = $"SP: {Mathf.RoundToInt(clampedCurrent)} / {Mathf.RoundToInt(clampedMax)}";
+        }
+    }
+
     public void SetPlayerName(string heroName)
     {
         if (playerNameText != null)
@@ -202,6 +320,89 @@ public sealed class Level01BattleUI : MonoBehaviour
             playerNameText.text = heroName;
         }
     }
+
+    #region Pause Management
+    public void TogglePause()
+    {
+        if (isPaused)
+            ResumeGame();
+        else
+            PauseGame();
+    }
+
+    public void PauseGame()
+    {
+        Level01TurnManager tm = FindAnyObjectByType<Level01TurnManager>();
+        if ((tm != null && tm.IsBattleOver) || (resultPanel != null && resultPanel.activeSelf))
+            return;
+
+        isPaused = true;
+        IsGamePaused = true;
+        Time.timeScale = 0f;
+
+        if (pausePanel != null)
+            pausePanel.SetActive(true);
+
+        PlayerMovementDebugInput playerInput = FindAnyObjectByType<PlayerMovementDebugInput>();
+        if (playerInput != null)
+            playerInput.ClearInput();
+
+        Level01TouchControls touchControls = FindAnyObjectByType<Level01TouchControls>();
+        if (touchControls != null)
+            touchControls.ClearAllHeldInputs();
+
+        Debug.Log("[Level01BattleUI] Game PAUSED.");
+    }
+
+    public void ResumeGame()
+    {
+        isPaused = false;
+        IsGamePaused = false;
+        Time.timeScale = 1f;
+
+        if (pausePanel != null)
+            pausePanel.SetActive(false);
+
+        Debug.Log("[Level01BattleUI] Game RESUMED.");
+    }
+    #endregion
+
+    #region Navigation & Scene Routing
+    public void RestartCurrentBattle()
+    {
+        Time.timeScale = 1f;
+        isPaused = false;
+        IsGamePaused = false;
+        Debug.Log($"[Level01BattleUI] Reloading Level 01 for {BattleSessionData.SelectedHero}...");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void ReturnToHome()
+    {
+        Time.timeScale = 1f;
+        isPaused = false;
+        IsGamePaused = false;
+        BattleSessionData.ReturnToCharacterSelect = false;
+        BattleSessionData.ReturnToLevelSelect = false;
+        Debug.Log("[Level01BattleUI] Returning to Home screen...");
+        SceneManager.LoadScene(0); // Load SCN_Home
+    }
+
+    public void GoToNextLevel()
+    {
+        Time.timeScale = 1f;
+        isPaused = false;
+        IsGamePaused = false;
+        BattleSessionData.ReturnToLevelSelect = true;
+        Debug.Log("[Level01BattleUI] Progressing to Level Select...");
+        SceneManager.LoadScene(0); // Load SCN_Home with Level Select active
+    }
+
+    public void RestartBattle()
+    {
+        RestartCurrentBattle();
+    }
+    #endregion
 
     public void ShowResult(bool isWin)
     {
@@ -211,6 +412,12 @@ public sealed class Level01BattleUI : MonoBehaviour
 
     public void ShowResult(bool isWin, string heroName)
     {
+        if (isPaused)
+            ResumeGame();
+
+        if (pauseButton != null)
+            pauseButton.gameObject.SetActive(false);
+
         if (resultPanel != null)
         {
             resultPanel.SetActive(true);
@@ -226,44 +433,50 @@ public sealed class Level01BattleUI : MonoBehaviour
 
         if (resultSubtitleText != null)
         {
+            string enemyName = cyclopsNameText != null && !string.IsNullOrEmpty(cyclopsNameText.text)
+                ? cyclopsNameText.text
+                : "Cyclops";
             resultSubtitleText.text = isWin
-                ? "Cyclops Normal Defeated!"
+                ? $"{enemyName} Defeated!"
                 : $"{heroName} Has Fallen!";
+        }
+
+        if (nextLevelButton != null)
+        {
+            nextLevelButton.gameObject.SetActive(isWin);
         }
     }
 
-    public void RestartBattle()
+    private void HookAllButtons()
     {
-        Time.timeScale = 1f;
-        // On Restart, return to Character Select with the previous choice highlighted.
-        BattleSessionData.ReturnToCharacterSelect = true;
-        SceneManager.LoadScene(0); // Load SCN_Home
+        HookButton(pauseButton, TogglePause);
+        HookButton(resumeButton, ResumeGame);
+        HookButton(pauseRestartButton, RestartCurrentBattle);
+        HookButton(pauseHomeButton, ReturnToHome);
+
+        HookButton(restartButton, RestartCurrentBattle);
+        HookButton(homeButton, ReturnToHome);
+        HookButton(nextLevelButton, GoToNextLevel);
     }
 
-    private void HookRestartButton()
+    private void HookButton(Button btn, UnityEngine.Events.UnityAction action)
     {
-        if (restartButton != null)
+        if (btn == null) return;
+
+        btn.onClick.RemoveListener(action);
+        btn.onClick.AddListener(action);
+
+        Image btnImg = btn.GetComponent<Image>();
+        if (btnImg != null)
         {
-            restartButton.onClick.RemoveListener(RestartBattle);
-            restartButton.onClick.AddListener(RestartBattle);
+            btn.targetGraphic = btnImg;
+            btnImg.raycastTarget = true;
+        }
 
-            Image btnImg = restartButton.GetComponent<Image>();
-            if (btnImg != null)
-            {
-                restartButton.targetGraphic = btnImg;
-                btnImg.raycastTarget = true;
-            }
-
-            if (restartButtonText != null)
-            {
-                restartButtonText.raycastTarget = false;
-            }
-            else
-            {
-                var textChild = restartButton.GetComponentInChildren<TextMeshProUGUI>();
-                if (textChild != null)
-                    textChild.raycastTarget = false;
-            }
+        var textChildren = btn.GetComponentsInChildren<TextMeshProUGUI>();
+        foreach (var t in textChildren)
+        {
+            t.raycastTarget = false;
         }
     }
 
@@ -306,5 +519,11 @@ public sealed class Level01BattleUI : MonoBehaviour
             cachedWhiteSprite = Sprite.Create(tex, new Rect(0, 0, 4, 4), new Vector2(0.5f, 0.5f), 100f);
         }
         return cachedWhiteSprite;
+    }
+
+    private void OnDestroy()
+    {
+        if (energySystem != null)
+            energySystem.EnergyChanged -= UpdatePlayerEnergy;
     }
 }

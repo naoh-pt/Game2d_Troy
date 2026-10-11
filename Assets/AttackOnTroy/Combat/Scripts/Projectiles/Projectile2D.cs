@@ -74,6 +74,8 @@ public sealed class Projectile2D : MonoBehaviour
     public bool IsResolving => isResolving;
     public ProjectileImpactType ImpactType => impactType;
     public ProjectileCompletionReason LastCompletionReason { get; private set; }
+    public Collider2D OwnerCollider { get; private set; }
+    public GameObject Owner => OwnerCollider != null ? OwnerCollider.gameObject : null;
 
     private void Awake() => InitializeComponents();
 
@@ -124,6 +126,7 @@ public sealed class Projectile2D : MonoBehaviour
             hasCachedBounds = true;
         }
         if (terrain != null) terrainTarget = terrain;
+        OwnerCollider = ownerCollider;
         if (ownerCollider != null)
         {
             Collider2D[] ownerColliders = ownerCollider.GetComponentsInChildren<Collider2D>();
@@ -330,6 +333,7 @@ public sealed class Projectile2D : MonoBehaviour
             FirePatch2D fire = patch.GetComponent<FirePatch2D>();
             if (fire != null)
             {
+                fire.Initialize(Owner);
                 fire.SnapToGround();
             }
         }
@@ -411,7 +415,8 @@ public sealed class Projectile2D : MonoBehaviour
     private void ApplyDamageSafely(IDamageable2D recipient, float amount, Vector2 point)
     {
         if (recipient == null || (recipient is UnityEngine.Object target && target == null)) return;
-        try { recipient.ApplyDamage(amount, point, gameObject); }
+        GameObject source = Owner != null ? Owner : gameObject;
+        try { recipient.ApplyDamage(amount, point, source); }
         catch (Exception exception) { Debug.LogException(exception, this); }
     }
 

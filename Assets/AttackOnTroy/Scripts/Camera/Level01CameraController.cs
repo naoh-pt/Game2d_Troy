@@ -61,6 +61,8 @@ public sealed class Level01CameraController : MonoBehaviour
     private bool holdingImpactPosition;
     private float impactHoldRemaining;
     private Transform impactFallbackActor;
+    private Transform projectileTargetA;
+    private Transform projectileTargetB;
 
     private bool mouseDragging;
     private Vector2 previousMousePosition;
@@ -143,6 +145,9 @@ public sealed class Level01CameraController : MonoBehaviour
 
     public void FollowProjectile(Transform projectile)
     {
+        projectileTargetA = projectile;
+        projectileTargetB = null;
+
         if (projectile == null)
         {
             ReturnToFallbackActor();
@@ -150,6 +155,25 @@ public sealed class Level01CameraController : MonoBehaviour
         }
 
         BeginTargetMode(projectile, Level01CameraMode.FollowProjectile, false);
+    }
+
+    /// <summary>
+    /// Follows two simultaneous projectiles, tracking their midpoint while both exist,
+    /// then seamlessly continuing to track the remaining one when one finishes.
+    /// </summary>
+    public void FollowProjectiles(Transform projectileA, Transform projectileB)
+    {
+        projectileTargetA = projectileA;
+        projectileTargetB = projectileB;
+
+        if (projectileA == null && projectileB == null)
+        {
+            ReturnToFallbackActor();
+            return;
+        }
+
+        Transform initialTarget = projectileA != null ? projectileA : projectileB;
+        BeginTargetMode(initialTarget, Level01CameraMode.FollowProjectile, false);
     }
 
     /// <summary>Holds the last projectile position, then blends to the override or configured fallback.</summary>
@@ -165,6 +189,8 @@ public sealed class Level01CameraController : MonoBehaviour
         holdingImpactPosition = impactHoldDuration > 0f;
         impactHoldRemaining = impactHoldDuration;
         impactFallbackActor = fallbackActorOverride != null ? fallbackActorOverride : fallbackActor;
+        projectileTargetA = null;
+        projectileTargetB = null;
         currentMode = Level01CameraMode.FollowProjectile;
         transitionElapsed = 0f;
         movementVelocity = Vector3.zero;
@@ -177,6 +203,8 @@ public sealed class Level01CameraController : MonoBehaviour
     {
         currentMode = Level01CameraMode.Manual;
         currentTarget = null;
+        projectileTargetA = null;
+        projectileTargetB = null;
         holdingImpactPosition = false;
         impactHoldRemaining = 0f;
         impactFallbackActor = null;
@@ -222,8 +250,41 @@ public sealed class Level01CameraController : MonoBehaviour
             return;
         }
 
-        if (!holdingImpactPosition && currentTarget != null)
-            targetPosition = GetTargetPosition(currentTarget, currentMode == Level01CameraMode.FollowActor);
+        if (!holdingImpactPosition)
+        {
+            if (currentMode == Level01CameraMode.FollowProjectile)
+            {
+                bool hasA = projectileTargetA != null && projectileTargetA.gameObject.activeInHierarchy;
+                bool hasB = projectileTargetB != null && projectileTargetB.gameObject.activeInHierarchy;
+
+                if (hasA && hasB)
+                {
+                    targetPosition = (projectileTargetA.position + projectileTargetB.position) * 0.5f;
+                    targetPosition.z = transform.position.z;
+                }
+                else if (hasA)
+                {
+                    currentTarget = projectileTargetA;
+                    targetPosition = projectileTargetA.position;
+                    targetPosition.z = transform.position.z;
+                }
+                else if (hasB)
+                {
+                    currentTarget = projectileTargetB;
+                    targetPosition = projectileTargetB.position;
+                    targetPosition.z = transform.position.z;
+                }
+                else if (currentTarget != null)
+                {
+                    targetPosition = currentTarget.position;
+                    targetPosition.z = transform.position.z;
+                }
+            }
+            else if (currentTarget != null)
+            {
+                targetPosition = GetTargetPosition(currentTarget, currentMode == Level01CameraMode.FollowActor);
+            }
+        }
 
         targetPosition = ClampToBounds(targetPosition, controlledCamera.orthographicSize);
         float smoothTime = GetCurrentMovementSmoothTime();
@@ -289,8 +350,20 @@ public sealed class Level01CameraController : MonoBehaviour
         bool needsTarget = currentMode == Level01CameraMode.Transition ||
             (currentMode == Level01CameraMode.FollowActor && !holdingImpactPosition) ||
             (currentMode == Level01CameraMode.FollowProjectile && !holdingImpactPosition);
-        if (needsTarget && currentTarget == null)
-            ReturnToFallbackActor();
+        if (needsTarget)
+        {
+            if (currentMode == Level01CameraMode.FollowProjectile)
+            {
+                bool hasA = projectileTargetA != null && projectileTargetA.gameObject.activeInHierarchy;
+                bool hasB = projectileTargetB != null && projectileTargetB.gameObject.activeInHierarchy;
+                if (!hasA && !hasB && currentTarget == null)
+                    ReturnToFallbackActor();
+            }
+            else if (currentTarget == null)
+            {
+                ReturnToFallbackActor();
+            }
+        }
     }
 
     private void UpdateImpactHold(float deltaTime)

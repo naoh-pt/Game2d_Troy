@@ -28,6 +28,12 @@ public sealed class PlayerMovementDebugInput : MonoBehaviour
 
     private void Update()
     {
+        if (Time.timeScale <= 0f)
+        {
+            ClearInput();
+            return;
+        }
+
         float keyboardInput = 0f;
         Keyboard keyboard = Keyboard.current;
         if (debugInputEnabled && keyboard != null)

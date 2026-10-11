@@ -24,6 +24,7 @@ public sealed class Level01HeroManager : MonoBehaviour
     [SerializeField] private Level01BattleUI battleUI;
     [SerializeField] private ProjectileAimHUD aimHUD;
     [SerializeField] private AimGuideRenderer aimGuide;
+    [SerializeField] private PlayerEnergySystem energySystem;
 
     public GameObject AchillesRoot => achillesRoot;
     public GameObject OdysseusRoot => odysseusRoot;
@@ -121,6 +122,15 @@ public sealed class Level01HeroManager : MonoBehaviour
             {
                 battleUI.UpdatePlayerHealth(damage.CurrentHealth, damage.MaximumHealth);
             }
+        }
+
+        if (energySystem == null)
+            energySystem = FindAnyObjectByType<PlayerEnergySystem>();
+
+        if (energySystem != null)
+        {
+            energySystem.SetPlayer(damage, launcher);
+            energySystem.ResetEnergy();
         }
 
         Debug.Log($"[Level01HeroManager] Selected hero: {(isOdysseus ? "Odysseus" : "Achilles")} initialized successfully.");

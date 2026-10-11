@@ -12,6 +12,7 @@ public static class BattleSessionData
 
     private static string selectedHero;
     private static bool returnToCharacterSelect;
+    private static bool returnToLevelSelect;
 
     public static string SelectedHero
     {
@@ -35,6 +36,12 @@ public static class BattleSessionData
     {
         get => returnToCharacterSelect;
         set => returnToCharacterSelect = value;
+    }
+
+    public static bool ReturnToLevelSelect
+    {
+        get => returnToLevelSelect;
+        set => returnToLevelSelect = value;
     }
 
     public static bool IsOdysseus => SelectedHero == HeroOdysseus;

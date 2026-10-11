@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45351e6359684edba03efc507976cc0a, type: 3}
+  m_Name: SO_Dialogue_Level02_Scamander
+  m_EditorClassIdentifier: Assembly-CSharp::LevelDialogueData
+  achillesOpeningLines:
+  - speakerName: Achilles
+    text: The river Scamander runs red! Stand aside, armored giant, or be washed away into the sea!
+    speakerColor: {r: 1, g: 0.85, b: 0.2, a: 1}
+  - speakerName: Cyclops Heavy
+    text: ROAARR! I am the Iron Breaker of the Scamander! Your spear cannot pierce my thick hide!
+    speakerColor: {r: 0.95, g: 0.35, b: 0.25, a: 1}
+  - speakerName: Achilles
+    text: Let us see if your heavy skull can withstand the wrath of Achilles!
+    speakerColor: {r: 1, g: 0.85, b: 0.2, a: 1}
+  odysseusOpeningLines:
+  - speakerName: Odysseus
+    text: The sacred river Scamander... and a behemoth barring the ford. Yield peacefully, titan!
+    speakerColor: {r: 0.4, g: 0.85, b: 0.95, a: 1}
+  - speakerName: Cyclops Heavy
+    text: Foolish archer! Heavy armor laughs at tiny arrows! I will crush you into the river mud!
+    speakerColor: {r: 0.95, g: 0.35, b: 0.25, a: 1}
+  - speakerName: Odysseus
+    text: Heavy armor only means you fall harder. Prepare yourself!
+    speakerColor: {r: 0.4, g: 0.85, b: 0.95, a: 1}
+  enemyEntries:
+  - enemyId: CyclopsHeavy
+    preFirstAttackLines:
+    - speakerName: Cyclops Heavy
+      text: Tremble before my colossal axe! CRUSH!
+      speakerColor: {r: 0.95, g: 0.35, b: 0.25, a: 1}
+    tauntLines:
+    - speakerName: Cyclops Heavy
+      text: Puny scratches! My heavy armor feels nothing!
+      speakerColor: {r: 0.95, g: 0.35, b: 0.25, a: 1}
+    - speakerName: Cyclops Heavy
+      text: The waters of Scamander will drown your broken bones!
+      speakerColor: {r: 0.95, g: 0.35, b: 0.25, a: 1}
+    - speakerName: Cyclops Heavy
+      text: You cannot match brute titan power, Greek!
+      speakerColor: {r: 0.95, g: 0.35, b: 0.25, a: 1}
+    - speakerName: Cyclops Heavy
+      text: Feel the earth shake under my wrath! Take this!
+      speakerColor: {r: 0.95, g: 0.35, b: 0.25, a: 1}
+  achillesVictoryLines:
+  - speakerName: Achilles
+    text: Even the heaviest giant crumbles before my might! The Scamander flows free once more!
+    speakerColor: {r: 1, g: 0.85, b: 0.2, a: 1}
+  odysseusVictoryLines:
+  - speakerName: Odysseus
+    text: Size and armor are nothing against patience and wisdom. The crossing is secured!
+    speakerColor: {r: 0.4, g: 0.85, b: 0.95, a: 1}

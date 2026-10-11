@@ -40,6 +40,7 @@ public sealed class Level01TurnManager : MonoBehaviour
     [SerializeField] private Level01CameraController cameraController;
     [SerializeField] private TextMeshProUGUI turnText;
     [SerializeField] private Level01BattleUI battleUI;
+    [SerializeField] private PlayerEnergySystem energySystem;
 
     [Header("Dialogue System")]
     [SerializeField] private LevelDialogueData dialogueData;
@@ -164,7 +165,7 @@ public sealed class Level01TurnManager : MonoBehaviour
 
     private void Update()
     {
-        if (isBattleOver)
+        if (isBattleOver || Time.timeScale <= 0f)
             return;
 
         switch (currentState)
@@ -471,6 +472,8 @@ public sealed class Level01TurnManager : MonoBehaviour
         // Lock Achilles: aiming, charging, weapon selection, horizontal motor
         if (launcher != null)
             launcher.SetTurnInputEnabled(false);
+        if (energySystem != null && energySystem.IsSpecialArmed)
+            energySystem.CancelSpecial();
         if (playerMotor != null)
         {
             playerMotor.SetMovementEnabled(false);

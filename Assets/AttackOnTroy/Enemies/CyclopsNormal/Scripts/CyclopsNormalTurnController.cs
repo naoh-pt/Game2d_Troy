@@ -367,7 +367,7 @@ public sealed class CyclopsNormalTurnController : MonoBehaviour
 
     private void Update()
     {
-        if (turnManager != null && turnManager.IsBattleOver)
+        if ((turnManager != null && turnManager.IsBattleOver) || Time.timeScale <= 0f)
         {
             if (motor != null)
                 motor.SetMoveInput(0f);

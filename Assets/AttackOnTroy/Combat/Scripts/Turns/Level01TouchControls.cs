@@ -42,6 +42,13 @@ public sealed class Level01TouchControls : MonoBehaviour
     [SerializeField] private Sprite arrowIcon;
     [SerializeField] private Sprite oilJarIcon;
 
+    [Header("Special / Double Shot")]
+    [SerializeField] private Button specialButton;
+    [SerializeField] private TMPro.TextMeshProUGUI specialButtonText;
+    [SerializeField] private Image specialButtonBackground;
+    [SerializeField] private Image specialArmedIndicator;
+    [SerializeField] private PlayerEnergySystem energySystem;
+
     private bool wasPlayerTurn;
     private bool wasCanAim;
 
@@ -166,6 +173,15 @@ public sealed class Level01TouchControls : MonoBehaviour
                 playerMotor = achilles.GetComponent<GroundedActorMotor2D>();
             }
         }
+
+        if (energySystem == null)
+            energySystem = FindAnyObjectByType<PlayerEnergySystem>();
+    }
+
+    public void SetEnergySystem(PlayerEnergySystem system)
+    {
+        energySystem = system;
+        UpdateVisualStates(true);
     }
 
     private void HookButtonEvents()
@@ -212,6 +228,11 @@ public sealed class Level01TouchControls : MonoBehaviour
         {
             weaponBombButton.onClick.AddListener(SelectBomb);
         }
+
+        if (specialButton != null)
+        {
+            specialButton.onClick.AddListener(OnSpecialButtonClicked);
+        }
     }
 
     private void UnhookButtonEvents()
@@ -256,6 +277,11 @@ public sealed class Level01TouchControls : MonoBehaviour
         {
             weaponBombButton.onClick.RemoveListener(SelectBomb);
         }
+
+        if (specialButton != null)
+        {
+            specialButton.onClick.RemoveListener(OnSpecialButtonClicked);
+        }
     }
 
     private void OnDestroy()
@@ -265,6 +291,12 @@ public sealed class Level01TouchControls : MonoBehaviour
 
     private void Update()
     {
+        if (Time.timeScale <= 0f)
+        {
+            ClearAllHeldInputs();
+            return;
+        }
+
         UpdateVisualStates(false);
     }
 
@@ -313,6 +345,50 @@ public sealed class Level01TouchControls : MonoBehaviour
             bool canSelectBomb = canSelectWeapon && launcher.ClubBombPrefab != null;
             if (weaponBombButton != null && weaponBombButton.interactable != canSelectBomb)
                 weaponBombButton.interactable = canSelectBomb;
+        }
+
+        // Special Button Visual Feedback
+        if (specialButton != null && energySystem != null)
+        {
+            bool canUseSpecial = controlsActive && canAim && (energySystem.CanActivateSpecial || energySystem.IsSpecialArmed);
+            if (specialButton.interactable != canUseSpecial)
+                specialButton.interactable = canUseSpecial;
+
+            if (energySystem.IsSpecialArmed)
+            {
+                if (specialButtonText != null)
+                    specialButtonText.text = "CANCEL";
+                if (specialButtonBackground != null)
+                    specialButtonBackground.color = new Color(1.0f, 0.75f, 0.1f, 1.0f); // Bright Gold/Amber
+                if (specialArmedIndicator != null && !specialArmedIndicator.gameObject.activeSelf)
+                    specialArmedIndicator.gameObject.SetActive(true);
+            }
+            else if (energySystem.IsEnergyFull)
+            {
+                if (specialButtonText != null)
+                    specialButtonText.text = "SPECIAL";
+                if (specialButtonBackground != null)
+                    specialButtonBackground.color = new Color(0.15f, 0.85f, 1.0f, 1.0f); // Bright Cyan
+                if (specialArmedIndicator != null && specialArmedIndicator.gameObject.activeSelf)
+                    specialArmedIndicator.gameObject.SetActive(false);
+            }
+            else
+            {
+                if (specialButtonText != null)
+                    specialButtonText.text = $"SP\n{Mathf.RoundToInt(energySystem.CurrentEnergy)}%";
+                if (specialButtonBackground != null)
+                    specialButtonBackground.color = new Color(0.2f, 0.25f, 0.32f, 0.6f); // Dimmed slate
+                if (specialArmedIndicator != null && specialArmedIndicator.gameObject.activeSelf)
+                    specialArmedIndicator.gameObject.SetActive(false);
+            }
+        }
+    }
+
+    private void OnSpecialButtonClicked()
+    {
+        if (energySystem != null)
+        {
+            energySystem.ToggleSpecial();
         }
     }
 

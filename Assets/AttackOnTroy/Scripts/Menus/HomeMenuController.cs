@@ -47,6 +47,7 @@ namespace AttackOnTroy.Menus
 
         [Header("Scene Routing")]
         [SerializeField] private string level01SceneName = "SCN_Level01_Beach";
+        [SerializeField] private string level02SceneName = "SCN_Level02_Scamander";
 
         private MenuScreenState currentState = MenuScreenState.Home;
         private int selectedLevelIndex = 1;
@@ -168,6 +169,11 @@ namespace AttackOnTroy.Menus
                 BattleSessionData.ReturnToCharacterSelect = false;
                 ShowCharacterSelectScreen();
             }
+            else if (BattleSessionData.ReturnToLevelSelect)
+            {
+                BattleSessionData.ReturnToLevelSelect = false;
+                ShowLevelSelectScreen();
+            }
             else
             {
                 ShowHomeScreen();
@@ -204,7 +210,9 @@ namespace AttackOnTroy.Menus
 
             if (level02Button != null)
             {
-                level02Button.interactable = false;
+                level02Button.onClick.RemoveListener(OnLevel02Clicked);
+                level02Button.onClick.AddListener(OnLevel02Clicked);
+                level02Button.interactable = true;
             }
 
             if (level03Button != null)
@@ -294,10 +302,15 @@ namespace AttackOnTroy.Menus
             SelectLevel(1);
         }
 
+        public void OnLevel02Clicked()
+        {
+            SelectLevel(2);
+        }
+
         public void SelectLevel(int levelIndex)
         {
             selectedLevelIndex = levelIndex;
-            if (selectedLevelIndex == 1)
+            if (selectedLevelIndex == 1 || selectedLevelIndex == 2)
             {
                 ShowCharacterSelectScreen();
             }
@@ -344,6 +357,11 @@ namespace AttackOnTroy.Menus
             {
                 Debug.Log($"[HomeMenuController] Loading Level 01: {level01SceneName} with Hero: {BattleSessionData.SelectedHero}");
                 SceneManager.LoadScene(level01SceneName);
+            }
+            else if (selectedLevelIndex == 2)
+            {
+                Debug.Log($"[HomeMenuController] Loading Level 02: {level02SceneName} with Hero: {BattleSessionData.SelectedHero}");
+                SceneManager.LoadScene(level02SceneName);
             }
             else
             {

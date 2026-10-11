@@ -28,6 +28,7 @@ public sealed class FirePatch2D : MonoBehaviour
     private float tickTimer;
     private float animationTimer;
     private int currentFrameIndex;
+    private GameObject owner;
 
     private readonly Collider2D[] overlapBuffer = new Collider2D[32];
     private readonly HashSet<IDamageable2D> uniqueRecipients = new HashSet<IDamageable2D>();
@@ -35,6 +36,12 @@ public sealed class FirePatch2D : MonoBehaviour
     public float Duration => duration;
     public float DamageRadius => damageRadius;
     public float DamagePerTick => damagePerTick;
+    public GameObject Owner => owner;
+
+    public void Initialize(GameObject patchOwner)
+    {
+        owner = patchOwner;
+    }
 
     private void Awake()
     {
@@ -115,7 +122,7 @@ public sealed class FirePatch2D : MonoBehaviour
         {
             try
             {
-                target.ApplyDamage(damagePerTick, transform.position, gameObject);
+                target.ApplyDamage(damagePerTick, transform.position, owner != null ? owner : gameObject);
             }
             catch (Exception ex)
             {

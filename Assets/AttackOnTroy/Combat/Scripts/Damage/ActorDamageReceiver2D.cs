@@ -10,6 +10,8 @@ using UnityEngine;
 public sealed class ActorDamageReceiver2D : MonoBehaviour, IDamageable2D
 {
     [SerializeField, Min(1f)] private float maximumHealth = 100f;
+    [Tooltip("Multiplier applied to incoming damage (e.g. 0.8 for 20% damage reduction, 1.0 for normal).")]
+    [SerializeField, Min(0.1f)] private float damageMultiplier = 1.0f;
     [SerializeField] private bool logDamage;
 
     [Header("Animation Feedback")]
@@ -24,6 +26,11 @@ public sealed class ActorDamageReceiver2D : MonoBehaviour, IDamageable2D
 
     public float CurrentHealth { get; private set; }
     public float MaximumHealth => maximumHealth;
+    public float DamageMultiplier
+    {
+        get => damageMultiplier;
+        set => damageMultiplier = Mathf.Max(0.01f, value);
+    }
     public bool IsDead => CurrentHealth <= 0f;
     public Animator TargetAnimator => animator;
 
@@ -72,9 +79,10 @@ public sealed class ActorDamageReceiver2D : MonoBehaviour, IDamageable2D
     public void ApplyDamage(float amount, Vector2 hitPosition, GameObject source)
     {
         if (!isActiveAndEnabled || amount <= 0f || CurrentHealth <= 0f) return;
-        float applied = Mathf.Min(CurrentHealth, amount);
+        float scaledAmount = amount * damageMultiplier;
+        float applied = Mathf.Min(CurrentHealth, scaledAmount);
         CurrentHealth -= applied;
-        if (logDamage) Debug.Log($"[Damage] {name}: -{applied:F1}, HP {CurrentHealth:F1}/{maximumHealth:F1}", this);
+        if (logDamage) Debug.Log($"[Damage] {name}: -{applied:F1} (raw {amount:F1} * mult {damageMultiplier:F2}), HP {CurrentHealth:F1}/{maximumHealth:F1}", this);
 
         if (CurrentHealth <= 0f)
         {

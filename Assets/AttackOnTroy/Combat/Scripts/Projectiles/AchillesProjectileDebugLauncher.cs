@@ -47,12 +47,19 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
     [SerializeField] private float minWind = -2f;
     [SerializeField] private float maxWind = 2f;
 
+    [Header("Double-Shot Ability")]
+    [SerializeField, Range(1f, 15f)] private float doubleShotSpreadAngle = 3.0f;
+    [SerializeField] private PlayerEnergySystem energySystem;
+
     [Header("Debug")]
     [SerializeField] private bool debugLauncherEnabled = true;
 
     private float chargeTimer;
     private bool isCharging;
     private Projectile2D activeProjectile;
+    private readonly System.Collections.Generic.List<Projectile2D> activeProjectiles = new System.Collections.Generic.List<Projectile2D>();
+    private bool isDoubleShotArmed;
+    private bool storedDoubleShot;
     private readonly Vector3 fallbackSpawnOffset = new Vector3(0.8f, 1.2f, 0f);
 
     // Prepared wind lifecycle
@@ -90,8 +97,12 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
     public int FacingDirection => motor != null ? motor.FacingDirection : 1;
     public bool IsCharging => isCharging;
     public bool IsThrowing => isThrowInProgress;
-    public bool HasActiveProjectile => activeProjectile != null;
-    public bool CanAim => turnInputEnabled && !isThrowInProgress && activeProjectile == null;
+    public bool HasActiveProjectile => activeProjectiles.Count > 0 || activeProjectile != null;
+    public bool CanAim => turnInputEnabled && !isThrowInProgress && activeProjectiles.Count == 0 && activeProjectile == null;
+    public bool IsDoubleShotArmed => isDoubleShotArmed;
+    public float DoubleShotSpreadAngle => doubleShotSpreadAngle;
+    public void SetDoubleShotArmed(bool armed) => isDoubleShotArmed = armed;
+    public void SetEnergySystem(PlayerEnergySystem system) => energySystem = system;
     public bool TurnInputEnabled => turnInputEnabled;
     public AchillesWeapon SelectedWeapon => selectedWeapon;
     public GameObject ProjectilePrefab => projectilePrefab;
@@ -287,6 +298,9 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
 
     private void Update()
     {
+        if (Time.timeScale <= 0f)
+            return;
+
         // Resolve an already-started animation even if debug input is subsequently disabled.
         if (isThrowInProgress)
         {
@@ -363,7 +377,7 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
 
     private void RequestThrow(float speed)
     {
-        if (!CanAim) return;
+        if (Time.timeScale <= 0f || !CanAim) return;
         GameObject chosenPrefab = selectedWeapon == AchillesWeapon.ClubBomb ? clubBombPrefab : projectilePrefab;
         if (chosenPrefab == null || chosenPrefab.GetComponent<Projectile2D>() == null)
         {
@@ -396,6 +410,15 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
         storedFacing = motor != null ? motor.FacingDirection : 1;
         if (storedFacing == 0)
             storedFacing = 1;
+
+        // Double-shot special attack state
+        storedDoubleShot = isDoubleShotArmed;
+        if (storedDoubleShot)
+        {
+            isDoubleShotArmed = false;
+            if (energySystem != null)
+                energySystem.ConsumeSpecialOnLaunch();
+        }
 
         // Lock movement on motor (does not freeze Rigidbody2D or disable gravity)
         if (motor != null)
@@ -478,6 +501,18 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
 
     private void SpawnProjectile()
     {
+        if (storedDoubleShot)
+        {
+            SpawnDoubleProjectiles();
+        }
+        else
+        {
+            SpawnSingleProjectile();
+        }
+    }
+
+    private void SpawnSingleProjectile()
+    {
         Vector3 spawnWorldPosition = ComputeSpawnPosition(storedFacing);
 
         // Direction based on elevation angle and locked facing direction
@@ -493,6 +528,8 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
         GameObject projectileObject = Instantiate(storedProjectilePrefab, spawnWorldPosition, initialRotation);
         Projectile2D projectile = projectileObject.GetComponent<Projectile2D>();
 
+        activeProjectiles.Clear();
+        activeProjectiles.Add(projectile);
         activeProjectile = projectile;
 
         // Camera follow begins only when projectile is actually created
@@ -515,6 +552,77 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
 
         // Log only one concise line when firing: angle, launch speed and wind
         Debug.Log($"[Achilles Launcher] Fired {projectile.ImpactType} - Angle: {storedAngle:F1}°, Launch Speed: {storedSpeed:F1}, Wind: {storedWind:F2}");
+    }
+
+    private void SpawnDoubleProjectiles()
+    {
+        Vector3 spawnWorldPosition = ComputeSpawnPosition(storedFacing);
+        Projectile2D prefabProjectile = storedProjectilePrefab.GetComponent<Projectile2D>();
+        bool isBallisticRot = (prefabProjectile.ImpactType == ProjectileImpactType.ClubBomb || prefabProjectile.ImpactType == ProjectileImpactType.OilJar);
+
+        // Symmetric angles: storedAngle - spread and storedAngle + spread
+        float angle1 = Mathf.Clamp(storedAngle - doubleShotSpreadAngle, 1f, 89f);
+        float angle2 = Mathf.Clamp(storedAngle + doubleShotSpreadAngle, 1f, 89f);
+
+        float rad1 = angle1 * Mathf.Deg2Rad;
+        Vector2 launchDir1 = new Vector2(storedFacing * Mathf.Cos(rad1), Mathf.Sin(rad1)).normalized;
+        Vector2 initialVelocity1 = launchDir1 * storedSpeed;
+
+        float rad2 = angle2 * Mathf.Deg2Rad;
+        Vector2 launchDir2 = new Vector2(storedFacing * Mathf.Cos(rad2), Mathf.Sin(rad2)).normalized;
+        Vector2 initialVelocity2 = launchDir2 * storedSpeed;
+
+        float angleDeg1 = Mathf.Atan2(initialVelocity1.y, initialVelocity1.x) * Mathf.Rad2Deg;
+        float angleDeg2 = Mathf.Atan2(initialVelocity2.y, initialVelocity2.x) * Mathf.Rad2Deg;
+
+        Quaternion rot1 = isBallisticRot ? Quaternion.identity : Quaternion.Euler(0f, 0f, angleDeg1);
+        Quaternion rot2 = isBallisticRot ? Quaternion.identity : Quaternion.Euler(0f, 0f, angleDeg2);
+
+        GameObject obj1 = Instantiate(storedProjectilePrefab, spawnWorldPosition, rot1);
+        GameObject obj2 = Instantiate(storedProjectilePrefab, spawnWorldPosition, rot2);
+
+        Projectile2D p1 = obj1.GetComponent<Projectile2D>();
+        Projectile2D p2 = obj2.GetComponent<Projectile2D>();
+
+        // Ensure the two projectiles don't collide with each other
+        Collider2D col1 = obj1.GetComponent<Collider2D>();
+        Collider2D col2 = obj2.GetComponent<Collider2D>();
+        if (col1 != null && col2 != null)
+        {
+            Physics2D.IgnoreCollision(col1, col2, true);
+        }
+
+        activeProjectiles.Clear();
+        activeProjectiles.Add(p1);
+        activeProjectiles.Add(p2);
+        activeProjectile = p1;
+
+        if (cameraController != null)
+        {
+            cameraController.FollowProjectiles(p1.transform, p2.transform);
+        }
+
+        ProjectileLaunched?.Invoke();
+
+        Collider2D ownerCol = actorCollider != null ? actorCollider : GetComponent<Collider2D>();
+
+        p1.Launch(
+            initialVelocity1,
+            ownerCol,
+            storedWind,
+            levelBoundsCollider,
+            terrainTarget,
+            OnProjectileCompleted);
+
+        p2.Launch(
+            initialVelocity2,
+            ownerCol,
+            storedWind,
+            levelBoundsCollider,
+            terrainTarget,
+            OnProjectileCompleted);
+
+        Debug.Log($"[Achilles Launcher] DOUBLE-SHOT Fired 2x {prefabProjectile.ImpactType} - Angles: ({angle1:F1}°, {angle2:F1}°), Speed: {storedSpeed:F1}, Wind: {storedWind:F2}");
     }
 
     private void CompleteThrow()
@@ -547,12 +655,32 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
 
     private void OnProjectileCompleted(Projectile2D projectile)
     {
-        // Latch the whole handoff, including wind and camera, not just the turn event.
-        if (this == null || projectileCompletedFiredThisShot || activeProjectile != projectile) return;
-        activeProjectile = null;
+        if (this == null) return;
+
+        activeProjectiles.Remove(projectile);
+        if (activeProjectile == projectile)
+            activeProjectile = activeProjectiles.Count > 0 ? activeProjectiles[0] : null;
+
+        // If battle ended (e.g. lethal hit on Cyclops), stop immediately!
+        if (turnManager != null && turnManager.IsBattleOver)
+        {
+            return;
+        }
+
+        // If another projectile is still flying, do NOT complete the turn!
+        if (activeProjectiles.Count > 0)
+        {
+            if (cameraController != null && activeProjectiles[0] != null)
+            {
+                cameraController.FollowProjectile(activeProjectiles[0].transform);
+            }
+            return;
+        }
+
+        if (projectileCompletedFiredThisShot) return;
         projectileCompletedFiredThisShot = true;
 
-        // Generate the NEXT wind value only after the current projectile has completed
+        // Generate the NEXT wind value only after ALL projectiles have completed
         GenerateNextWind();
 
         try
