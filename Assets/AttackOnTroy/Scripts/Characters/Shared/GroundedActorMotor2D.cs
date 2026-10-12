@@ -32,7 +32,7 @@ public sealed class GroundedActorMotor2D : MonoBehaviour
     [Header("Ground Detection")]
     [SerializeField] private LayerMask terrainLayers = 1 << 6;
     [SerializeField, Min(0.001f)] private float groundCheckDistance = 0.2f;
-    [SerializeField, Range(0f, 89f)] private float maximumWalkableSlopeAngle = 45f;
+    [SerializeField, Range(0f, 89f)] private float maximumWalkableSlopeAngle = 60f;
     [SerializeField, Range(0.01f, 1f)] private float minimumGroundNormalY = 0.5f;
     [Tooltip("Maximum height difference treated as a contour stair step rather than a wall. Set above the terrain's 4-pixel sample height.")]
     [SerializeField, Min(0f)] private float maximumStepHeight = 0.35f;
@@ -92,6 +92,18 @@ public sealed class GroundedActorMotor2D : MonoBehaviour
     {
         get => spriteFacesLeftByDefault;
         set => spriteFacesLeftByDefault = value;
+    }
+    public float EffectiveStepHeight
+    {
+        get
+        {
+            if (bodyCollider != null)
+            {
+                float halfHeight = bodyCollider.bounds.size.y * 0.5f;
+                return Mathf.Max(maximumStepHeight, halfHeight);
+            }
+            return maximumStepHeight;
+        }
     }
 
     private void Awake() => Initialize();
@@ -457,15 +469,17 @@ public sealed class GroundedActorMotor2D : MonoBehaviour
         if (!IsGrounded)
             return false;
 
+        float stepLimit = EffectiveStepHeight;
+
         // Step height limit check: obstacle contact point must not exceed maximum step allowance
         float obstacleRelativeY = obstaclePoint.y - groundPoint.y;
-        if (obstacleRelativeY > maximumStepHeight + 0.02f)
+        if (obstacleRelativeY > stepLimit + 0.02f)
             return false;
 
         // Verify raised clearance for the capsule at maximum step height.
         // A wall continuing upward or a low ceiling will block the raised capsule.
         profileHits.Clear();
-        float raisedOffset = maximumStepHeight + 0.02f;
+        float raisedOffset = stepLimit + 0.02f;
         bodyCollider.Cast(
             (Vector2)bodyCollider.transform.position + Vector2.up * raisedOffset,
             bodyCollider.transform.eulerAngles.z,
@@ -490,14 +504,15 @@ public sealed class GroundedActorMotor2D : MonoBehaviour
         if (!TryFindWalkableStepSurface(direction, obstaclePoint, out stepHeight))
             return false;
 
-        return stepHeight <= maximumStepHeight + 0.02f;
+        return stepHeight <= stepLimit + 0.02f;
     }
 
     private bool TryFindWalkableStepSurface(int direction, Vector2 obstaclePoint, out float stepHeight)
     {
         stepHeight = 0f;
-        float probeStartY = groundPoint.y + maximumStepHeight + 0.05f;
-        float probeDistance = maximumStepHeight + 0.15f;
+        float stepLimit = EffectiveStepHeight;
+        float probeStartY = groundPoint.y + stepLimit + 0.05f;
+        float probeDistance = stepLimit + 0.15f;
         float minWalkableY = RequiredGroundNormalY;
 
         // Sample on top of the step and immediately ahead
@@ -521,7 +536,7 @@ public sealed class GroundedActorMotor2D : MonoBehaviour
                     continue;
 
                 float surfaceHeight = hit.point.y - groundPoint.y;
-                if (surfaceHeight > maximumStepHeight + 0.02f || surfaceHeight < -0.05f)
+                if (surfaceHeight > stepLimit + 0.02f || surfaceHeight < -0.05f)
                     continue;
 
                 foundWalkable = true;
@@ -535,9 +550,10 @@ public sealed class GroundedActorMotor2D : MonoBehaviour
 
     private bool TryBuildGroundProfile(int direction)
     {
+        float stepLimit = EffectiveStepHeight;
         float overlapDepth = hasGroundPoint ? Mathf.Max(0f, groundPoint.y - bodyCollider.bounds.min.y) : 0f;
-        float lift = overlapDepth + maximumStepHeight + slopeProbeDistance * Mathf.Tan(maximumWalkableSlopeAngle * Mathf.Deg2Rad) + 0.05f;
-        float distance = lift + maximumStepHeight + groundCheckDistance;
+        float lift = overlapDepth + stepLimit + slopeProbeDistance * Mathf.Tan(maximumWalkableSlopeAngle * Mathf.Deg2Rad) + 0.05f;
+        float distance = lift + stepLimit + groundCheckDistance;
         if (!TryGetSupportDistance(Vector2.up * lift, distance, out float currentDistance) ||
             !TryGetSupportDistance(Vector2.up * lift + Vector2.right * (direction * slopeProbeDistance), distance, out float aheadDistance))
             return false;

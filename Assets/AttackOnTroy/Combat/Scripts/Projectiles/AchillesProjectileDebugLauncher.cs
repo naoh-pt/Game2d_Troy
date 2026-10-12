@@ -33,23 +33,26 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
     [SerializeField, Min(0.1f)] private float timeoutSafetyMargin = 0.5f;
 
     [Header("Angle Settings")]
-    [SerializeField, Range(10f, 80f)] private float currentAngle = 45f;
-    [SerializeField, Min(0f)] private float minAngle = 10f;
-    [SerializeField, Min(0f)] private float maxAngle = 80f;
+    [SerializeField, Range(0f, 85f)] private float currentAngle = 45f;
+    [SerializeField, Min(0f)] private float minAngle = 0f;
+    [SerializeField, Min(0f)] private float maxAngle = 85f;
     [SerializeField, Min(1f)] private float angleAdjustmentSpeed = 45f;
 
     [Header("Launch Power")]
     [SerializeField, Min(0f)] private float minLaunchSpeed = 12f;
     [SerializeField, Min(0f)] private float maxLaunchSpeed = 24f;
-    [SerializeField, Min(0.1f)] private float chargeDuration = 1.5f;
+    [SerializeField, Min(0.1f)] private float chargeDuration = 1.25f;
 
     [Header("Wind")]
-    [SerializeField] private float minWind = -2f;
-    [SerializeField] private float maxWind = 2f;
+    [SerializeField] private float minWind = -0.8f;
+    [SerializeField] private float maxWind = 0.8f;
 
     [Header("Double-Shot Ability")]
     [SerializeField, Range(1f, 15f)] private float doubleShotSpreadAngle = 3.0f;
     [SerializeField] private PlayerEnergySystem energySystem;
+
+    [Header("Level 03 Wall Carve")]
+    [SerializeField] private bool enableOilJarWallCarve = false;
 
     [Header("Debug")]
     [SerializeField] private bool debugLauncherEnabled = true;
@@ -89,10 +92,18 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
 
     #region Presentation API
     public float CurrentAngle => currentAngle;
-    public float CurrentCharge01 => isCharging && chargeDuration > 0f ? Mathf.Clamp01(chargeTimer / chargeDuration) : 0f;
-    public float CurrentLaunchSpeed => isCharging
-        ? Mathf.Lerp(minLaunchSpeed, maxLaunchSpeed, CurrentCharge01)
-        : minLaunchSpeed;
+    public float CurrentCharge01 => isCharging && chargeDuration > 0f
+        ? Mathf.Lerp(0.25f, 1.0f, Mathf.Clamp01(chargeTimer / chargeDuration))
+        : 0f;
+    public float CurrentLaunchSpeed
+    {
+        get
+        {
+            GetWeaponSpeedRange(out float minSpeed, out float maxSpeed);
+            float t = isCharging && chargeDuration > 0f ? Mathf.Clamp01(chargeTimer / chargeDuration) : 0f;
+            return Mathf.Lerp(minSpeed, maxSpeed, t);
+        }
+    }
     public float CurrentWind => preparedWind;
     public int FacingDirection => motor != null ? motor.FacingDirection : 1;
     public bool IsCharging => isCharging;
@@ -177,12 +188,42 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
         chargeTimer = 0f;
     }
 
+    public void GetWeaponSpeedRange(out float minSpeed, out float maxSpeed)
+    {
+        Projectile2D prefab = SelectedProjectilePrefab;
+        if (prefab != null)
+        {
+            switch (prefab.ImpactType)
+            {
+                case ProjectileImpactType.Spear:
+                    minSpeed = 16f;
+                    maxSpeed = 32f;
+                    return;
+                case ProjectileImpactType.ClubBomb:
+                    minSpeed = 12f;
+                    maxSpeed = 28f;
+                    return;
+                case ProjectileImpactType.Arrow:
+                    minSpeed = 32f;
+                    maxSpeed = 50f;
+                    return;
+                case ProjectileImpactType.OilJar:
+                    minSpeed = 12f;
+                    maxSpeed = 27f;
+                    return;
+            }
+        }
+        minSpeed = minLaunchSpeed;
+        maxSpeed = maxLaunchSpeed;
+    }
+
     public void ReleaseChargeAndThrow()
     {
         if (!isCharging)
             return;
-        float charge = CurrentCharge01;
-        float speed = Mathf.Lerp(minLaunchSpeed, maxLaunchSpeed, charge);
+        float t = chargeDuration > 0f ? Mathf.Clamp01(chargeTimer / chargeDuration) : 0f;
+        GetWeaponSpeedRange(out float minSpeed, out float maxSpeed);
+        float speed = Mathf.Lerp(minSpeed, maxSpeed, t);
         isCharging = false;
         chargeTimer = 0f;
         RequestThrow(speed);
@@ -287,7 +328,28 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
 
     public void GenerateNextWind()
     {
+        UpdateWindBoundsForCurrentScene();
         preparedWind = UnityEngine.Random.Range(minWind, maxWind);
+    }
+
+    private void UpdateWindBoundsForCurrentScene()
+    {
+        string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        if (sceneName.IndexOf("Level03", StringComparison.OrdinalIgnoreCase) >= 0)
+        {
+            minWind = -2.0f;
+            maxWind = 2.0f;
+        }
+        else if (sceneName.IndexOf("Level02", StringComparison.OrdinalIgnoreCase) >= 0)
+        {
+            minWind = -1.5f;
+            maxWind = 1.5f;
+        }
+        else
+        {
+            minWind = -0.8f;
+            maxWind = 0.8f;
+        }
     }
 
     public Vector3 GetSpawnPosition()
@@ -542,6 +604,11 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
         ProjectileLaunched?.Invoke();
 
         Collider2D ownerCol = actorCollider != null ? actorCollider : GetComponent<Collider2D>();
+        if (enableOilJarWallCarve && projectile.ImpactType == ProjectileImpactType.OilJar)
+        {
+            projectile.OilJarWallCarveEnabled = true;
+        }
+
         projectile.Launch(
             initialVelocity,
             ownerCol,
@@ -561,8 +628,8 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
         bool isBallisticRot = (prefabProjectile.ImpactType == ProjectileImpactType.ClubBomb || prefabProjectile.ImpactType == ProjectileImpactType.OilJar);
 
         // Symmetric angles: storedAngle - spread and storedAngle + spread
-        float angle1 = Mathf.Clamp(storedAngle - doubleShotSpreadAngle, 1f, 89f);
-        float angle2 = Mathf.Clamp(storedAngle + doubleShotSpreadAngle, 1f, 89f);
+        float angle1 = Mathf.Clamp(storedAngle - doubleShotSpreadAngle, 0f, 85f);
+        float angle2 = Mathf.Clamp(storedAngle + doubleShotSpreadAngle, 0f, 85f);
 
         float rad1 = angle1 * Mathf.Deg2Rad;
         Vector2 launchDir1 = new Vector2(storedFacing * Mathf.Cos(rad1), Mathf.Sin(rad1)).normalized;
@@ -605,6 +672,11 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
         ProjectileLaunched?.Invoke();
 
         Collider2D ownerCol = actorCollider != null ? actorCollider : GetComponent<Collider2D>();
+        if (enableOilJarWallCarve && p1.ImpactType == ProjectileImpactType.OilJar)
+        {
+            p1.OilJarWallCarveEnabled = true;
+            p2.OilJarWallCarveEnabled = true;
+        }
 
         p1.Launch(
             initialVelocity1,

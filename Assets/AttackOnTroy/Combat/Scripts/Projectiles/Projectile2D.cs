@@ -46,6 +46,16 @@ public sealed class Projectile2D : MonoBehaviour
 
     [Header("Oil Jar Impact")]
     [SerializeField] private GameObject firePatchPrefab;
+    [Tooltip("Allow oil jar to carve a configurable small crater on wall terrain (e.g. Level 03 Troy Wall) on initial impact.")]
+    [SerializeField] private bool oilJarWallCarveEnabled = false;
+    [SerializeField, Min(0.1f)] private float oilJarCraterRadius = 0.8f;
+
+    [Header("Wind Sensitivity")]
+    [Tooltip("Multiplier applied to wind acceleration. Spear=0.75, Bomb=1.0, Arrow=0.0, OilJar=1.0, StoneAxe=0.8.")]
+    [SerializeField, Range(-1f, 2f)] private float windSensitivity = -1f;
+
+    [Header("Terrain Destruction")]
+    [SerializeField] private bool canCarveTerrain = false;
 
     private Rigidbody2D body;
     private Collider2D projectileCollider;
@@ -75,7 +85,46 @@ public sealed class Projectile2D : MonoBehaviour
     public ProjectileImpactType ImpactType => impactType;
     public ProjectileCompletionReason LastCompletionReason { get; private set; }
     public Collider2D OwnerCollider { get; private set; }
+    public bool OilJarWallCarveEnabled
+    {
+        get => oilJarWallCarveEnabled;
+        set => oilJarWallCarveEnabled = value;
+    }
+    public float OilJarCraterRadius
+    {
+        get => oilJarCraterRadius;
+        set => oilJarCraterRadius = Mathf.Max(0.1f, value);
+    }
+    public bool CanCarveTerrain
+    {
+        get => canCarveTerrain;
+        set => canCarveTerrain = value;
+    }
     public GameObject Owner => OwnerCollider != null ? OwnerCollider.gameObject : null;
+    public float WindSensitivity
+    {
+        get => GetDefaultWindSensitivity();
+        set => windSensitivity = value;
+    }
+
+    public float GetDefaultWindSensitivity()
+    {
+        if (windSensitivity >= 0f) return windSensitivity;
+        switch (impactType)
+        {
+            case ProjectileImpactType.Spear: return 0.75f;
+            case ProjectileImpactType.ClubBomb: return 1.0f;
+            case ProjectileImpactType.Arrow: return 0.0f;
+            case ProjectileImpactType.OilJar: return 1.0f;
+            case ProjectileImpactType.StoneAxe: return 0.8f;
+            default: return 1.0f;
+        }
+    }
+
+    public void SetDirectHitDamage(float damage)
+    {
+        directHitDamage = Mathf.Max(0f, damage);
+    }
 
     private void Awake() => InitializeComponents();
 
@@ -116,7 +165,8 @@ public sealed class Projectile2D : MonoBehaviour
     {
         if (isLaunched || isCompleted) return;
         InitializeComponents();
-        horizontalWind = windAcceleration;
+        float sensitivity = GetDefaultWindSensitivity();
+        horizontalWind = windAcceleration * sensitivity;
         lifetimeTimer = maxLifetime;
         onCompletedCallback = onCompleted;
         if (boundsCollider != null)
@@ -303,6 +353,19 @@ public sealed class Projectile2D : MonoBehaviour
             if (recipient != null)
                 ApplyDamageSafely(recipient, directHitDamage, point);
 
+            bool isLevel03 = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.IndexOf("Level03", StringComparison.OrdinalIgnoreCase) >= 0;
+            if ((oilJarWallCarveEnabled || isLevel03) && terrainHit)
+            {
+                DestructibleTerrain2D targetToCarve = terrain != null ? terrain : terrainTarget;
+                if (targetToCarve == null)
+                    targetToCarve = FindAnyObjectByType<DestructibleTerrain2D>();
+                if (targetToCarve != null)
+                {
+                    try { targetToCarve.DestroyCircle(point, oilJarCraterRadius); }
+                    catch (Exception ex) { Debug.LogException(ex, this); }
+                }
+            }
+
             SpawnFirePatch(point);
             Complete(reason);
         }
@@ -313,6 +376,20 @@ public sealed class Projectile2D : MonoBehaviour
         }
         else if (terrainHit)
         {
+            bool isLevel03 = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.IndexOf("Level03", StringComparison.OrdinalIgnoreCase) >= 0;
+            bool isHeavyAxe = impactType == ProjectileImpactType.StoneAxe && (gameObject.name.IndexOf("Heavy", StringComparison.OrdinalIgnoreCase) >= 0 || canCarveTerrain);
+            if (isLevel03 && isHeavyAxe)
+            {
+                DestructibleTerrain2D targetToCarve = terrain != null ? terrain : terrainTarget;
+                if (targetToCarve == null)
+                    targetToCarve = FindAnyObjectByType<DestructibleTerrain2D>();
+                if (targetToCarve != null)
+                {
+                    try { targetToCarve.DestroyCircle(point, craterRadius > 0f ? craterRadius : 1.0f); }
+                    catch (Exception ex) { Debug.LogException(ex, this); }
+                }
+            }
+
             if (impactType == ProjectileImpactType.Spear || impactType == ProjectileImpactType.Arrow)
                 EmbedSpear(point);
             resolutionTimer = embeddedDuration;

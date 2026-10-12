@@ -69,6 +69,14 @@ public sealed class ProjectileAimHUD : MonoBehaviour
     private void Start()
     {
         EnsureFillSprite();
+        string scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        if (scene.IndexOf("Level01", StringComparison.OrdinalIgnoreCase) >= 0)
+            maxWindSpeed = 0.8f;
+        else if (scene.IndexOf("Level02", StringComparison.OrdinalIgnoreCase) >= 0)
+            maxWindSpeed = 1.5f;
+        else if (scene.IndexOf("Level03", StringComparison.OrdinalIgnoreCase) >= 0)
+            maxWindSpeed = 2.0f;
+
         if (powerBarFill != null)
             powerBarFill.fillAmount = 0f;
     }

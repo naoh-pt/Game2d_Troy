@@ -116,7 +116,7 @@ MonoBehaviour:
   jarVisualDegreesPerSecond: 360
   maxLifetime: 10
   levelBoundsCollider: {fileID: 0}
-  directHitDamage: 20
+  directHitDamage: 10
   embeddedDuration: 0.8
   embedDepth: 0.08
   areaDamage: 20
@@ -129,6 +129,8 @@ MonoBehaviour:
   explosionResolveDuration: 0.45
   explosionEffectPrefab: {fileID: 0}
   firePatchPrefab: {fileID: 1000000000000001, guid: c3a4f15928d145c2903e1e2d8b5c4912, type: 3}
+  oilJarCraterRadius: 0.8
+  windSensitivity: 1.0
 --- !u!1 &1200000000000001
 GameObject:
   m_ObjectHideFlags: 0

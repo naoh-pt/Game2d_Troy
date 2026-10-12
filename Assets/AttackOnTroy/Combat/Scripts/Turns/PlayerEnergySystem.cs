@@ -12,12 +12,14 @@ using UnityEngine.InputSystem;
 public sealed class PlayerEnergySystem : MonoBehaviour
 {
     [Header("Energy Configuration")]
+    [Header("Energy Configuration")]
     [SerializeField, Range(10f, 200f)] private float maxEnergy = 100f;
-    [Tooltip("Energy gained per point of HP lost from enemy attacks.")]
-    [SerializeField, Range(0.5f, 5.0f)] private float energyPerDamage = 2.0f;
+    [Tooltip("Hits required from enemy attacks to fully charge energy.")]
+    [SerializeField, Range(1, 5)] private int hitsRequiredForFullEnergy = 2;
 
     [Header("Current State")]
     [SerializeField] private float currentEnergy = 0f;
+    [SerializeField] private int hitsReceived = 0;
     [SerializeField] private bool isSpecialArmed = false;
 
     [Header("Actor & Scene References")]
@@ -28,9 +30,10 @@ public sealed class PlayerEnergySystem : MonoBehaviour
 
     public float CurrentEnergy => currentEnergy;
     public float MaxEnergy => maxEnergy;
+    public int HitsReceived => hitsReceived;
     public float Energy01 => maxEnergy > 0f ? Mathf.Clamp01(currentEnergy / maxEnergy) : 0f;
     public bool IsSpecialArmed => isSpecialArmed;
-    public bool IsEnergyFull => currentEnergy >= maxEnergy - 0.001f;
+    public bool IsEnergyFull => hitsReceived >= hitsRequiredForFullEnergy || currentEnergy >= maxEnergy - 0.001f;
 
     public bool CanActivateSpecial
     {
@@ -50,6 +53,7 @@ public sealed class PlayerEnergySystem : MonoBehaviour
     private void Awake()
     {
         currentEnergy = 0f;
+        hitsReceived = 0;
         isSpecialArmed = false;
         ResolveReferences();
     }
@@ -83,11 +87,13 @@ public sealed class PlayerEnergySystem : MonoBehaviour
         }
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-        // Debug hotkey: Press X to instantly charge energy to 100
+        // Debug hotkey: Press X to instantly charge energy to 100 (2 hits)
         if (keyboard.xKey.wasPressedThisFrame)
         {
-            SetEnergy(maxEnergy);
-            Debug.Log("[PlayerEnergySystem] Debug cheat: Energy set to 100!");
+            hitsReceived = hitsRequiredForFullEnergy;
+            currentEnergy = maxEnergy;
+            EnergyChanged?.Invoke(currentEnergy, maxEnergy);
+            Debug.Log("[PlayerEnergySystem] Debug cheat: Energy set to 100 (2 hits)!");
         }
 #endif
     }
@@ -159,50 +165,42 @@ public sealed class PlayerEnergySystem : MonoBehaviour
         if (actualHpLost <= 0f) return;
         if (playerDamageReceiver != null && playerDamageReceiver.IsDead) return;
 
-        if (!IsEnemyDamageSource(source))
+        if (!IsEnemyAxeDamageSource(source))
         {
             return;
         }
 
-        float energyGain = actualHpLost * energyPerDamage;
-        AddEnergy(energyGain);
-        Debug.Log($"[PlayerEnergySystem] Gained {energyGain:F1} energy from enemy attack (Damage: {actualHpLost:F1}). Current Energy: {currentEnergy:F1}/{maxEnergy:F1}");
+        // Each hit that inflicts actual HP loss increases hit count by 1 up to 2
+        if (hitsReceived < hitsRequiredForFullEnergy)
+        {
+            hitsReceived++;
+            currentEnergy = (float)hitsReceived / hitsRequiredForFullEnergy * maxEnergy;
+            EnergyChanged?.Invoke(currentEnergy, maxEnergy);
+            Debug.Log($"[PlayerEnergySystem] Enemy axe hit {hitsReceived}/{hitsRequiredForFullEnergy} received (Damage: {actualHpLost:F1}). Energy: {currentEnergy:F0}/{maxEnergy:F0}");
+        }
     }
 
-    private bool IsEnemyDamageSource(GameObject source)
+    private bool IsEnemyAxeDamageSource(GameObject source)
     {
         if (source == null) return false;
 
-        // FirePatch2D is created by player Oil Jar -> self-damage
-        if (source.GetComponent<FirePatch2D>() != null) return false;
+        // FirePatch2D is DoT / ground fire -> not counted
+        if (source.GetComponent<FirePatch2D>() != null || source.GetComponentInParent<FirePatch2D>() != null)
+            return false;
 
-        // Check Projectile2D
+        // Check Projectile2D: only enemy StoneAxe counts as a hit
         Projectile2D proj = source.GetComponent<Projectile2D>();
         if (proj != null)
         {
-            if (proj.ImpactType == ProjectileImpactType.StoneAxe) return true;
+            if (proj.ImpactType == ProjectileImpactType.StoneAxe)
+                return true;
 
-            Transform playerTr = playerDamageReceiver != null ? playerDamageReceiver.transform : null;
-            if (proj.Owner != null)
-            {
-                if (playerTr != null && (proj.Owner == playerTr.gameObject || proj.Owner.transform.IsChildOf(playerTr)))
-                    return false;
-                if (cyclopsTransform != null && (proj.Owner == cyclopsTransform.gameObject || proj.Owner.transform.IsChildOf(cyclopsTransform)))
-                    return true;
-            }
-
-            // Player weapon types
-            if (proj.ImpactType == ProjectileImpactType.Spear ||
-                proj.ImpactType == ProjectileImpactType.Arrow ||
-                proj.ImpactType == ProjectileImpactType.ClubBomb ||
-                proj.ImpactType == ProjectileImpactType.OilJar)
-            {
-                return false;
-            }
+            // Player projectiles (Spear, Arrow, Bomb, OilJar) do not count
+            return false;
         }
 
-        Transform pTr = playerDamageReceiver != null ? playerDamageReceiver.transform : null;
-        if (pTr != null && (source == pTr.gameObject || source.transform.IsChildOf(pTr)))
+        Transform playerTr = playerDamageReceiver != null ? playerDamageReceiver.transform : null;
+        if (playerTr != null && (source == playerTr.gameObject || source.transform.IsChildOf(playerTr)))
             return false;
 
         if (cyclopsTransform != null && (source == cyclopsTransform.gameObject || source.transform.IsChildOf(cyclopsTransform)))
@@ -216,15 +214,18 @@ public sealed class PlayerEnergySystem : MonoBehaviour
 
     public void AddEnergy(float amount)
     {
+        // Retained for API compatibility: translates into energy
         if (amount <= 0f || isSpecialArmed) return;
 
         currentEnergy = Mathf.Clamp(currentEnergy + amount, 0f, maxEnergy);
+        hitsReceived = Mathf.RoundToInt(currentEnergy / (maxEnergy / hitsRequiredForFullEnergy));
         EnergyChanged?.Invoke(currentEnergy, maxEnergy);
     }
 
     public void SetEnergy(float amount)
     {
         currentEnergy = Mathf.Clamp(amount, 0f, maxEnergy);
+        hitsReceived = Mathf.RoundToInt(currentEnergy / (maxEnergy / hitsRequiredForFullEnergy));
         EnergyChanged?.Invoke(currentEnergy, maxEnergy);
     }
 
@@ -233,12 +234,10 @@ public sealed class PlayerEnergySystem : MonoBehaviour
         if (!CanActivateSpecial || isSpecialArmed) return false;
 
         isSpecialArmed = true;
-        currentEnergy = 0f; // Consumes the full meter on activation
 
         if (playerLauncher != null)
             playerLauncher.SetDoubleShotArmed(true);
 
-        EnergyChanged?.Invoke(currentEnergy, maxEnergy);
         SpecialArmedChanged?.Invoke(true);
         Debug.Log("[PlayerEnergySystem] Special DOUBLE-SHOT armed! Next attack will launch two projectiles.");
         return true;
@@ -249,14 +248,12 @@ public sealed class PlayerEnergySystem : MonoBehaviour
         if (!isSpecialArmed) return false;
 
         isSpecialArmed = false;
-        currentEnergy = maxEnergy; // Restores the full meter on cancellation
 
         if (playerLauncher != null)
             playerLauncher.SetDoubleShotArmed(false);
 
-        EnergyChanged?.Invoke(currentEnergy, maxEnergy);
         SpecialArmedChanged?.Invoke(false);
-        Debug.Log("[PlayerEnergySystem] Special DOUBLE-SHOT cancelled. Energy restored.");
+        Debug.Log("[PlayerEnergySystem] Special DOUBLE-SHOT cancelled. Energy retained.");
         return true;
     }
 
@@ -274,18 +271,24 @@ public sealed class PlayerEnergySystem : MonoBehaviour
 
     /// <summary>
     /// Called when the armed double-shot attack is launched.
+    /// Resets hit count and energy back to 0.
     /// </summary>
     public void ConsumeSpecialOnLaunch()
     {
         if (!isSpecialArmed) return;
 
         isSpecialArmed = false;
+        hitsReceived = 0;
+        currentEnergy = 0f;
+
+        EnergyChanged?.Invoke(currentEnergy, maxEnergy);
         SpecialArmedChanged?.Invoke(false);
-        Debug.Log("[PlayerEnergySystem] Special DOUBLE-SHOT consumed on launch.");
+        Debug.Log("[PlayerEnergySystem] Special DOUBLE-SHOT consumed on launch. Energy and hits reset to 0.");
     }
 
     public void ResetEnergy()
     {
+        hitsReceived = 0;
         currentEnergy = 0f;
         isSpecialArmed = false;
 

@@ -1,0 +1,1627 @@
+fileFormatVersion: 2
+guid: b641fdbe6c42f334fb62b36026622c53
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3775253140778763062
+    second: ENV_TroyWall_Terrain (1) (1)_0
+  - first:
+      213: 405919787959410717
+    second: ENV_TroyWall_Terrain (1) (1)_1
+  - first:
+      213: -8306635339156187744
+    second: ENV_TroyWall_Terrain (1) (1)_2
+  - first:
+      213: 1676852757108219172
+    second: ENV_TroyWall_Terrain (1) (1)_3
+  - first:
+      213: 3232923141090811967
+    second: ENV_TroyWall_Terrain (1) (1)_4
+  - first:
+      213: 5666827423727008890
+    second: ENV_TroyWall_Terrain (1) (1)_5
+  - first:
+      213: 4079518062039696198
+    second: ENV_TroyWall_Terrain (1) (1)_6
+  - first:
+      213: 2442042629066928262
+    second: ENV_TroyWall_Terrain (1) (1)_7
+  - first:
+      213: -218778393560012799
+    second: ENV_TroyWall_Terrain (1) (1)_8
+  - first:
+      213: 6170334525930582363
+    second: ENV_TroyWall_Terrain (1) (1)_9
+  - first:
+      213: 619735795453935694
+    second: ENV_TroyWall_Terrain (1) (1)_10
+  - first:
+      213: 1709492084675792306
+    second: ENV_TroyWall_Terrain (1) (1)_11
+  - first:
+      213: 4617801266596402101
+    second: ENV_TroyWall_Terrain (1) (1)_12
+  - first:
+      213: 7827301799008871649
+    second: ENV_TroyWall_Terrain (1) (1)_13
+  - first:
+      213: 3795231376481108380
+    second: ENV_TroyWall_Terrain (1) (1)_14
+  - first:
+      213: -8467394101535825021
+    second: ENV_TroyWall_Terrain (1) (1)_15
+  - first:
+      213: -4921114264443463897
+    second: ENV_TroyWall_Terrain (1) (1)_16
+  - first:
+      213: 9106719371776472316
+    second: ENV_TroyWall_Terrain (1) (1)_17
+  - first:
+      213: 2931162676799159684
+    second: ENV_TroyWall_Terrain (1) (1)_18
+  - first:
+      213: -601537912079782743
+    second: ENV_TroyWall_Terrain (1) (1)_19
+  - first:
+      213: 1423332378989357066
+    second: ENV_TroyWall_Terrain (1) (1)_20
+  - first:
+      213: 2626666371043793659
+    second: ENV_TroyWall_Terrain (1) (1)_21
+  - first:
+      213: 8983907274099776486
+    second: ENV_TroyWall_Terrain (1) (1)_22
+  - first:
+      213: -1397840956091531747
+    second: ENV_TroyWall_Terrain (1) (1)_23
+  - first:
+      213: 7548338277977490031
+    second: ENV_TroyWall_Terrain (1) (1)_24
+  - first:
+      213: -1736494323090898174
+    second: ENV_TroyWall_Terrain (1) (1)_25
+  - first:
+      213: -1860086539452983572
+    second: ENV_TroyWall_Terrain (1) (1)_26
+  - first:
+      213: -672472965779730292
+    second: ENV_TroyWall_Terrain (1) (1)_27
+  - first:
+      213: 7403766142820434684
+    second: ENV_TroyWall_Terrain (1) (1)_28
+  - first:
+      213: 6667698674382274670
+    second: ENV_TroyWall_Terrain (1) (1)_29
+  - first:
+      213: -6340335287750594179
+    second: ENV_TroyWall_Terrain (1) (1)_30
+  - first:
+      213: -8002103351904543661
+    second: ENV_TroyWall_Terrain (1) (1)_31
+  - first:
+      213: 2936298278924269766
+    second: ENV_TroyWall_Terrain (1) (1)_32
+  - first:
+      213: 4653991088342840450
+    second: ENV_TroyWall_Terrain (1) (1)_33
+  - first:
+      213: 1209978684331302385
+    second: ENV_TroyWall_Terrain (1) (1)_34
+  - first:
+      213: 6976931230225210869
+    second: ENV_TroyWall_Terrain (1) (1)_35
+  - first:
+      213: 5727978040408111490
+    second: ENV_TroyWall_Terrain (1) (1)_36
+  - first:
+      213: 2578952096324413535
+    second: ENV_TroyWall_Terrain (1) (1)_37
+  - first:
+      213: -2301207082529121653
+    second: ENV_TroyWall_Terrain (1) (1)_38
+  - first:
+      213: -4384612687084754830
+    second: ENV_TroyWall_Terrain (1) (1)_39
+  - first:
+      213: -2589951415047882860
+    second: ENV_TroyWall_Terrain (1) (1)_40
+  - first:
+      213: -9065036518763636946
+    second: ENV_TroyWall_Terrain (1) (1)_41
+  - first:
+      213: 3325454643241845486
+    second: ENV_TroyWall_Terrain (1) (1)_42
+  - first:
+      213: 208140091073328267
+    second: ENV_TroyWall_Terrain (1) (1)_43
+  - first:
+      213: 106681335824863267
+    second: ENV_TroyWall_Terrain (1) (1)_44
+  - first:
+      213: -1478947704242705916
+    second: ENV_TroyWall_Terrain (1) (1)_45
+  - first:
+      213: -1004133309307248099
+    second: ENV_TroyWall_Terrain (1) (1)_46
+  - first:
+      213: -1626132522028173909
+    second: ENV_TroyWall_Terrain (1) (1)_47
+  - first:
+      213: 198245839228071715
+    second: ENV_TroyWall_Terrain (1) (1)_48
+  - first:
+      213: -5461510938835481056
+    second: ENV_TroyWall_Terrain (1) (1)_49
+  - first:
+      213: 7997188270104654815
+    second: ENV_TroyWall_Terrain (1) (1)_50
+  - first:
+      213: -1365983251875519711
+    second: ENV_TroyWall_Terrain (1) (1)_51
+  - first:
+      213: 4747764530420090760
+    second: ENV_TroyWall_Terrain (1) (1)_52
+  - first:
+      213: -3595679840457596364
+    second: ENV_TroyWall_Terrain (1) (1)_53
+  - first:
+      213: -374572688614686326
+    second: ENV_TroyWall_Terrain (1) (1)_54
+  - first:
+      213: 3515228310379448481
+    second: ENV_TroyWall_Terrain (1) (1)_55
+  - first:
+      213: -8782187270550484951
+    second: ENV_TroyWall_Terrain (1) (1)_56
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_0
+      rect:
+        serializedVersion: 2
+        x: 471
+        y: 277
+        width: 204
+        height: 228
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: acc34b6454b9b9bc0800000000000000
+      internalID: -3775253140778763062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_1
+      rect:
+        serializedVersion: 2
+        x: 593
+        y: 361
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d106f9085ed12a500800000000000000
+      internalID: 405919787959410717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_2
+      rect:
+        serializedVersion: 2
+        x: 608
+        y: 364
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a593e26b27e8bc80800000000000000
+      internalID: -8306635339156187744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_3
+      rect:
+        serializedVersion: 2
+        x: 630
+        y: 361
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42dd110c2b0654710800000000000000
+      internalID: 1676852757108219172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_4
+      rect:
+        serializedVersion: 2
+        x: 690
+        y: 390
+        width: 55
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f30abd2d776addc20800000000000000
+      internalID: 3232923141090811967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_5
+      rect:
+        serializedVersion: 2
+        x: 701
+        y: 306
+        width: 106
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7cb0ba848d94ae40800000000000000
+      internalID: 5666827423727008890
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_6
+      rect:
+        serializedVersion: 2
+        x: 734
+        y: 404
+        width: 62
+        height: 144
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6438aae201c5d9830800000000000000
+      internalID: 4079518062039696198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_7
+      rect:
+        serializedVersion: 2
+        x: 748
+        y: 372
+        width: 22
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 68035e725d0e3e120800000000000000
+      internalID: 2442042629066928262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_8
+      rect:
+        serializedVersion: 2
+        x: 763
+        y: 339
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 108235fc53eb6fcf0800000000000000
+      internalID: -218778393560012799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_9
+      rect:
+        serializedVersion: 2
+        x: 777
+        y: 339
+        width: 19
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b51bb6b3f8e61a550800000000000000
+      internalID: 6170334525930582363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_10
+      rect:
+        serializedVersion: 2
+        x: 796
+        y: 277
+        width: 80
+        height: 109
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4040a62c6eb99800800000000000000
+      internalID: 619735795453935694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_11
+      rect:
+        serializedVersion: 2
+        x: 909
+        y: 273
+        width: 56
+        height: 102
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2bd41756ef559b710800000000000000
+      internalID: 1709492084675792306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_12
+      rect:
+        serializedVersion: 2
+        x: 927
+        y: 368
+        width: 45
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b3d3da29c9b51040800000000000000
+      internalID: 4617801266596402101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_13
+      rect:
+        serializedVersion: 2
+        x: 949
+        y: 264
+        width: 13
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e423bfe38920ac60800000000000000
+      internalID: 7827301799008871649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_14
+      rect:
+        serializedVersion: 2
+        x: 963
+        y: 273
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c91c29334de5ba430800000000000000
+      internalID: 3795231376481108380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_15
+      rect:
+        serializedVersion: 2
+        x: 965
+        y: 364
+        width: 11
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 38328b44de5cd7a80800000000000000
+      internalID: -8467394101535825021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_16
+      rect:
+        serializedVersion: 2
+        x: 967
+        y: 262
+        width: 27
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7275db056a0b4bbb0800000000000000
+      internalID: -4921114264443463897
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_17
+      rect:
+        serializedVersion: 2
+        x: 985
+        y: 353
+        width: 38
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf4b7e7e401916e70800000000000000
+      internalID: 9106719371776472316
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_18
+      rect:
+        serializedVersion: 2
+        x: 995
+        y: 244
+        width: 265
+        height: 341
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48d3f71bce49da820800000000000000
+      internalID: 2931162676799159684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_19
+      rect:
+        serializedVersion: 2
+        x: 1133
+        y: 353
+        width: 11
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9aced8fb478e6a7f0800000000000000
+      internalID: -601537912079782743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_20
+      rect:
+        serializedVersion: 2
+        x: 1144
+        y: 379
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a08e8fee141b0c310800000000000000
+      internalID: 1423332378989357066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_21
+      rect:
+        serializedVersion: 2
+        x: 1144
+        y: 364
+        width: 22
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bfa9785d52bc37420800000000000000
+      internalID: 2626666371043793659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_22
+      rect:
+        serializedVersion: 2
+        x: 1308
+        y: 266
+        width: 250
+        height: 343
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ebd3c721104dac70800000000000000
+      internalID: 8983907274099776486
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_23
+      rect:
+        serializedVersion: 2
+        x: 1470
+        y: 281
+        width: 11
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1efba77e0fd99ce0800000000000000
+      internalID: -1397840956091531747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_24
+      rect:
+        serializedVersion: 2
+        x: 1517
+        y: 361
+        width: 8
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f620557cba511c860800000000000000
+      internalID: 7548338277977490031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_25
+      rect:
+        serializedVersion: 2
+        x: 1521
+        y: 350
+        width: 15
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2034fad0d9bb6e7e0800000000000000
+      internalID: -1736494323090898174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_26
+      rect:
+        serializedVersion: 2
+        x: 1521
+        y: 277
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce65b64c525af26e0800000000000000
+      internalID: -1860086539452983572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_27
+      rect:
+        serializedVersion: 2
+        x: 1530
+        y: 535
+        width: 9
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c8055a98665eaa6f0800000000000000
+      internalID: -672472965779730292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_28
+      rect:
+        serializedVersion: 2
+        x: 1536
+        y: 364
+        width: 22
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf240ee74167fb660800000000000000
+      internalID: 7403766142820434684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_29
+      rect:
+        serializedVersion: 2
+        x: 1539
+        y: 539
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6006eb0e9c688c50800000000000000
+      internalID: 6667698674382274670
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_30
+      rect:
+        serializedVersion: 2
+        x: 1539
+        y: 470
+        width: 48
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7170c8f5aa9208a0800000000000000
+      internalID: -6340335287750594179
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_31
+      rect:
+        serializedVersion: 2
+        x: 1541
+        y: 251
+        width: 6
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35c54cdf561d2f090800000000000000
+      internalID: -8002103351904543661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_32
+      rect:
+        serializedVersion: 2
+        x: 1547
+        y: 357
+        width: 22
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c83fdd3ab3dfb820800000000000000
+      internalID: 2936298278924269766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_33
+      rect:
+        serializedVersion: 2
+        x: 1547
+        y: 280
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2843288ac3c469040800000000000000
+      internalID: 4653991088342840450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_34
+      rect:
+        serializedVersion: 2
+        x: 1568
+        y: 320
+        width: 185
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1fd9c51e335bac010800000000000000
+      internalID: 1209978684331302385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_35
+      rect:
+        serializedVersion: 2
+        x: 1598
+        y: 299
+        width: 23
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5fd17ef0df903d060800000000000000
+      internalID: 6976931230225210869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_36
+      rect:
+        serializedVersion: 2
+        x: 1612
+        y: 313
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28973cbfdaddd7f40800000000000000
+      internalID: 5727978040408111490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_37
+      rect:
+        serializedVersion: 2
+        x: 1627
+        y: 499
+        width: 16
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f586a2a84474ac320800000000000000
+      internalID: 2578952096324413535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_38
+      rect:
+        serializedVersion: 2
+        x: 1641
+        y: 277
+        width: 31
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8a1d3bc9587010e0800000000000000
+      internalID: -2301207082529121653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_39
+      rect:
+        serializedVersion: 2
+        x: 1645
+        y: 455
+        width: 111
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27864a4edf9b623c0800000000000000
+      internalID: -4384612687084754830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_40
+      rect:
+        serializedVersion: 2
+        x: 1656
+        y: 255
+        width: 78
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 497fc8009e4ae0cd0800000000000000
+      internalID: -2589951415047882860
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_41
+      rect:
+        serializedVersion: 2
+        x: 1778
+        y: 237
+        width: 210
+        height: 160
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2756279055823280800000000000000
+      internalID: -9065036518763636946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_42
+      rect:
+        serializedVersion: 2
+        x: 1815
+        y: 295
+        width: 40
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee28a170163662e20800000000000000
+      internalID: 3325454643241845486
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_43
+      rect:
+        serializedVersion: 2
+        x: 1833
+        y: 320
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8471ff5f4673e200800000000000000
+      internalID: 208140091073328267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_44
+      rect:
+        serializedVersion: 2
+        x: 1865
+        y: 255
+        width: 15
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32051061c120b7100800000000000000
+      internalID: 106681335824863267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_45
+      rect:
+        serializedVersion: 2
+        x: 1876
+        y: 364
+        width: 8
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40aeb3716e8b97be0800000000000000
+      internalID: -1478947704242705916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_46
+      rect:
+        serializedVersion: 2
+        x: 2057
+        y: 280
+        width: 490
+        height: 272
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d12aa97431a9012f0800000000000000
+      internalID: -1004133309307248099
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_47
+      rect:
+        serializedVersion: 2
+        x: 3179
+        y: 423
+        width: 19
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba5fcca3611de69e0800000000000000
+      internalID: -1626132522028173909
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_48
+      rect:
+        serializedVersion: 2
+        x: 3240
+        y: 399
+        width: 268
+        height: 189
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32f63695a8f40c200800000000000000
+      internalID: 198245839228071715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_49
+      rect:
+        serializedVersion: 2
+        x: 3896
+        y: 310
+        width: 104
+        height: 87
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02e0dc9ccb0d434b0800000000000000
+      internalID: -5461510938835481056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_50
+      rect:
+        serializedVersion: 2
+        x: 3918
+        y: 499
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd332895c58bbfe60800000000000000
+      internalID: 7997188270104654815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_51
+      rect:
+        serializedVersion: 2
+        x: 3918
+        y: 484
+        width: 13
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 123a3de387d0b0de0800000000000000
+      internalID: -1365983251875519711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_52
+      rect:
+        serializedVersion: 2
+        x: 3932
+        y: 470
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88783e88fa273e140800000000000000
+      internalID: 4747764530420090760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_53
+      rect:
+        serializedVersion: 2
+        x: 938
+        y: 251
+        width: 16
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 432ed7f5c34991ec0800000000000000
+      internalID: -3595679840457596364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_54
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 4000
+        height: 221
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a810f80df104dcaf0800000000000000
+      internalID: -374572688614686326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_55
+      rect:
+        serializedVersion: 2
+        x: 1938
+        y: 209
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a84098168998c030800000000000000
+      internalID: 3515228310379448481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ENV_TroyWall_Terrain (1) (1)_56
+      rect:
+        serializedVersion: 2
+        x: 1946
+        y: 218
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 92881eb15376f1680800000000000000
+      internalID: -8782187270550484951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      ENV_TroyWall_Terrain (1) (1)_0: -3775253140778763062
+      ENV_TroyWall_Terrain (1) (1)_1: 405919787959410717
+      ENV_TroyWall_Terrain (1) (1)_10: 619735795453935694
+      ENV_TroyWall_Terrain (1) (1)_11: 1709492084675792306
+      ENV_TroyWall_Terrain (1) (1)_12: 4617801266596402101
+      ENV_TroyWall_Terrain (1) (1)_13: 7827301799008871649
+      ENV_TroyWall_Terrain (1) (1)_14: 3795231376481108380
+      ENV_TroyWall_Terrain (1) (1)_15: -8467394101535825021
+      ENV_TroyWall_Terrain (1) (1)_16: -4921114264443463897
+      ENV_TroyWall_Terrain (1) (1)_17: 9106719371776472316
+      ENV_TroyWall_Terrain (1) (1)_18: 2931162676799159684
+      ENV_TroyWall_Terrain (1) (1)_19: -601537912079782743
+      ENV_TroyWall_Terrain (1) (1)_2: -8306635339156187744
+      ENV_TroyWall_Terrain (1) (1)_20: 1423332378989357066
+      ENV_TroyWall_Terrain (1) (1)_21: 2626666371043793659
+      ENV_TroyWall_Terrain (1) (1)_22: 8983907274099776486
+      ENV_TroyWall_Terrain (1) (1)_23: -1397840956091531747
+      ENV_TroyWall_Terrain (1) (1)_24: 7548338277977490031
+      ENV_TroyWall_Terrain (1) (1)_25: -1736494323090898174
+      ENV_TroyWall_Terrain (1) (1)_26: -1860086539452983572
+      ENV_TroyWall_Terrain (1) (1)_27: -672472965779730292
+      ENV_TroyWall_Terrain (1) (1)_28: 7403766142820434684
+      ENV_TroyWall_Terrain (1) (1)_29: 6667698674382274670
+      ENV_TroyWall_Terrain (1) (1)_3: 1676852757108219172
+      ENV_TroyWall_Terrain (1) (1)_30: -6340335287750594179
+      ENV_TroyWall_Terrain (1) (1)_31: -8002103351904543661
+      ENV_TroyWall_Terrain (1) (1)_32: 2936298278924269766
+      ENV_TroyWall_Terrain (1) (1)_33: 4653991088342840450
+      ENV_TroyWall_Terrain (1) (1)_34: 1209978684331302385
+      ENV_TroyWall_Terrain (1) (1)_35: 6976931230225210869
+      ENV_TroyWall_Terrain (1) (1)_36: 5727978040408111490
+      ENV_TroyWall_Terrain (1) (1)_37: 2578952096324413535
+      ENV_TroyWall_Terrain (1) (1)_38: -2301207082529121653
+      ENV_TroyWall_Terrain (1) (1)_39: -4384612687084754830
+      ENV_TroyWall_Terrain (1) (1)_4: 3232923141090811967
+      ENV_TroyWall_Terrain (1) (1)_40: -2589951415047882860
+      ENV_TroyWall_Terrain (1) (1)_41: -9065036518763636946
+      ENV_TroyWall_Terrain (1) (1)_42: 3325454643241845486
+      ENV_TroyWall_Terrain (1) (1)_43: 208140091073328267
+      ENV_TroyWall_Terrain (1) (1)_44: 106681335824863267
+      ENV_TroyWall_Terrain (1) (1)_45: -1478947704242705916
+      ENV_TroyWall_Terrain (1) (1)_46: -1004133309307248099
+      ENV_TroyWall_Terrain (1) (1)_47: -1626132522028173909
+      ENV_TroyWall_Terrain (1) (1)_48: 198245839228071715
+      ENV_TroyWall_Terrain (1) (1)_49: -5461510938835481056
+      ENV_TroyWall_Terrain (1) (1)_5: 5666827423727008890
+      ENV_TroyWall_Terrain (1) (1)_50: 7997188270104654815
+      ENV_TroyWall_Terrain (1) (1)_51: -1365983251875519711
+      ENV_TroyWall_Terrain (1) (1)_52: 4747764530420090760
+      ENV_TroyWall_Terrain (1) (1)_53: -3595679840457596364
+      ENV_TroyWall_Terrain (1) (1)_54: -374572688614686326
+      ENV_TroyWall_Terrain (1) (1)_55: 3515228310379448481
+      ENV_TroyWall_Terrain (1) (1)_56: -8782187270550484951
+      ENV_TroyWall_Terrain (1) (1)_6: 4079518062039696198
+      ENV_TroyWall_Terrain (1) (1)_7: 2442042629066928262
+      ENV_TroyWall_Terrain (1) (1)_8: -218778393560012799
+      ENV_TroyWall_Terrain (1) (1)_9: 6170334525930582363
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

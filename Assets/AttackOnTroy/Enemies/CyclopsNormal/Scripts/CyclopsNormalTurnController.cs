@@ -281,6 +281,7 @@ public sealed class CyclopsNormalTurnController : MonoBehaviour
 
         throwTriggerHash = Animator.StringToHash(throwTriggerName);
         throwStateHash = Animator.StringToHash(throwStateName);
+        ApplyAccuracyCalibration();
         ApplyWalkAnimationSpeed();
     }
 
@@ -470,6 +471,9 @@ public sealed class CyclopsNormalTurnController : MonoBehaviour
             return;
         }
 
+        // Apply level-calibrated axe damage
+        projectile.SetDirectHitDamage(GetEffectiveAxeDamage());
+
         activeProjectile = projectile;
         currentPhase = TurnPhase.AxeInFlight;
 
@@ -491,7 +495,75 @@ public sealed class CyclopsNormalTurnController : MonoBehaviour
             null,
             OnAxeCompleted);
 
-        Debug.Log($"[Cyclops Normal] Threw Stone Axe - Angle: {throwAngle:F1}°, Speed: {launchSpeed:F1}, Wind: {wind:F2}, AimAccurate: {isAccurateShot}");
+        Debug.Log($"[{enemyId}] Threw Stone Axe - Angle: {throwAngle:F1}°, Speed: {launchSpeed:F1}, Wind: {wind:F2}, Damage: {GetEffectiveAxeDamage():F0}, AimAccurate: {isAccurateShot}");
+    }
+
+    public float GetEffectiveAxeDamage()
+    {
+        string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        bool isHeavy = enemyId.IndexOf("Heavy", StringComparison.OrdinalIgnoreCase) >= 0 || name.IndexOf("Heavy", StringComparison.OrdinalIgnoreCase) >= 0;
+        if (sceneName.IndexOf("Level03", StringComparison.OrdinalIgnoreCase) >= 0)
+        {
+            return isHeavy ? 28f : 20f;
+        }
+        else if (sceneName.IndexOf("Level02", StringComparison.OrdinalIgnoreCase) >= 0)
+        {
+            return 26f;
+        }
+        else
+        {
+            return 18f;
+        }
+    }
+
+    public void ApplyAccuracyCalibration()
+    {
+        string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        bool isHeavy = enemyId.IndexOf("Heavy", StringComparison.OrdinalIgnoreCase) >= 0 || name.IndexOf("Heavy", StringComparison.OrdinalIgnoreCase) >= 0;
+
+        if (sceneName.IndexOf("Level03", StringComparison.OrdinalIgnoreCase) >= 0)
+        {
+            if (isHeavy)
+            {
+                // Heavy L03: 65% - 75%
+                accuracy = 0.70f;
+                angleJitterDegrees = 1.0f;
+                speedJitterFraction = 0.02f;
+                minMissDistance = 1.6f;
+                maxMissDistance = 3.2f;
+                candidateTrajectorySamples = 14;
+            }
+            else
+            {
+                // Normal L03: 55% - 65%
+                accuracy = 0.60f;
+                angleJitterDegrees = 1.5f;
+                speedJitterFraction = 0.03f;
+                minMissDistance = 1.8f;
+                maxMissDistance = 3.6f;
+                candidateTrajectorySamples = 11;
+            }
+        }
+        else if (sceneName.IndexOf("Level02", StringComparison.OrdinalIgnoreCase) >= 0)
+        {
+            // Heavy L02: 50% - 60%
+            accuracy = 0.55f;
+            angleJitterDegrees = 1.8f;
+            speedJitterFraction = 0.035f;
+            minMissDistance = 2.0f;
+            maxMissDistance = 4.0f;
+            candidateTrajectorySamples = 10;
+        }
+        else
+        {
+            // Normal L01: 40% - 50%
+            accuracy = 0.45f;
+            angleJitterDegrees = 2.2f;
+            speedJitterFraction = 0.045f;
+            minMissDistance = 2.2f;
+            maxMissDistance = 4.5f;
+            candidateTrajectorySamples = 8;
+        }
     }
 
     private Vector2 CalculateAimVelocity(Vector3 spawnWorldPos, int facing, float wind, out bool isAccurateShot)
@@ -506,18 +578,37 @@ public sealed class CyclopsNormalTurnController : MonoBehaviour
         // Determine target position with vertical offset (e.g. Achilles' torso)
         Vector3 targetPos = targetTransform.position + Vector3.up * targetVerticalOffset;
 
-        // Configurable aiming error: determine whether this shot is an intentional miss
-        isAccurateShot = UnityEngine.Random.value <= accuracy;
-        if (!isAccurateShot)
+        // Hit streak limiter: if enemy attacks caused HP loss in 2 consecutive turns, must safe miss!
+        bool mustSafeMiss = Level01TurnManager.MustEnemyMissNext;
+        if (mustSafeMiss)
         {
+            isAccurateShot = false;
             float missSign = UnityEngine.Random.value < 0.5f ? -1f : 1f;
-            float missDist = UnityEngine.Random.Range(minMissDistance, maxMissDistance);
-            targetPos.x += missSign * missDist;
+            float safeMissDist = UnityEngine.Random.Range(Mathf.Max(2.5f, minMissDistance + 1.2f), Mathf.Max(4.5f, maxMissDistance + 1.5f));
+            targetPos.x += missSign * safeMissDist;
 
             if (levelBoundsCollider != null)
             {
                 Bounds bounds = levelBoundsCollider.bounds;
-                targetPos.x = Mathf.Clamp(targetPos.x, bounds.min.x + 1f, bounds.max.x - 1f);
+                targetPos.x = Mathf.Clamp(targetPos.x, bounds.min.x + 1.5f, bounds.max.x - 1.5f);
+            }
+            Debug.Log($"[{enemyId} AI] Forced safe miss trajectory (hit streak >= 2). Miss offset: {missSign * safeMissDist:F1}");
+        }
+        else
+        {
+            // Configurable aiming error: determine whether this shot is an intentional miss
+            isAccurateShot = UnityEngine.Random.value <= accuracy;
+            if (!isAccurateShot)
+            {
+                float missSign = UnityEngine.Random.value < 0.5f ? -1f : 1f;
+                float missDist = UnityEngine.Random.Range(minMissDistance, maxMissDistance);
+                targetPos.x += missSign * missDist;
+
+                if (levelBoundsCollider != null)
+                {
+                    Bounds bounds = levelBoundsCollider.bounds;
+                    targetPos.x = Mathf.Clamp(targetPos.x, bounds.min.x + 1f, bounds.max.x - 1f);
+                }
             }
         }
 
@@ -529,6 +620,7 @@ public sealed class CyclopsNormalTurnController : MonoBehaviour
         int dirToTarget = deltaX < 0 ? -1 : 1;
 
         float gravityY = Physics2D.gravity.y; // Standard -9.81 m/s^2
+        float effectiveWind = wind * 0.8f; // Axe wind sensitivity multiplier is 0.8
 
         List<TrajectoryCandidate> candidates = new List<TrajectoryCandidate>(candidateTrajectorySamples);
 
@@ -541,8 +633,8 @@ public sealed class CyclopsNormalTurnController : MonoBehaviour
             float candRad = candAngle * Mathf.Deg2Rad;
             float tanTheta = Mathf.Tan(candRad);
 
-            // Kinematic denominator: g - w * dirToTarget * tan(theta)
-            float denom = gravityY - wind * dirToTarget * tanTheta;
+            // Kinematic denominator: g - effectiveWind * dirToTarget * tan(theta)
+            float denom = gravityY - effectiveWind * dirToTarget * tanTheta;
             if (denom >= -0.1f)
             {
                 // Extreme headwind blowing projectile backwards
@@ -564,7 +656,7 @@ public sealed class CyclopsNormalTurnController : MonoBehaviour
                 continue;
             }
 
-            float v0x = (deltaX - 0.5f * wind * t2) / flightTime;
+            float v0x = (deltaX - 0.5f * effectiveWind * t2) / flightTime;
             float v0y = (deltaY - 0.5f * gravityY * t2) / flightTime;
             float candSpeed = Mathf.Sqrt(v0x * v0x + v0y * v0y);
 
@@ -574,7 +666,7 @@ public sealed class CyclopsNormalTurnController : MonoBehaviour
             }
 
             Vector2 candVel = new Vector2(v0x, v0y);
-            bool isClear = CheckTrajectoryClearance(spawnWorldPos, candVel, wind, flightTime, out float clearDist);
+            bool isClear = CheckTrajectoryClearance(spawnWorldPos, candVel, effectiveWind, flightTime, out float clearDist);
 
             candidates.Add(new TrajectoryCandidate
             {

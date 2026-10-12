@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/AttackOnTroy/Scenes/Splash/SCN_Splash.unity
+    guid: c0f95b3467e24da8a49032c0f934a003
+  - enabled: 1
     path: Assets/AttackOnTroy/Scenes/Menus/SCN_Home.unity
     guid: 446a961100434dd2b3d3d6b26f315552
   - enabled: 1
@@ -14,5 +17,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/AttackOnTroy/Scenes/Levels/Level02_Scamander/SCN_Level02_Scamander.unity
     guid: 6fdfc390728c475ca11a369ca718b1e8
+  - enabled: 1
+    path: Assets/AttackOnTroy/Scenes/Levels/Level03_TroyWall/SCN_Level03_TroyWall.unity
+    guid: 19a2db603994423fb0d1a6ddef76565e
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

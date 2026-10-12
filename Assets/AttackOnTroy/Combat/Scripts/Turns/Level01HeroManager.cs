@@ -19,6 +19,7 @@ public sealed class Level01HeroManager : MonoBehaviour
     [SerializeField] private Level01TurnManager turnManager;
     [SerializeField] private Level01CameraController cameraController;
     [SerializeField] private CyclopsNormalTurnController cyclopsController;
+    [SerializeField] private CyclopsNormalTurnController cyclops2Controller;
     [SerializeField] private Level01TouchControls touchControls;
     [SerializeField] private Level01Minimap minimap;
     [SerializeField] private Level01BattleUI battleUI;
@@ -93,6 +94,11 @@ public sealed class Level01HeroManager : MonoBehaviour
         if (cyclopsController != null)
         {
             cyclopsController.SetTarget(heroTransform, launcher);
+        }
+
+        if (cyclops2Controller != null)
+        {
+            cyclops2Controller.SetTarget(heroTransform, launcher);
         }
 
         if (touchControls != null)

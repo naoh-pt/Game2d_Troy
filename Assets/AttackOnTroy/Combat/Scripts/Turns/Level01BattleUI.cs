@@ -27,6 +27,12 @@ public sealed class Level01BattleUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI cyclopsHpText;
     [SerializeField] private TextMeshProUGUI cyclopsNameText;
 
+    [Header("Enemy 2 HP (Level 03 / Multi-Enemy)")]
+    [SerializeField] private GameObject cyclops2Panel;
+    [SerializeField] private Image cyclops2HpFill;
+    [SerializeField] private TextMeshProUGUI cyclops2HpText;
+    [SerializeField] private TextMeshProUGUI cyclops2NameText;
+
     [Header("HUD Pause Button")]
     [SerializeField] private Button pauseButton;
 
@@ -133,6 +139,28 @@ public sealed class Level01BattleUI : MonoBehaviour
             {
                 Transform nameTr = cPanel.Find("NameText");
                 if (nameTr != null) cyclopsNameText = nameTr.GetComponent<TextMeshProUGUI>();
+            }
+        }
+
+        Transform c2Panel = transform.Find("Cyclops2HealthPanel");
+        if (c2Panel != null)
+        {
+            if (cyclops2Panel == null)
+                cyclops2Panel = c2Panel.gameObject;
+            if (cyclops2HpFill == null)
+            {
+                Transform fillTr = c2Panel.Find("BarBackground/BarFill");
+                if (fillTr != null) cyclops2HpFill = fillTr.GetComponent<Image>();
+            }
+            if (cyclops2HpText == null)
+            {
+                Transform hpTr = c2Panel.Find("BarBackground/HpText");
+                if (hpTr != null) cyclops2HpText = hpTr.GetComponent<TextMeshProUGUI>();
+            }
+            if (cyclops2NameText == null)
+            {
+                Transform nameTr = c2Panel.Find("NameText");
+                if (nameTr != null) cyclops2NameText = nameTr.GetComponent<TextMeshProUGUI>();
             }
         }
 
@@ -279,6 +307,23 @@ public sealed class Level01BattleUI : MonoBehaviour
         }
     }
 
+    public void UpdateCyclops2Health(float current, float max)
+    {
+        EnsureFillSprites();
+        float clampedMax = Mathf.Max(1f, max);
+        float clampedCurrent = Mathf.Clamp(current, 0f, clampedMax);
+
+        if (cyclops2HpFill != null)
+        {
+            cyclops2HpFill.fillAmount = clampedCurrent / clampedMax;
+        }
+
+        if (cyclops2HpText != null)
+        {
+            cyclops2HpText.text = $"{Mathf.CeilToInt(clampedCurrent)} / {Mathf.CeilToInt(clampedMax)}";
+        }
+    }
+
     public void SetEnergySystem(PlayerEnergySystem system)
     {
         if (energySystem != null)
@@ -385,7 +430,7 @@ public sealed class Level01BattleUI : MonoBehaviour
         BattleSessionData.ReturnToCharacterSelect = false;
         BattleSessionData.ReturnToLevelSelect = false;
         Debug.Log("[Level01BattleUI] Returning to Home screen...");
-        SceneManager.LoadScene(0); // Load SCN_Home
+        SceneManager.LoadScene("SCN_Home");
     }
 
     public void GoToNextLevel()
@@ -395,7 +440,7 @@ public sealed class Level01BattleUI : MonoBehaviour
         IsGamePaused = false;
         BattleSessionData.ReturnToLevelSelect = true;
         Debug.Log("[Level01BattleUI] Progressing to Level Select...");
-        SceneManager.LoadScene(0); // Load SCN_Home with Level Select active
+        SceneManager.LoadScene("SCN_Home");
     }
 
     public void RestartBattle()
@@ -412,6 +457,15 @@ public sealed class Level01BattleUI : MonoBehaviour
 
     public void ShowResult(bool isWin, string heroName)
     {
+        if (isWin)
+        {
+            string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+            int currentLevel = 1;
+            if (sceneName.Contains("Level03") || sceneName.Contains("TroyWall")) currentLevel = 3;
+            else if (sceneName.Contains("Level02") || sceneName.Contains("Scamander")) currentLevel = 2;
+            BattleSessionData.RecordLevelVictory(currentLevel);
+        }
+
         if (isPaused)
             ResumeGame();
 
@@ -436,6 +490,8 @@ public sealed class Level01BattleUI : MonoBehaviour
             string enemyName = cyclopsNameText != null && !string.IsNullOrEmpty(cyclopsNameText.text)
                 ? cyclopsNameText.text
                 : "Cyclops";
+            if (cyclops2Panel != null)
+                enemyName = "The Cyclopes";
             resultSubtitleText.text = isWin
                 ? $"{enemyName} Defeated!"
                 : $"{heroName} Has Fallen!";

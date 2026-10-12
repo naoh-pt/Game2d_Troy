@@ -11,10 +11,10 @@ using UnityEngine;
 public sealed class FirePatch2D : MonoBehaviour
 {
     [Header("Lifetime")]
-    [SerializeField, Min(0.5f)] private float duration = 4.0f;
+    [SerializeField, Min(0.5f)] private float duration = 3.0f;
 
     [Header("Damage")]
-    [SerializeField, Min(0.1f)] private float damageInterval = 0.5f;
+    [SerializeField, Min(0.1f)] private float damageInterval = 1.0f;
     [SerializeField, Min(0f)] private float damagePerTick = 8f;
     [SerializeField, Min(0.1f)] private float damageRadius = 1.6f;
     [SerializeField] private LayerMask damageLayers = ~0;
@@ -23,6 +23,8 @@ public sealed class FirePatch2D : MonoBehaviour
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Sprite[] animationFrames;
     [SerializeField, Min(1f)] private float animationFps = 12f;
+
+    private static readonly Dictionary<IDamageable2D, float> targetLastFireDamageTime = new Dictionary<IDamageable2D, float>();
 
     private float lifetimeTimer;
     private float tickTimer;
@@ -38,6 +40,11 @@ public sealed class FirePatch2D : MonoBehaviour
     public float DamagePerTick => damagePerTick;
     public GameObject Owner => owner;
 
+    public static void ResetFireThrottle()
+    {
+        targetLastFireDamageTime.Clear();
+    }
+
     public void Initialize(GameObject patchOwner)
     {
         owner = patchOwner;
@@ -52,7 +59,7 @@ public sealed class FirePatch2D : MonoBehaviour
     private void Start()
     {
         lifetimeTimer = duration;
-        tickTimer = 0f; // Immediate first damage tick on spawn
+        tickTimer = 0f; // Immediate first damage tick on spawn (t=0)
         SnapToGround();
     }
 
@@ -118,8 +125,20 @@ public sealed class FirePatch2D : MonoBehaviour
             }
         }
 
+        float now = Time.time;
         foreach (IDamageable2D target in uniqueRecipients)
         {
+            if (target == null || (target is UnityEngine.Object obj && obj == null))
+                continue;
+
+            // Enforce minimum 1.0s window between fire ticks for any target to prevent overlapping patch damage stacking
+            if (targetLastFireDamageTime.TryGetValue(target, out float lastTime))
+            {
+                if (now < lastTime + 0.95f)
+                    continue;
+            }
+
+            targetLastFireDamageTime[target] = now;
             try
             {
                 target.ApplyDamage(damagePerTick, transform.position, owner != null ? owner : gameObject);
@@ -129,6 +148,19 @@ public sealed class FirePatch2D : MonoBehaviour
                 Debug.LogException(ex, this);
             }
         }
+    }
+
+    private void OnDestroy()
+    {
+        // Cleanup destroyed targets
+        var keysToRemove = new List<IDamageable2D>();
+        foreach (var kvp in targetLastFireDamageTime)
+        {
+            if (kvp.Key == null || (kvp.Key is UnityEngine.Object obj && obj == null))
+                keysToRemove.Add(kvp.Key);
+        }
+        for (int i = 0; i < keysToRemove.Count; i++)
+            targetLastFireDamageTime.Remove(keysToRemove[i]);
     }
 
     private void OnDrawGizmosSelected()

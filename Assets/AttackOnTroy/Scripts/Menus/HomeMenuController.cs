@@ -17,7 +17,7 @@ namespace AttackOnTroy.Menus
     /// Controls the initial Home, Level Select, and Character Select menu flow.
     /// Manages panel transitions (Home <-> Level Select <-> Character Select) and routes level loading.
     /// Supports selecting between Achilles and Odysseus with clear highlight, Idle art presentation,
-    /// Back navigation, and Start Battle button.
+    /// Back navigation, Start Battle button, and persistent Level 01-03 unlock progression.
     /// </summary>
     [DisallowMultipleComponent]
     public sealed class HomeMenuController : MonoBehaviour
@@ -27,15 +27,28 @@ namespace AttackOnTroy.Menus
         [SerializeField] private GameObject levelSelectPanel;
         [SerializeField] private GameObject characterSelectPanel;
 
+        [Header("Backgrounds")]
+        [SerializeField] private Image homeBackgroundImage;
+        [SerializeField] private Image levelSelectBackgroundImage;
+        [SerializeField] private Image characterSelectBackgroundImage;
+
         [Header("Home Screen Buttons")]
         [SerializeField] private Button playButton;
         [SerializeField] private Button exitButton;
+        [SerializeField] private Button soundButton;
+        [SerializeField] private TextMeshProUGUI soundButtonText;
 
-        [Header("Level Select Buttons")]
+        [Header("Level Select Buttons & Cards")]
         [SerializeField] private Button backButton;
         [SerializeField] private Button level01Button;
         [SerializeField] private Button level02Button;
         [SerializeField] private Button level03Button;
+        [SerializeField] private Image level01CardImage;
+        [SerializeField] private Image level02CardImage;
+        [SerializeField] private Image level03CardImage;
+        [SerializeField] private TextMeshProUGUI level01Text;
+        [SerializeField] private TextMeshProUGUI level02Text;
+        [SerializeField] private TextMeshProUGUI level03Text;
 
         [Header("Character Select UI")]
         [SerializeField] private Button achillesCardButton;
@@ -48,6 +61,7 @@ namespace AttackOnTroy.Menus
         [Header("Scene Routing")]
         [SerializeField] private string level01SceneName = "SCN_Level01_Beach";
         [SerializeField] private string level02SceneName = "SCN_Level02_Scamander";
+        [SerializeField] private string level03SceneName = "SCN_Level03_TroyWall";
 
         private MenuScreenState currentState = MenuScreenState.Home;
         private int selectedLevelIndex = 1;
@@ -83,6 +97,11 @@ namespace AttackOnTroy.Menus
 
             if (homePanel != null)
             {
+                if (homeBackgroundImage == null)
+                {
+                    Transform bg = homePanel.transform.Find("Background");
+                    if (bg != null) homeBackgroundImage = bg.GetComponent<Image>();
+                }
                 if (playButton == null)
                 {
                     Transform btn = homePanel.transform.Find("PlayButton");
@@ -93,10 +112,25 @@ namespace AttackOnTroy.Menus
                     Transform btn = homePanel.transform.Find("ExitButton");
                     if (btn != null) exitButton = btn.GetComponent<Button>();
                 }
+                if (soundButton == null)
+                {
+                    Transform btn = homePanel.transform.Find("SoundButton");
+                    if (btn != null) soundButton = btn.GetComponent<Button>();
+                }
+                if (soundButton != null && soundButtonText == null)
+                {
+                    soundButtonText = soundButton.GetComponentInChildren<TextMeshProUGUI>();
+                }
             }
 
             if (levelSelectPanel != null)
             {
+                if (levelSelectBackgroundImage == null)
+                {
+                    Transform bg = levelSelectPanel.transform.Find("Background");
+                    if (bg != null) levelSelectBackgroundImage = bg.GetComponent<Image>();
+                }
+
                 Transform dialog = levelSelectPanel.transform.Find("DialogFrame");
                 if (dialog != null)
                 {
@@ -125,6 +159,12 @@ namespace AttackOnTroy.Menus
 
             if (characterSelectPanel != null)
             {
+                if (characterSelectBackgroundImage == null)
+                {
+                    Transform bg = characterSelectPanel.transform.Find("Background");
+                    if (bg != null) characterSelectBackgroundImage = bg.GetComponent<Image>();
+                }
+
                 Transform dialog = characterSelectPanel.transform.Find("DialogFrame");
                 if (dialog != null)
                 {
@@ -160,6 +200,22 @@ namespace AttackOnTroy.Menus
                     }
                 }
             }
+
+            if (level01Button != null)
+            {
+                if (level01CardImage == null) level01CardImage = level01Button.GetComponent<Image>();
+                if (level01Text == null) level01Text = level01Button.GetComponentInChildren<TextMeshProUGUI>();
+            }
+            if (level02Button != null)
+            {
+                if (level02CardImage == null) level02CardImage = level02Button.GetComponent<Image>();
+                if (level02Text == null) level02Text = level02Button.GetComponentInChildren<TextMeshProUGUI>();
+            }
+            if (level03Button != null)
+            {
+                if (level03CardImage == null) level03CardImage = level03Button.GetComponent<Image>();
+                if (level03Text == null) level03Text = level03Button.GetComponentInChildren<TextMeshProUGUI>();
+            }
         }
 
         private void Start()
@@ -179,6 +235,19 @@ namespace AttackOnTroy.Menus
                 ShowHomeScreen();
             }
             UpdateCharacterSelectionVisuals();
+            UpdateLevelSelectVisuals();
+            if (Audio.AudioManager.Instance != null)
+            {
+                Audio.AudioManager.Instance.OnSoundToggled -= OnSoundToggledCallback;
+                Audio.AudioManager.Instance.OnSoundToggled += OnSoundToggledCallback;
+            }
+            UpdateSoundButtonVisual();
+        }
+
+        private void OnEnable()
+        {
+            UpdateLevelSelectVisuals();
+            UpdateSoundButtonVisual();
         }
 
         private void HookButtons()
@@ -195,6 +264,12 @@ namespace AttackOnTroy.Menus
                 exitButton.onClick.AddListener(OnExitClicked);
             }
 
+            if (soundButton != null)
+            {
+                soundButton.onClick.RemoveListener(OnSoundButtonClicked);
+                soundButton.onClick.AddListener(OnSoundButtonClicked);
+            }
+
             if (backButton != null)
             {
                 backButton.onClick.RemoveListener(OnBackClicked);
@@ -205,19 +280,18 @@ namespace AttackOnTroy.Menus
             {
                 level01Button.onClick.RemoveListener(OnLevel01Clicked);
                 level01Button.onClick.AddListener(OnLevel01Clicked);
-                level01Button.interactable = true;
             }
 
             if (level02Button != null)
             {
                 level02Button.onClick.RemoveListener(OnLevel02Clicked);
                 level02Button.onClick.AddListener(OnLevel02Clicked);
-                level02Button.interactable = true;
             }
 
             if (level03Button != null)
             {
-                level03Button.interactable = false;
+                level03Button.onClick.RemoveListener(OnLevel03Clicked);
+                level03Button.onClick.AddListener(OnLevel03Clicked);
             }
 
             if (achillesCardButton != null)
@@ -243,6 +317,8 @@ namespace AttackOnTroy.Menus
                 startBattleButton.onClick.RemoveListener(OnStartBattleClicked);
                 startBattleButton.onClick.AddListener(OnStartBattleClicked);
             }
+
+            UpdateLevelSelectVisuals();
         }
 
         public void ShowHomeScreen()
@@ -259,6 +335,7 @@ namespace AttackOnTroy.Menus
             if (homePanel != null) homePanel.SetActive(false);
             if (levelSelectPanel != null) levelSelectPanel.SetActive(true);
             if (characterSelectPanel != null) characterSelectPanel.SetActive(false);
+            UpdateLevelSelectVisuals();
         }
 
         public void ShowCharacterSelectScreen()
@@ -297,6 +374,47 @@ namespace AttackOnTroy.Menus
 #endif
         }
 
+        public void OnSoundButtonClicked()
+        {
+            if (Audio.AudioManager.Instance != null)
+            {
+                Audio.AudioManager.Instance.ToggleSound();
+            }
+            else
+            {
+                bool muted = PlayerPrefs.GetInt("AttackOnTroy_SoundMuted", 0) == 1;
+                muted = !muted;
+                PlayerPrefs.SetInt("AttackOnTroy_SoundMuted", muted ? 1 : 0);
+                PlayerPrefs.Save();
+                AudioListener.volume = muted ? 0f : 1f;
+            }
+            UpdateSoundButtonVisual();
+        }
+
+        public void UpdateSoundButtonVisual()
+        {
+            if (soundButtonText == null) return;
+            bool isMuted = Audio.AudioManager.Instance != null 
+                ? Audio.AudioManager.Instance.IsSoundMuted 
+                : PlayerPrefs.GetInt("AttackOnTroy_SoundMuted", 0) == 1;
+            soundButtonText.text = isMuted
+                ? "<b><color=#D32F2F>SOUND: OFF</color></b>"
+                : "<b><color=#4CAF50>SOUND: ON</color></b>";
+        }
+
+        private void OnSoundToggledCallback(bool isMuted)
+        {
+            UpdateSoundButtonVisual();
+        }
+
+        private void OnDestroy()
+        {
+            if (Audio.AudioManager.Instance != null)
+            {
+                Audio.AudioManager.Instance.OnSoundToggled -= OnSoundToggledCallback;
+            }
+        }
+
         public void OnLevel01Clicked()
         {
             SelectLevel(1);
@@ -307,16 +425,82 @@ namespace AttackOnTroy.Menus
             SelectLevel(2);
         }
 
+        public void OnLevel03Clicked()
+        {
+            SelectLevel(3);
+        }
+
         public void SelectLevel(int levelIndex)
         {
-            selectedLevelIndex = levelIndex;
-            if (selectedLevelIndex == 1 || selectedLevelIndex == 2)
+            if (levelIndex < 1 || levelIndex > 3)
             {
-                ShowCharacterSelectScreen();
+                Debug.LogWarning($"[HomeMenuController] Invalid Level {levelIndex}.");
+                return;
             }
-            else
+
+            if (!BattleSessionData.IsLevelUnlocked(levelIndex))
             {
-                Debug.LogWarning($"[HomeMenuController] Level {selectedLevelIndex} is currently locked.");
+                Debug.LogWarning($"[HomeMenuController] Level {levelIndex} is currently locked. Complete previous level to unlock.");
+                return;
+            }
+
+            selectedLevelIndex = levelIndex;
+            ShowCharacterSelectScreen();
+        }
+
+        public void UpdateLevelSelectVisuals()
+        {
+            UpdateCardVisual(level01Button, level01CardImage, level01Text, 1,
+                BattleSessionData.IsLevelUnlocked(1),
+                BattleSessionData.IsLevelCompleted(1),
+                "BEACH OF TROY", "BOSS: CYCLOPS");
+
+            UpdateCardVisual(level02Button, level02CardImage, level02Text, 2,
+                BattleSessionData.IsLevelUnlocked(2),
+                BattleSessionData.IsLevelCompleted(2),
+                "SCAMANDER", "RIVER CROSSING");
+
+            UpdateCardVisual(level03Button, level03CardImage, level03Text, 3,
+                BattleSessionData.IsLevelUnlocked(3),
+                BattleSessionData.IsLevelCompleted(3),
+                "WALLS OF TROY", "THE GATES");
+        }
+
+        private void UpdateCardVisual(Button button, Image cardImage, TextMeshProUGUI cardText, int levelIndex, bool isUnlocked, bool isCompleted, string title, string subtitle)
+        {
+            if (button != null)
+            {
+                button.interactable = isUnlocked;
+            }
+
+            if (cardImage != null)
+            {
+                cardImage.color = isUnlocked
+                    ? new Color(0.20f, 0.32f, 0.46f, 0.95f)
+                    : new Color(0.08f, 0.10f, 0.14f, 0.90f);
+            }
+
+            if (cardText != null)
+            {
+                string levelNum = $"LEVEL 0{levelIndex}";
+                if (isUnlocked)
+                {
+                    string statusTag = isCompleted
+                        ? "<b><color=#FFD700><size=24>★ CLEARED ★</size></color></b>"
+                        : "<b><color=#4CAF50><size=26>[ BATTLE ]</size></color></b>";
+
+                    cardText.text = $"<b><color=#FFD700>{levelNum}</color></b>\n" +
+                                    $"<size=28><b>{title}</b></size>\n\n" +
+                                    $"<color=#D4B26F><size=20>{subtitle}</size></color>\n\n\n" +
+                                    $"{statusTag}";
+                }
+                else
+                {
+                    cardText.text = $"<b><color=#777777>{levelNum}</color></b>\n" +
+                                    $"<size=28><color=#888888>{title}</color></size>\n\n" +
+                                    $"<color=#555555><size=20>{subtitle}</size></color>\n\n\n" +
+                                    $"<b><color=#D32F2F><size=24>[ LOCKED ]</size></color></b>";
+                }
             }
         }
 
@@ -362,6 +546,11 @@ namespace AttackOnTroy.Menus
             {
                 Debug.Log($"[HomeMenuController] Loading Level 02: {level02SceneName} with Hero: {BattleSessionData.SelectedHero}");
                 SceneManager.LoadScene(level02SceneName);
+            }
+            else if (selectedLevelIndex == 3)
+            {
+                Debug.Log($"[HomeMenuController] Loading Level 03: {level03SceneName} with Hero: {BattleSessionData.SelectedHero}");
+                SceneManager.LoadScene(level03SceneName);
             }
             else
             {

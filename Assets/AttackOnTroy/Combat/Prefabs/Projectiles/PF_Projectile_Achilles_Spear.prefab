@@ -208,7 +208,7 @@ MonoBehaviour:
   bombVisualDegreesPerSecond: 360
   maxLifetime: 10
   levelBoundsCollider: {fileID: 0}
-  directHitDamage: 25
+  directHitDamage: 34
   embeddedDuration: 0.8
   embedDepth: 0.08
   areaDamage: 30
@@ -220,3 +220,4 @@ MonoBehaviour:
   terrainTarget: {fileID: 0}
   explosionResolveDuration: 0.45
   explosionEffectPrefab: {fileID: 0}
+  windSensitivity: 0.75

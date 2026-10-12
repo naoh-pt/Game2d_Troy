@@ -36,6 +36,12 @@ public sealed class Level01TurnManager : MonoBehaviour
     [SerializeField] private ActorDamageReceiver2D playerDamageReceiver;
     [SerializeField] private ActorDamageReceiver2D cyclopsDamageReceiver;
 
+    [Header("Secondary Enemy References (Level 03+)")]
+    [SerializeField] private Transform cyclops2Transform;
+    [SerializeField] private GroundedActorMotor2D cyclops2Motor;
+    [SerializeField] private CyclopsNormalTurnController cyclops2Controller;
+    [SerializeField] private ActorDamageReceiver2D cyclops2DamageReceiver;
+
     [Header("Camera & UI References")]
     [SerializeField] private Level01CameraController cameraController;
     [SerializeField] private TextMeshProUGUI turnText;
@@ -59,7 +65,19 @@ public sealed class Level01TurnManager : MonoBehaviour
     private bool isBattleOver;
     private bool hasPlayedOpeningDialogue;
     private int enemyTurnCount;
+    private int enemyTurnCycleIndex = 0; // Alternates between 0 (Enemy 1) and 1 (Enemy 2)
+    private CyclopsNormalTurnController currentActingEnemyController;
+    private Transform currentActingEnemyTransform;
     private readonly System.Collections.Generic.HashSet<string> playedEnemyDialogueIds = new System.Collections.Generic.HashSet<string>();
+
+    // Hit streak limiter (shared across Normal & Heavy)
+    private static int consecutiveEnemyHits = 0;
+    private bool playerDamagedDuringCurrentEnemyTurn = false;
+    private bool hasUsedPlayerSelfHeal = false;
+
+    public static int ConsecutiveEnemyHits => consecutiveEnemyHits;
+    public static bool MustEnemyMissNext => consecutiveEnemyHits >= 2;
+    public bool HasUsedPlayerSelfHeal => hasUsedPlayerSelfHeal;
 
     public Level01TurnState CurrentState => currentState;
     public bool IsPlayerTurn => currentState == Level01TurnState.PlayerTurn && !isBattleOver;
@@ -77,10 +95,25 @@ public sealed class Level01TurnManager : MonoBehaviour
         set => battleResultDelay = Mathf.Max(0.1f, value);
     }
 
+    public bool IsEnemy1Alive => cyclopsDamageReceiver != null && !cyclopsDamageReceiver.IsDead;
+    public bool IsEnemy2Alive => cyclops2DamageReceiver != null && !cyclops2DamageReceiver.IsDead;
+    public bool AreAllEnemiesDead
+    {
+        get
+        {
+            if (cyclopsDamageReceiver != null && !cyclopsDamageReceiver.IsDead) return false;
+            if (cyclops2DamageReceiver != null && !cyclops2DamageReceiver.IsDead) return false;
+            return true;
+        }
+    }
+
     public event Action<bool> BattleEnded;
 
     private void Awake()
     {
+        consecutiveEnemyHits = 0;
+        playerDamagedDuringCurrentEnemyTurn = false;
+        hasUsedPlayerSelfHeal = false;
         InitializeReferences();
     }
 
@@ -129,7 +162,10 @@ public sealed class Level01TurnManager : MonoBehaviour
 
         if (IsEnemySpeaker(line.speakerName))
         {
-            if (cyclopsTransform != null)
+            Transform targetEnemyTr = GetEnemyTransformForSpeaker(line.speakerName);
+            if (targetEnemyTr != null)
+                cameraController.FocusActor(targetEnemyTr);
+            else if (cyclopsTransform != null)
                 cameraController.FocusActor(cyclopsTransform);
         }
         else
@@ -139,14 +175,33 @@ public sealed class Level01TurnManager : MonoBehaviour
         }
     }
 
+    private Transform GetEnemyTransformForSpeaker(string speakerName)
+    {
+        if (string.IsNullOrEmpty(speakerName)) return cyclopsTransform;
+        if (cyclops2Controller != null && cyclops2Transform != null)
+        {
+            if (speakerName.IndexOf(cyclops2Controller.EnemyId, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                speakerName.IndexOf("Heavy", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                return cyclops2Transform;
+            }
+        }
+        if (currentActingEnemyTransform != null)
+            return currentActingEnemyTransform;
+        return cyclopsTransform != null ? cyclopsTransform : cyclops2Transform;
+    }
+
     private bool IsEnemySpeaker(string speakerName)
     {
         if (string.IsNullOrEmpty(speakerName))
             return false;
 
-        string enemyId = cyclopsController != null ? cyclopsController.EnemyId : "CyclopsNormal";
+        string enemy1Id = cyclopsController != null ? cyclopsController.EnemyId : "CyclopsNormal";
+        string enemy2Id = cyclops2Controller != null ? cyclops2Controller.EnemyId : "CyclopsHeavy";
+
         return speakerName.IndexOf("Cyclops", StringComparison.OrdinalIgnoreCase) >= 0
-            || speakerName.IndexOf(enemyId, StringComparison.OrdinalIgnoreCase) >= 0;
+            || speakerName.IndexOf(enemy1Id, StringComparison.OrdinalIgnoreCase) >= 0
+            || speakerName.IndexOf(enemy2Id, StringComparison.OrdinalIgnoreCase) >= 0;
     }
 
     private void OnEnable()
@@ -199,12 +254,66 @@ public sealed class Level01TurnManager : MonoBehaviour
         }
     }
 
+    private void SelectActiveEnemyForNextTurn()
+    {
+        bool enemy1Alive = IsEnemy1Alive;
+        bool enemy2Alive = IsEnemy2Alive;
+
+        if (enemy1Alive && enemy2Alive)
+        {
+            // Both alive: alternate between 0 and 1
+            if (enemyTurnCycleIndex % 2 == 0)
+            {
+                currentActingEnemyController = cyclopsController;
+                currentActingEnemyTransform = cyclopsTransform;
+            }
+            else
+            {
+                currentActingEnemyController = cyclops2Controller != null ? cyclops2Controller : cyclopsController;
+                currentActingEnemyTransform = cyclops2Transform != null ? cyclops2Transform : cyclopsTransform;
+            }
+            enemyTurnCycleIndex++;
+        }
+        else if (enemy1Alive)
+        {
+            currentActingEnemyController = cyclopsController;
+            currentActingEnemyTransform = cyclopsTransform;
+        }
+        else if (enemy2Alive)
+        {
+            currentActingEnemyController = cyclops2Controller;
+            currentActingEnemyTransform = cyclops2Transform;
+        }
+        else
+        {
+            currentActingEnemyController = null;
+            currentActingEnemyTransform = null;
+        }
+    }
+
     private void TryTriggerEnemyDialogueOrStartTurn()
     {
         if (isBattleOver)
             return;
 
-        string enemyId = cyclopsController != null ? cyclopsController.EnemyId : "CyclopsNormal";
+        if (currentActingEnemyController == null)
+            SelectActiveEnemyForNextTurn();
+
+        if (currentActingEnemyController == null)
+        {
+            // All enemies dead or missing
+            if (AreAllEnemiesDead)
+            {
+                EndBattle(true);
+            }
+            else
+            {
+                EnterState(Level01TurnState.TurnTransition);
+            }
+            return;
+        }
+
+        string enemyId = currentActingEnemyController.EnemyId;
         DialogueLine[] preAttackLines = dialogueData != null ? dialogueData.GetEnemyTurnTauntLines(enemyId, enemyTurnCount) : null;
         enemyTurnCount++;
 
@@ -369,6 +478,9 @@ public sealed class Level01TurnManager : MonoBehaviour
 
         if (cyclopsDamageReceiver != null)
             battleUI.UpdateCyclopsHealth(cyclopsDamageReceiver.CurrentHealth, cyclopsDamageReceiver.MaximumHealth);
+
+        if (cyclops2DamageReceiver != null)
+            battleUI.UpdateCyclops2Health(cyclops2DamageReceiver.CurrentHealth, cyclops2DamageReceiver.MaximumHealth);
     }
 
     private void SubscribeLauncherEvents()
@@ -402,6 +514,11 @@ public sealed class Level01TurnManager : MonoBehaviour
             cyclopsController.TurnCompleted -= OnCyclopsTurnCompleted;
             cyclopsController.TurnCompleted += OnCyclopsTurnCompleted;
         }
+        if (cyclops2Controller != null)
+        {
+            cyclops2Controller.TurnCompleted -= OnCyclopsTurnCompleted;
+            cyclops2Controller.TurnCompleted += OnCyclopsTurnCompleted;
+        }
     }
 
     private void UnsubscribeCyclopsEvents()
@@ -409,6 +526,10 @@ public sealed class Level01TurnManager : MonoBehaviour
         if (cyclopsController != null)
         {
             cyclopsController.TurnCompleted -= OnCyclopsTurnCompleted;
+        }
+        if (cyclops2Controller != null)
+        {
+            cyclops2Controller.TurnCompleted -= OnCyclopsTurnCompleted;
         }
     }
 
@@ -418,20 +539,52 @@ public sealed class Level01TurnManager : MonoBehaviour
         {
             playerDamageReceiver.HealthChanged -= OnPlayerHealthChanged;
             playerDamageReceiver.HealthChanged += OnPlayerHealthChanged;
+
+            playerDamageReceiver.DamageApplied -= OnPlayerDamageAppliedForTurnStreak;
+            playerDamageReceiver.DamageApplied += OnPlayerDamageAppliedForTurnStreak;
         }
         if (cyclopsDamageReceiver != null)
         {
             cyclopsDamageReceiver.HealthChanged -= OnCyclopsHealthChanged;
             cyclopsDamageReceiver.HealthChanged += OnCyclopsHealthChanged;
         }
+        if (cyclops2DamageReceiver != null)
+        {
+            cyclops2DamageReceiver.HealthChanged -= OnCyclops2HealthChanged;
+            cyclops2DamageReceiver.HealthChanged += OnCyclops2HealthChanged;
+        }
     }
 
     private void UnsubscribeDamageEvents()
     {
         if (playerDamageReceiver != null)
+        {
             playerDamageReceiver.HealthChanged -= OnPlayerHealthChanged;
+            playerDamageReceiver.DamageApplied -= OnPlayerDamageAppliedForTurnStreak;
+        }
         if (cyclopsDamageReceiver != null)
             cyclopsDamageReceiver.HealthChanged -= OnCyclopsHealthChanged;
+        if (cyclops2DamageReceiver != null)
+            cyclops2DamageReceiver.HealthChanged -= OnCyclops2HealthChanged;
+    }
+
+    private void OnPlayerDamageAppliedForTurnStreak(float actualHpLost, Vector2 hitPoint, GameObject source)
+    {
+        if (actualHpLost <= 0f) return;
+
+        // Check if damage originated from an enemy axe during enemy preparation/turn
+        if (currentState == Level01TurnState.CyclopsTurn || currentState == Level01TurnState.CyclopsPreparation)
+        {
+            Projectile2D proj = source != null ? source.GetComponent<Projectile2D>() : null;
+            if (proj != null && proj.ImpactType == ProjectileImpactType.StoneAxe)
+            {
+                playerDamagedDuringCurrentEnemyTurn = true;
+            }
+            else if (source != null && (source == cyclopsTransform?.gameObject || source == cyclops2Transform?.gameObject || source.GetComponentInParent<CyclopsNormalTurnController>() != null))
+            {
+                playerDamagedDuringCurrentEnemyTurn = true;
+            }
+        }
     }
 
     private void OnPlayerHealthChanged(float current, float max)
@@ -450,9 +603,52 @@ public sealed class Level01TurnManager : MonoBehaviour
         if (battleUI != null)
             battleUI.UpdateCyclopsHealth(current, max);
 
-        if (current <= 0f && !isBattleOver)
+        if (current <= 0f)
         {
-            EndBattle(true);
+            if (cyclopsController != null)
+                cyclopsController.enabled = false;
+            if (cyclopsMotor != null)
+            {
+                cyclopsMotor.SetMovementEnabled(false);
+                cyclopsMotor.SetMoveInput(0f);
+            }
+            if (cyclopsDamageReceiver != null)
+            {
+                cyclopsDamageReceiver.enabled = false;
+                cyclopsDamageReceiver.TriggerDeathAnimation();
+            }
+
+            if (AreAllEnemiesDead && !isBattleOver)
+            {
+                EndBattle(true);
+            }
+        }
+    }
+
+    private void OnCyclops2HealthChanged(float current, float max)
+    {
+        if (battleUI != null)
+            battleUI.UpdateCyclops2Health(current, max);
+
+        if (current <= 0f)
+        {
+            if (cyclops2Controller != null)
+                cyclops2Controller.enabled = false;
+            if (cyclops2Motor != null)
+            {
+                cyclops2Motor.SetMovementEnabled(false);
+                cyclops2Motor.SetMoveInput(0f);
+            }
+            if (cyclops2DamageReceiver != null)
+            {
+                cyclops2DamageReceiver.enabled = false;
+                cyclops2DamageReceiver.TriggerDeathAnimation();
+            }
+
+            if (AreAllEnemiesDead && !isBattleOver)
+            {
+                EndBattle(true);
+            }
         }
     }
 
@@ -489,10 +685,21 @@ public sealed class Level01TurnManager : MonoBehaviour
             cyclopsMotor.SetMoveInput(0f);
         }
 
-        // Disable further collision damage on the defeated actor
-        if (isWin && cyclopsDamageReceiver != null)
+        if (cyclops2Controller != null)
+            cyclops2Controller.enabled = false;
+        if (cyclops2Motor != null)
         {
-            cyclopsDamageReceiver.enabled = false;
+            cyclops2Motor.SetMovementEnabled(false);
+            cyclops2Motor.SetMoveInput(0f);
+        }
+
+        // Disable further collision damage on the defeated actor
+        if (isWin)
+        {
+            if (cyclopsDamageReceiver != null)
+                cyclopsDamageReceiver.enabled = false;
+            if (cyclops2DamageReceiver != null)
+                cyclops2DamageReceiver.enabled = false;
         }
         else if (!isWin && playerDamageReceiver != null)
         {
@@ -502,23 +709,52 @@ public sealed class Level01TurnManager : MonoBehaviour
         // Focus camera on the defeated actor so death animation is clearly visible
         if (cameraController != null)
         {
-            if (isWin && cyclopsTransform != null)
-                cameraController.FocusActor(cyclopsTransform);
+            if (isWin)
+            {
+                Transform targetToFocus = currentActingEnemyTransform != null ? currentActingEnemyTransform : (cyclopsTransform != null ? cyclopsTransform : cyclops2Transform);
+                if (targetToFocus != null)
+                    cameraController.FocusActor(targetToFocus);
+            }
             else if (!isWin && playerTransform != null)
+            {
                 cameraController.FocusActor(playerTransform);
+            }
         }
 
         // Ensure death animation trigger is set on the defeated actor
-        if (isWin && cyclopsDamageReceiver != null)
-            cyclopsDamageReceiver.TriggerDeathAnimation();
+        if (isWin)
+        {
+            if (cyclopsDamageReceiver != null && cyclopsDamageReceiver.IsDead)
+                cyclopsDamageReceiver.TriggerDeathAnimation();
+            if (cyclops2DamageReceiver != null && cyclops2DamageReceiver.IsDead)
+                cyclops2DamageReceiver.TriggerDeathAnimation();
+        }
         else if (!isWin && playerDamageReceiver != null)
+        {
             playerDamageReceiver.TriggerDeathAnimation();
+        }
 
         UpdateTurnHUD(isWin ? "VICTORY" : "DEFEAT");
 
         // Delayed display of result panel so death animation can be seen
+        if (isWin)
+        {
+            int currentLevel = GetCurrentLevelIndex();
+            BattleSessionData.RecordLevelVictory(currentLevel);
+        }
+
         StartCoroutine(ShowResultDelayedRoutine(isWin, battleResultDelay));
         Debug.Log($"[Level01TurnManager] Battle ending with result: {(isWin ? "WIN" : "LOSE")} (Result delay: {battleResultDelay:F1}s)");
+    }
+
+    private int GetCurrentLevelIndex()
+    {
+        string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        if (sceneName.Contains("Level03") || sceneName.Contains("TroyWall"))
+            return 3;
+        if (sceneName.Contains("Level02") || sceneName.Contains("Scamander"))
+            return 2;
+        return 1;
     }
 
     private System.Collections.IEnumerator ShowResultDelayedRoutine(bool isWin, float delay)
@@ -579,8 +815,18 @@ public sealed class Level01TurnManager : MonoBehaviour
         if (isBattleOver)
             return;
 
-        // After Achilles projectile resolves (actor hit, terrain hit, timeout, or bounds),
-        // enter the Cyclops preparation pause. A lethal hit already bypassed this path.
+        // After player projectile resolves, choose next active enemy and enter preparation pause.
+        SelectActiveEnemyForNextTurn();
+
+        if (currentActingEnemyController == null)
+        {
+            if (AreAllEnemiesDead)
+            {
+                EndBattle(true);
+                return;
+            }
+        }
+
         if (currentState == Level01TurnState.ProjectileFlight || currentState == Level01TurnState.PlayerThrowing)
         {
             EnterState(Level01TurnState.CyclopsPreparation);
@@ -591,6 +837,18 @@ public sealed class Level01TurnManager : MonoBehaviour
     {
         if (isBattleOver)
             return;
+
+        if (playerDamagedDuringCurrentEnemyTurn)
+        {
+            consecutiveEnemyHits++;
+            Debug.Log($"[Level01TurnManager] Player was damaged by enemy this turn. Consecutive enemy hits: {consecutiveEnemyHits}");
+        }
+        else
+        {
+            consecutiveEnemyHits = 0;
+            Debug.Log("[Level01TurnManager] Enemy missed player. Reset consecutive enemy hits to 0.");
+        }
+        playerDamagedDuringCurrentEnemyTurn = false;
 
         if (currentState == Level01TurnState.CyclopsTurn)
         {
@@ -621,6 +879,7 @@ public sealed class Level01TurnManager : MonoBehaviour
 
             case Level01TurnState.PlayerTurn:
                 UpdateTurnHUD("PLAYER TURN");
+                CheckAndApplyPlayerSelfHeal();
                 if (launcher != null)
                     launcher.SetTurnInputEnabled(true);
                 else if (playerMotor != null)
@@ -640,27 +899,46 @@ public sealed class Level01TurnManager : MonoBehaviour
                 break;
 
             case Level01TurnState.CyclopsPreparation:
-                // Configurable pause (1.5s): display CYCLOPS TURN and focus camera on Cyclops.
-                // Cyclops does NOT act until this pause completes.
+                // Configurable pause: display CYCLOPS TURN and focus camera on active enemy.
+                playerDamagedDuringCurrentEnemyTurn = false;
                 UpdateTurnHUD("CYCLOPS TURN");
                 if (launcher != null)
                     launcher.SetTurnInputEnabled(false);
 
-                if (cameraController != null && cyclopsTransform != null)
-                    cameraController.FocusActor(cyclopsTransform);
+                Transform prepFocus = currentActingEnemyTransform != null ? currentActingEnemyTransform : (cyclopsTransform != null ? cyclopsTransform : cyclops2Transform);
+                if (cameraController != null && prepFocus != null)
+                    cameraController.FocusActor(prepFocus);
                 break;
 
             case Level01TurnState.CyclopsTurn:
+                playerDamagedDuringCurrentEnemyTurn = false;
                 UpdateTurnHUD("CYCLOPS TURN");
                 if (launcher != null)
                     launcher.SetTurnInputEnabled(false);
 
-                // Start Cyclops action only after preparation pause has elapsed
-                if (cyclopsController != null)
+                // Start active Cyclops action only after preparation pause has elapsed
+                if (currentActingEnemyController != null && !currentActingEnemyController.GetComponent<ActorDamageReceiver2D>().IsDead)
+                {
+                    currentActingEnemyController.BeginTurn();
+                }
+                else if (cyclopsController != null && !cyclopsController.GetComponent<ActorDamageReceiver2D>().IsDead)
+                {
                     cyclopsController.BeginTurn();
+                }
+                else if (cyclops2Controller != null && !cyclops2Controller.GetComponent<ActorDamageReceiver2D>().IsDead)
+                {
+                    cyclops2Controller.BeginTurn();
+                }
+                else
+                {
+                    EnterState(Level01TurnState.TurnTransition);
+                }
                 break;
 
             case Level01TurnState.TurnTransition:
+                // Clear acting enemy references so next cycle cleanly picks the next enemy
+                currentActingEnemyController = null;
+                currentActingEnemyTransform = null;
                 // Blend camera back to Achilles ahead of next player turn
                 if (cameraController != null && playerTransform != null)
                     cameraController.FocusActor(playerTransform);
@@ -668,6 +946,24 @@ public sealed class Level01TurnManager : MonoBehaviour
 
             case Level01TurnState.BattleOver:
                 break;
+        }
+    }
+
+    private void CheckAndApplyPlayerSelfHeal()
+    {
+        if (hasUsedPlayerSelfHeal || playerDamageReceiver == null || playerDamageReceiver.IsDead)
+            return;
+
+        float maxHp = playerDamageReceiver.MaximumHealth;
+        float currentHp = playerDamageReceiver.CurrentHealth;
+
+        if (currentHp <= maxHp * 0.5f)
+        {
+            hasUsedPlayerSelfHeal = true;
+            bool isOdysseus = BattleSessionData.IsOdysseus;
+            float healAmount = isOdysseus ? 25f : 30f;
+            playerDamageReceiver.Heal(healAmount);
+            Debug.Log($"[Level01TurnManager] Player self-heal activated! Healed {healAmount:F0} HP. Current HP: {playerDamageReceiver.CurrentHealth:F1}/{maxHp:F1}");
         }
     }
 

@@ -105,8 +105,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 764f7aa736e64ab1848cb7482101c129, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FirePatch2D
-  duration: 4
-  damageInterval: 0.5
+  duration: 3
+  damageInterval: 1
   damagePerTick: 8
   damageRadius: 1.6
   damageLayers:

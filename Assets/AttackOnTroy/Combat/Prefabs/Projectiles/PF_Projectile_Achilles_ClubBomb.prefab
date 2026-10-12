@@ -248,7 +248,8 @@ MonoBehaviour:
   damageLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  craterRadius: 1
+  craterRadius: 1.1
   terrainTarget: {fileID: 0}
   explosionResolveDuration: 0.45
   explosionEffectPrefab: {fileID: 2957744212958573880, guid: 69d2b28b58817e14ca2ca3b12f5f7bfd, type: 3}
+  windSensitivity: 1.0

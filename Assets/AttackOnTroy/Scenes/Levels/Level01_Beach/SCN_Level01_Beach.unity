@@ -935,14 +935,14 @@ MonoBehaviour:
   minimumFallbackTimeout: 1.5
   timeoutSafetyMargin: 0.5
   currentAngle: 45
-  minAngle: 10
-  maxAngle: 80
+  minAngle: 0
+  maxAngle: 85
   angleAdjustmentSpeed: 45
   minLaunchSpeed: 12
   maxLaunchSpeed: 24
-  chargeDuration: 1.5
-  minWind: -2
-  maxWind: 2
+  chargeDuration: 1.25
+  minWind: -0.8
+  maxWind: 0.8
   doubleShotSpreadAngle: 3
   energySystem: {fileID: 2026872433}
   debugLauncherEnabled: 1
@@ -958,7 +958,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b9cbac9cf559524a8bf6e97330f54b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ActorDamageReceiver2D
-  maximumHealth: 120
+  maximumHealth: 150
   damageMultiplier: 0.8
   logDamage: 0
   animator: {fileID: 518471230}
@@ -1093,14 +1093,14 @@ MonoBehaviour:
   minimumFallbackTimeout: 1.5
   timeoutSafetyMargin: 0.5
   currentAngle: 45
-  minAngle: 10
-  maxAngle: 80
+  minAngle: 0
+  maxAngle: 85
   angleAdjustmentSpeed: 45
   minLaunchSpeed: 12
   maxLaunchSpeed: 24
-  chargeDuration: 1.5
-  minWind: -2
-  maxWind: 2
+  chargeDuration: 1.25
+  minWind: -0.8
+  maxWind: 0.8
   doubleShotSpreadAngle: 3
   energySystem: {fileID: 2026872433}
   debugLauncherEnabled: 1
@@ -1300,7 +1300,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b9cbac9cf559524a8bf6e97330f54b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ActorDamageReceiver2D
-  maximumHealth: 100
+  maximumHealth: 150
+  damageMultiplier: 1.0
   logDamage: 0
   animator: {fileID: 1811670942}
   hurtTriggerName: Hurt

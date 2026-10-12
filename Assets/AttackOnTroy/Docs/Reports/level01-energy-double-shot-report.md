@@ -15,11 +15,11 @@ Implemented the Player Energy Meter (0–100) and Special **DOUBLE-SHOT** abilit
   - Tracks `owner` GameObject and passes it into `ApplyDamage(damage, owner)`.
 - **Damage Filtering in Energy System**:
   - Subscribes to `playerDamageReceiver.DamageApplied(damage, attacker)`.
-  - Filters out self-damage (when `attacker == player`), healing (`damage <= 0`), blocked damage, and post-death damage (`IsAlive == false`).
-  - Only enemy attacks (Cyclops Stone Axe) grant energy: `energyGain = actualHpLost * energyPerDamage` (default: 2.0 energy per 1 HP lost, so losing 50 HP charges the full meter).
+  - Filters out self-damage (when `attacker == player`), healing (`damage <= 0`), fire DoT ticks, blocked damage, and post-death damage (`IsAlive == false`).
+  - Only enemy attacks (Cyclops Stone Axe) inflicting actual HP loss grant energy: **1 hit = 50 SP, 2 hits = 100 SP (sẵn sàng)**.
 
 ### 2. Player Energy System Component ([`PlayerEnergySystem.cs`](file:///d:/nam5/semester_1/game_android/game_2d/gameTroyAchilles/Assets/AttackOnTroy/Combat/Scripts/Turns/PlayerEnergySystem.cs))
-- Manages `currentEnergy` (clamped `[0, 100]`) and `isSpecialArmed`.
+- Manages `currentEnergy` (0 / 50 / 100) and `isSpecialArmed`.
 - Full reset on battle start or restart.
 - Arming logic:
   - `CanArmSpecial`: true only when `currentEnergy >= 100`, player is alive, and it is currently `PlayerTurn`.

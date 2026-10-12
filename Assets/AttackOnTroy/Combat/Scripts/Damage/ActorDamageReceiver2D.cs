@@ -114,6 +114,18 @@ public sealed class ActorDamageReceiver2D : MonoBehaviour, IDamageable2D
         }
     }
 
+    /// <summary>
+    /// Restores health up to maximumHealth. Does not heal dead actors, does not trigger DamageApplied or energy gain.
+    /// </summary>
+    public void Heal(float amount)
+    {
+        if (!isActiveAndEnabled || amount <= 0f || CurrentHealth <= 0f) return;
+        float newHealth = Mathf.Min(maximumHealth, CurrentHealth + amount);
+        if (Mathf.Approximately(newHealth, CurrentHealth)) return;
+        CurrentHealth = newHealth;
+        HealthChanged?.Invoke(CurrentHealth, maximumHealth);
+    }
+
     public void TriggerHurtAnimation()
     {
         if (animator != null && hasHurtTrigger && animator.isActiveAndEnabled)

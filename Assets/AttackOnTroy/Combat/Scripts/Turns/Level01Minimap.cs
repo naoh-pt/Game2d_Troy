@@ -18,6 +18,8 @@ public sealed class Level01Minimap : MonoBehaviour
     [SerializeField] private RectTransform achillesMarker;
     [Tooltip("Marker RectTransform representing Cyclops Normal.")]
     [SerializeField] private RectTransform cyclopsMarker;
+    [Tooltip("Marker RectTransform representing Cyclops 2 (Heavy / Level 03).")]
+    [SerializeField] private RectTransform cyclops2Marker;
     [Tooltip("Rectangle RectTransform indicating the current camera viewport in world space.")]
     [SerializeField] private RectTransform cameraViewportRect;
 
@@ -26,6 +28,8 @@ public sealed class Level01Minimap : MonoBehaviour
     [SerializeField] private Transform achillesTransform;
     [Tooltip("Transform of Enemy Cyclops Normal.")]
     [SerializeField] private Transform cyclopsTransform;
+    [Tooltip("Transform of Enemy 2 (Heavy / Level 03).")]
+    [SerializeField] private Transform cyclops2Transform;
     [Tooltip("Main camera following the actors and projectiles.")]
     [SerializeField] private Camera targetCamera;
     [Tooltip("Collider representing LevelBounds.")]
@@ -204,15 +208,41 @@ public sealed class Level01Minimap : MonoBehaviour
         }
 
         // 3. Update Cyclops Marker
-        if (cyclopsMarker != null && cyclopsTransform != null)
+        if (cyclopsMarker != null)
         {
-            Vector2 markerPos = WorldToMapPosition(
-                cyclopsTransform.position,
-                worldMinX, worldMinY, worldWidth, worldHeight,
-                mapRect, clampMarkersToMap, markerPadding);
-            cyclopsMarker.anchoredPosition = markerPos;
-            if (!cyclopsMarker.gameObject.activeSelf)
-                cyclopsMarker.gameObject.SetActive(true);
+            if (cyclopsTransform != null && cyclopsTransform.gameObject.activeInHierarchy)
+            {
+                Vector2 markerPos = WorldToMapPosition(
+                    cyclopsTransform.position,
+                    worldMinX, worldMinY, worldWidth, worldHeight,
+                    mapRect, clampMarkersToMap, markerPadding);
+                cyclopsMarker.anchoredPosition = markerPos;
+                if (!cyclopsMarker.gameObject.activeSelf)
+                    cyclopsMarker.gameObject.SetActive(true);
+            }
+            else if (cyclopsMarker.gameObject.activeSelf)
+            {
+                cyclopsMarker.gameObject.SetActive(false);
+            }
+        }
+
+        // 3b. Update Cyclops 2 Marker (Level 03)
+        if (cyclops2Marker != null)
+        {
+            if (cyclops2Transform != null && cyclops2Transform.gameObject.activeInHierarchy)
+            {
+                Vector2 markerPos = WorldToMapPosition(
+                    cyclops2Transform.position,
+                    worldMinX, worldMinY, worldWidth, worldHeight,
+                    mapRect, clampMarkersToMap, markerPadding);
+                cyclops2Marker.anchoredPosition = markerPos;
+                if (!cyclops2Marker.gameObject.activeSelf)
+                    cyclops2Marker.gameObject.SetActive(true);
+            }
+            else if (cyclops2Marker.gameObject.activeSelf)
+            {
+                cyclops2Marker.gameObject.SetActive(false);
+            }
         }
 
         // 4. Update Camera Viewport Rect
@@ -222,6 +252,11 @@ public sealed class Level01Minimap : MonoBehaviour
                 worldMinX, worldMinY, worldWidth, worldHeight,
                 mapRect);
         }
+    }
+
+    public void SetEnemy2Transform(Transform enemy2Tr)
+    {
+        cyclops2Transform = enemy2Tr;
     }
 
     private Vector2 WorldToMapPosition(
