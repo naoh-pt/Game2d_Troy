@@ -1181,7 +1181,7 @@ MonoBehaviour:
   cameraController: {fileID: 1655878547}
   cyclopsController: {fileID: 218338127}
   cyclops2Controller: {fileID: 0}
-  touchControls: {fileID: 2109020470}
+  touchControls: {fileID: 2109020469}
   minimap: {fileID: 1950000006}
   battleUI: {fileID: 1595465323}
   aimHUD: {fileID: 2052778331}

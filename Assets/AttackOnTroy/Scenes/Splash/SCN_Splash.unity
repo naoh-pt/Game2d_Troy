@@ -985,7 +985,8 @@ MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 10000070}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 10000070}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f74c285d8bc34b188c3dbe270913029f, type: 3}
