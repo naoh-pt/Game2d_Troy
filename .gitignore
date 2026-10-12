@@ -56,6 +56,8 @@ sysinfo.txt
 *.aab
 *.unitypackage
 *.app
+*_BackUpThisFolder_ButDontShipItWithYourGame/
+.utmp/
 
 # Crashlytics generated file
 crashlytics-build.properties

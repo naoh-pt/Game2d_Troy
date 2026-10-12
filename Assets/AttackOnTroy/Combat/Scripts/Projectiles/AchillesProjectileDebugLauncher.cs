@@ -180,6 +180,13 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
         externalAimInput = Mathf.Clamp(direction, -1f, 1f);
     }
 
+    public void NudgeAimAngle(float deltaAngle)
+    {
+        if (!CanAim || activeProjectile != null || isThrowInProgress)
+            return;
+        currentAngle = Mathf.Clamp(currentAngle + deltaAngle, minAngle, maxAngle);
+    }
+
     public void StartCharging()
     {
         if (!CanAim || activeProjectile != null || isThrowInProgress)

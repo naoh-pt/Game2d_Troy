@@ -831,7 +831,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TouchHoldButton
   interactable: 1
-  cancelOnPointerExit: 1
+  cancelOnPointerExit: 0
+  cancelDragDistanceThreshold: 150
 --- !u!114 &139955404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1216,7 +1217,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ActorDamageReceiver2D
   maximumHealth: 100
-  damageMultiplier: 1.0
+  damageMultiplier: 1
   logDamage: 0
   animator: {fileID: 146007055}
   hurtTriggerName: Hurt
@@ -1985,7 +1986,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ActorDamageReceiver2D
   maximumHealth: 150
-  damageMultiplier: 1.0
+  damageMultiplier: 1
   logDamage: 0
   animator: {fileID: 3811670942}
   hurtTriggerName: Hurt
@@ -3257,8 +3258,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -267, y: 35}
-  m_SizeDelta: {x: 85, y: 85}
+  m_AnchoredPosition: {x: -304.4885, y: -0.0000038146973}
+  m_SizeDelta: {x: 154.5115, y: 154.57}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &627074537
 MonoBehaviour:
@@ -3379,8 +3380,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -267, y: 135}
-  m_SizeDelta: {x: 85, y: 85}
+  m_AnchoredPosition: {x: -292.61676, y: 154.57002}
+  m_SizeDelta: {x: 166.3834, y: 159.6}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &669343074
 MonoBehaviour:
@@ -3949,7 +3950,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: -41, y: 14}
-  m_SizeDelta: {x: 470, y: 246.3533}
+  m_SizeDelta: {x: 661.5896, y: 314.1726}
   m_Pivot: {x: 1, y: 0}
 --- !u!1 &875917139
 GameObject:
@@ -5254,8 +5255,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -371.68848, y: 135}
-  m_SizeDelta: {x: 93.3115, y: 85}
+  m_AnchoredPosition: {x: -493.67862, y: 154.56885}
+  m_SizeDelta: {x: 167.9129, y: 159.6012}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1347958187
 MonoBehaviour:
@@ -5270,7 +5271,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TouchHoldButton
   interactable: 1
-  cancelOnPointerExit: 1
+  cancelOnPointerExit: 0
+  cancelDragDistanceThreshold: 150
 --- !u!114 &1347958188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5594,8 +5596,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -371.69, y: 37.22701}
-  m_SizeDelta: {x: 93.31, y: 82.773}
+  m_AnchoredPosition: {x: -493.68, y: 0}
+  m_SizeDelta: {x: 167.91, y: 154.57}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1440550306
 MonoBehaviour:
@@ -5610,7 +5612,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TouchHoldButton
   interactable: 1
-  cancelOnPointerExit: 1
+  cancelOnPointerExit: 0
+  cancelDragDistanceThreshold: 150
 --- !u!114 &1440550307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5779,7 +5782,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TouchHoldButton
   interactable: 1
-  cancelOnPointerExit: 1
+  cancelOnPointerExit: 0
+  cancelDragDistanceThreshold: 150
 --- !u!114 &1492112996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6117,7 +6121,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TouchHoldButton
   interactable: 1
-  cancelOnPointerExit: 1
+  cancelOnPointerExit: 0
+  cancelDragDistanceThreshold: 150
 --- !u!114 &1578470954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7304,7 +7309,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -790, y: 4.000122}
+  m_AnchoredPosition: {x: -878, y: 1}
   m_SizeDelta: {x: 273.0739, y: 162.3348}
   m_Pivot: {x: 1, y: 1}
 --- !u!222 &1950000003
@@ -10139,7 +10144,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1258, y: -35}
+  m_AnchoredPosition: {x: 557, y: -52}
   m_SizeDelta: {x: 93.816, y: 88.2946}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &1990000003
@@ -12162,8 +12167,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerEnergySystem
   maxEnergy: 100
-  energyPerDamage: 2
+  hitsRequiredForFullEnergy: 2
   currentEnergy: 0
+  hitsReceived: 0
   isSpecialArmed: 0
   playerDamageReceiver: {fileID: 145007058}
   playerLauncher: {fileID: 145007054}

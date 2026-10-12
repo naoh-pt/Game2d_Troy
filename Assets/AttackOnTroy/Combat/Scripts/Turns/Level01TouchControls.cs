@@ -405,9 +405,26 @@ public sealed class Level01TouchControls : MonoBehaviour
             playerMotor.SetMoveInput(value);
     }
 
-    private void OnAimUpStarted() => SetAimInput(1f);
+    private void OnAimUpStarted()
+    {
+        if (launcher != null)
+        {
+            launcher.NudgeAimAngle(1f);
+            launcher.SetAimInput(1f);
+        }
+    }
+
     private void OnAimUpEnded() => SetAimInput(0f);
-    private void OnAimDownStarted() => SetAimInput(-1f);
+
+    private void OnAimDownStarted()
+    {
+        if (launcher != null)
+        {
+            launcher.NudgeAimAngle(-1f);
+            launcher.SetAimInput(-1f);
+        }
+    }
+
     private void OnAimDownEnded() => SetAimInput(0f);
 
     private void SetAimInput(float value)
