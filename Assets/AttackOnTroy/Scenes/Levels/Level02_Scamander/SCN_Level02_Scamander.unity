@@ -3204,14 +3204,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 707474390}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6c389ccf7277b434b8a2a3ec0e8179d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Level01ParallaxLayer
   targetCamera: {fileID: 1655878544}
   targetRenderer: {fileID: 707474392}
-  parallaxFactor: 0.01
+  parallaxFactorX: 0.01
+  parallaxFactorY: 1
+  constrainVertical: 0
 --- !u!1 &733473733
 GameObject:
   m_ObjectHideFlags: 0
@@ -4237,7 +4239,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Level01ParallaxLayer
   targetCamera: {fileID: 1655878544}
   targetRenderer: {fileID: 1184517506}
-  parallaxFactor: 0.12
+  parallaxFactorX: 0.12
+  parallaxFactorY: 1
+  constrainVertical: 0
 --- !u!1 &1195487998
 GameObject:
   m_ObjectHideFlags: 0

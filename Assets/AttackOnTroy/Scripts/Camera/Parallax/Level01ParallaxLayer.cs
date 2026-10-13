@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 /// <summary>
 /// Applies camera-relative parallax while keeping a sprite within its original
@@ -10,7 +11,11 @@ public sealed class Level01ParallaxLayer : MonoBehaviour
 {
     [SerializeField] private Camera targetCamera;
     [SerializeField] private SpriteRenderer targetRenderer;
-    [SerializeField, Range(0f, 1f)] private float parallaxFactor = 0.08f;
+
+    [FormerlySerializedAs("parallaxFactor")]
+    [SerializeField, Range(0f, 1f)] private float parallaxFactorX = 0.08f;
+    [SerializeField, Range(0f, 1f)] private float parallaxFactorY = 1.0f;
+    [SerializeField] private bool constrainVertical = false;
 
     private bool anchorCaptured;
     private Vector3 anchorTransformPosition;
@@ -22,13 +27,22 @@ public sealed class Level01ParallaxLayer : MonoBehaviour
     private float allowedBottom;
     private float allowedTop;
 
+    public float ParallaxFactorX => parallaxFactorX;
+    public float ParallaxFactorY => parallaxFactorY;
+
     /// <summary>Used by the idempotent Editor setup command.</summary>
-    public void Configure(Camera cameraReference, SpriteRenderer rendererReference, float factor)
+    public void Configure(Camera cameraReference, SpriteRenderer rendererReference, float factorX, float factorY = 1f)
     {
         targetCamera = cameraReference;
         targetRenderer = rendererReference;
-        parallaxFactor = Mathf.Clamp01(factor);
+        parallaxFactorX = Mathf.Clamp01(factorX);
+        parallaxFactorY = Mathf.Clamp01(factorY);
         anchorCaptured = false;
+    }
+
+    public void Configure(Camera cameraReference, SpriteRenderer rendererReference, float factor)
+    {
+        Configure(cameraReference, rendererReference, factor, 1f);
     }
 
     private void Awake()
@@ -50,7 +64,10 @@ public sealed class Level01ParallaxLayer : MonoBehaviour
             return;
 
         Vector3 cameraDelta = targetCamera.transform.position - anchorCameraPosition;
-        Vector3 desiredCenter = anchorBoundsCenter + cameraDelta * parallaxFactor;
+        Vector3 desiredCenter = anchorBoundsCenter;
+        desiredCenter.x += cameraDelta.x * parallaxFactorX;
+        desiredCenter.y += cameraDelta.y * parallaxFactorY;
+
         Vector3 cameraPosition = targetCamera.transform.position;
         float halfHeight = targetCamera.orthographicSize;
         float halfWidth = halfHeight * targetCamera.aspect;
@@ -62,13 +79,28 @@ public sealed class Level01ParallaxLayer : MonoBehaviour
             anchorBoundsExtents.x,
             allowedLeft,
             allowedRight);
-        desiredCenter.y = ConstrainAxis(
-            desiredCenter.y,
-            cameraPosition.y - halfHeight,
-            cameraPosition.y + halfHeight,
-            anchorBoundsExtents.y,
-            allowedBottom,
-            allowedTop);
+
+        if (constrainVertical)
+        {
+            desiredCenter.y = ConstrainAxis(
+                desiredCenter.y,
+                cameraPosition.y - halfHeight,
+                cameraPosition.y + halfHeight,
+                anchorBoundsExtents.y,
+                allowedBottom,
+                allowedTop);
+        }
+        else
+        {
+            // Safety guard: ensure the top edge of the background layer doesn't dip below
+            // the camera viewport top edge if the sprite height is sufficient to cover it.
+            float viewportTop = cameraPosition.y + halfHeight;
+            float spriteTop = desiredCenter.y + anchorBoundsExtents.y;
+            if (spriteTop < viewportTop && (2f * anchorBoundsExtents.y >= 2f * halfHeight))
+            {
+                desiredCenter.y = viewportTop - anchorBoundsExtents.y;
+            }
+        }
 
         // Set from the immutable anchor each frame to avoid cumulative drift.
         transform.position = anchorTransformPosition + (desiredCenter - anchorBoundsCenter);

@@ -376,14 +376,6 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
             UpdateThrowSequence();
             return;
         }
-#if !UNITY_EDITOR
-        if (!Debug.isDebugBuild)
-            return;
-#endif
-
-        if (!debugLauncherEnabled)
-            return;
-
         if (!turnInputEnabled || activeProjectile != null)
             return;
 
@@ -399,8 +391,16 @@ public sealed class AchillesProjectileDebugLauncher : MonoBehaviour
             chargeTimer = Mathf.Min(chargeTimer + Time.deltaTime, chargeDuration);
         }
 
+#if !UNITY_EDITOR
+        if (!Debug.isDebugBuild)
+            return;
+#endif
+
+        if (!debugLauncherEnabled)
+            return;
+
         Keyboard keyboard = Keyboard.current;
-        if (keyboard == null || !debugLauncherEnabled)
+        if (keyboard == null)
             return;
 
         if (keyboard.digit1Key.wasPressedThisFrame || keyboard.numpad1Key.wasPressedThisFrame)
