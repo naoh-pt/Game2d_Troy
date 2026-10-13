@@ -61,6 +61,8 @@ public sealed class FirePatch2D : MonoBehaviour
         lifetimeTimer = duration;
         tickTimer = 0f; // Immediate first damage tick on spawn (t=0)
         SnapToGround();
+        if (GetComponent<AttackOnTroy.Audio.FireAudioFeedback>() == null)
+            gameObject.AddComponent<AttackOnTroy.Audio.FireAudioFeedback>();
     }
 
     /// <summary>

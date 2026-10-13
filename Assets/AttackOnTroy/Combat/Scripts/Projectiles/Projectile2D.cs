@@ -214,6 +214,7 @@ public sealed class Projectile2D : MonoBehaviour
         body.linearVelocity = initialVelocity;
         isLaunched = true;
         UpdateFlightOrientation(0f);
+        AttackOnTroy.Audio.ProjectileAudio.Launch(this);
     }
 
     private void FixedUpdate()
@@ -343,6 +344,7 @@ public sealed class Projectile2D : MonoBehaviour
         isResolving = true;
         LastCompletionReason = reason;
         StopFlight();
+        AttackOnTroy.Audio.ProjectileAudio.Impact(this, recipient != null, terrainHit);
 
         if (impactType == ProjectileImpactType.ClubBomb)
         {

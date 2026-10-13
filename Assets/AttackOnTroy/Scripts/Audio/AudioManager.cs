@@ -12,7 +12,7 @@ namespace AttackOnTroy.Audio
     /// Operates as a persistent DontDestroyOnLoad singleton.
     /// </summary>
     [DisallowMultipleComponent]
-    public sealed class AudioManager : MonoBehaviour
+    public sealed partial class AudioManager : MonoBehaviour
     {
         private const string SoundMutedPrefKey = "AttackOnTroy_SoundMuted";
 
@@ -73,8 +73,10 @@ namespace AttackOnTroy.Audio
             Instance = this;
             DontDestroyOnLoad(gameObject);
 
+            InitializeSoundLibrary();
             AutoAssignClipsIfNull();
             EnsureAudioSources();
+            InitializeSoundSources();
             LoadSoundSettings();
 
             SceneManager.sceneLoaded += OnSceneLoaded;
@@ -201,6 +203,7 @@ namespace AttackOnTroy.Audio
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
+            HandleSoundScene(scene, mode);
             HandleSceneMusic(scene.name);
         }
 
@@ -331,6 +334,10 @@ namespace AttackOnTroy.Audio
             if (splashIntroStingClip != null && !isMuted && sfxSource != null)
             {
                 sfxSource.PlayOneShot(splashIntroStingClip);
+            }
+            else if (splashIntroStingClip == null)
+            {
+                PlaySFX(SoundId.SplashSting);
             }
         }
 

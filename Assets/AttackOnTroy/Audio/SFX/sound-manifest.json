@@ -1,0 +1,1955 @@
+{
+  "sounds": [
+    {
+      "id": "SpearLaunch",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/Weapons/SpearLaunch_01.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Weapons/SpearLaunch_02.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Weapons/SpearLaunch_03.wav"
+      ],
+      "bus": "Combat",
+      "volume": 0.52,
+      "pitchMin": 0.97,
+      "pitchMax": 1.03,
+      "minimumInterval": 0.0,
+      "priority": 100,
+      "loop": false
+    },
+    {
+      "id": "ArrowLaunch",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/Weapons/ArrowLaunch_01.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Weapons/ArrowLaunch_02.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Weapons/ArrowLaunch_03.wav"
+      ],
+      "bus": "Combat",
+      "volume": 0.48,
+      "pitchMin": 0.99,
+      "pitchMax": 1.01,
+      "minimumInterval": 0.0,
+      "priority": 100,
+      "loop": false
+    },
+    {
+      "id": "HeavyThrow",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/Weapons/HeavyThrow_01.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Weapons/HeavyThrow_02.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Weapons/HeavyThrow_03.wav"
+      ],
+      "bus": "Combat",
+      "volume": 0.52,
+      "pitchMin": 0.92,
+      "pitchMax": 0.99,
+      "minimumInterval": 0.0,
+      "priority": 100,
+      "loop": false
+    },
+    {
+      "id": "AxeLaunch",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/Weapons/HeavyThrow_01.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Weapons/HeavyThrow_02.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Weapons/HeavyThrow_03.wav"
+      ],
+      "bus": "Combat",
+      "volume": 0.58,
+      "pitchMin": 0.85,
+      "pitchMax": 0.93,
+      "minimumInterval": 0.0,
+      "priority": 100,
+      "loop": false
+    },
+    {
+      "id": "HeavyAxeLaunch",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/Weapons/HeavyThrow_01.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Weapons/HeavyThrow_02.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Weapons/HeavyThrow_03.wav"
+      ],
+      "bus": "Combat",
+      "volume": 0.62,
+      "pitchMin": 0.7,
+      "pitchMax": 0.8,
+      "minimumInterval": 0.0,
+      "priority": 100,
+      "loop": false
+    },
+    {
+      "id": "FleshImpact",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/Weapons/FleshImpact_01.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Weapons/FleshImpact_02.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Weapons/FleshImpact_03.wav"
+      ],
+      "bus": "Combat",
+      "volume": 0.68,
+      "pitchMin": 0.97,
+      "pitchMax": 1.03,
+      "minimumInterval": 0.0,
+      "priority": 70,
+      "loop": false
+    },
+    {
+      "id": "GroundImpact",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/Weapons/GroundImpact_01.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Weapons/GroundImpact_02.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Weapons/GroundImpact_03.wav"
+      ],
+      "bus": "Combat",
+      "volume": 0.72,
+      "pitchMin": 0.97,
+      "pitchMax": 1.03,
+      "minimumInterval": 0.0,
+      "priority": 70,
+      "loop": false
+    },
+    {
+      "id": "StoneImpact",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/Weapons/StoneImpact_01.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Weapons/StoneImpact_02.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Weapons/StoneImpact_03.wav"
+      ],
+      "bus": "Combat",
+      "volume": 0.68,
+      "pitchMin": 0.97,
+      "pitchMax": 1.03,
+      "minimumInterval": 0.0,
+      "priority": 70,
+      "loop": false
+    },
+    {
+      "id": "BombExplosion",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/Weapons/BombExplosion_01.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Weapons/BombExplosion_02.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Weapons/BombExplosion_03.wav"
+      ],
+      "bus": "Combat",
+      "volume": 0.65,
+      "pitchMin": 0.92,
+      "pitchMax": 1.02,
+      "minimumInterval": 0.0,
+      "priority": 35,
+      "loop": false
+    },
+    {
+      "id": "JarBreak",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/Weapons/JarBreak_01.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Weapons/JarBreak_02.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Weapons/JarBreak_03.wav"
+      ],
+      "bus": "Combat",
+      "volume": 0.5,
+      "pitchMin": 0.97,
+      "pitchMax": 1.03,
+      "minimumInterval": 0.0,
+      "priority": 70,
+      "loop": false
+    },
+    {
+      "id": "FireLoop",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/Environment/FireLoop.ogg"
+      ],
+      "bus": "Combat",
+      "volume": 0.18,
+      "pitchMin": 0.98,
+      "pitchMax": 1.02,
+      "minimumInterval": 0.0,
+      "priority": 150,
+      "loop": true
+    },
+    {
+      "id": "FireIgnite",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/Weapons/FireIgnite.wav"
+      ],
+      "bus": "Combat",
+      "volume": 0.3,
+      "pitchMin": 0.97,
+      "pitchMax": 1.03,
+      "minimumInterval": 0.0,
+      "priority": 100,
+      "loop": false
+    },
+    {
+      "id": "ChargeLoop",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/Weapons/ChargeLoop.ogg"
+      ],
+      "bus": "Combat",
+      "volume": 0.12,
+      "pitchMin": 1.0,
+      "pitchMax": 1.0,
+      "minimumInterval": 0.0,
+      "priority": 160,
+      "loop": true
+    },
+    {
+      "id": "WeaponSelect",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/UI/WeaponSelect.wav"
+      ],
+      "bus": "Combat",
+      "volume": 0.3,
+      "pitchMin": 0.97,
+      "pitchMax": 1.03,
+      "minimumInterval": 0.1,
+      "priority": 150,
+      "loop": false
+    },
+    {
+      "id": "HumanLand",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/Characters/HumanLand.wav"
+      ],
+      "bus": "Combat",
+      "volume": 0.36,
+      "pitchMin": 0.97,
+      "pitchMax": 1.03,
+      "minimumInterval": 0.1,
+      "priority": 150,
+      "loop": false
+    },
+    {
+      "id": "EnergyReady",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/UI/Magic_01.wav"
+      ],
+      "bus": "Combat",
+      "volume": 0.35,
+      "pitchMin": 1.25,
+      "pitchMax": 1.25,
+      "minimumInterval": 0.15,
+      "priority": 65,
+      "loop": false
+    },
+    {
+      "id": "SpecialArm",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/UI/Magic_02.wav"
+      ],
+      "bus": "Combat",
+      "volume": 0.4,
+      "pitchMin": 1.1,
+      "pitchMax": 1.1,
+      "minimumInterval": 0.15,
+      "priority": 65,
+      "loop": false
+    },
+    {
+      "id": "SpecialCancel",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/UI/Magic_01.wav"
+      ],
+      "bus": "Combat",
+      "volume": 0.22,
+      "pitchMin": 0.8,
+      "pitchMax": 0.8,
+      "minimumInterval": 0.15,
+      "priority": 65,
+      "loop": false
+    },
+    {
+      "id": "Heal",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/UI/Magic_02.wav"
+      ],
+      "bus": "Combat",
+      "volume": 0.35,
+      "pitchMin": 1.3,
+      "pitchMax": 1.3,
+      "minimumInterval": 0.15,
+      "priority": 65,
+      "loop": false
+    },
+    {
+      "id": "HumanFootstepSand",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/Characters/FootstepSand_01.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Characters/FootstepSand_02.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Characters/FootstepSand_03.wav"
+      ],
+      "bus": "Combat",
+      "volume": 0.28,
+      "pitchMin": 0.97,
+      "pitchMax": 1.03,
+      "minimumInterval": 0.15,
+      "priority": 230,
+      "loop": false
+    },
+    {
+      "id": "HumanFootstepStone",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/Characters/FootstepStone_01.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Characters/FootstepStone_02.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Characters/FootstepStone_03.wav"
+      ],
+      "bus": "Combat",
+      "volume": 0.28,
+      "pitchMin": 0.97,
+      "pitchMax": 1.03,
+      "minimumInterval": 0.15,
+      "priority": 230,
+      "loop": false
+    },
+    {
+      "id": "CyclopsFootstep",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/Characters/GiantFootstep_01.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Characters/GiantFootstep_02.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Characters/GiantFootstep_03.wav"
+      ],
+      "bus": "Combat",
+      "volume": 0.38,
+      "pitchMin": 0.9,
+      "pitchMax": 0.98,
+      "minimumInterval": 0.2,
+      "priority": 220,
+      "loop": false
+    },
+    {
+      "id": "HeavyCyclopsFootstep",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/Characters/GiantFootstep_01.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Characters/GiantFootstep_02.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Characters/GiantFootstep_03.wav"
+      ],
+      "bus": "Combat",
+      "volume": 0.45,
+      "pitchMin": 0.7,
+      "pitchMax": 0.8,
+      "minimumInterval": 0.2,
+      "priority": 215,
+      "loop": false
+    },
+    {
+      "id": "CyclopsLand",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/Characters/GiantFootstep_01.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Characters/GiantFootstep_02.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Characters/GiantFootstep_03.wav"
+      ],
+      "bus": "Combat",
+      "volume": 0.48,
+      "pitchMin": 0.8,
+      "pitchMax": 0.9,
+      "minimumInterval": 0.3,
+      "priority": 180,
+      "loop": false
+    },
+    {
+      "id": "AchillesAttack",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/Characters/AchillesGrunt_01.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Characters/AchillesGrunt_02.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Characters/AchillesGrunt_03.wav"
+      ],
+      "bus": "Voices",
+      "volume": 0.32,
+      "pitchMin": 0.97,
+      "pitchMax": 1.03,
+      "minimumInterval": 3.0,
+      "priority": 140,
+      "loop": false
+    },
+    {
+      "id": "AchillesHurt",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/Characters/AchillesHurt_01.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Characters/AchillesHurt_02.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Characters/AchillesHurt_03.wav"
+      ],
+      "bus": "Voices",
+      "volume": 0.42,
+      "pitchMin": 0.97,
+      "pitchMax": 1.03,
+      "minimumInterval": 1.0,
+      "priority": 90,
+      "loop": false
+    },
+    {
+      "id": "AchillesDeath",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/Characters/AchillesDeath.wav"
+      ],
+      "bus": "Voices",
+      "volume": 0.52,
+      "pitchMin": 1.0,
+      "pitchMax": 1.0,
+      "minimumInterval": 0.0,
+      "priority": 25,
+      "loop": false
+    },
+    {
+      "id": "OdysseusAttack",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/Characters/OdysseusGrunt_01.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Characters/OdysseusGrunt_02.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Characters/OdysseusGrunt_03.wav"
+      ],
+      "bus": "Voices",
+      "volume": 0.32,
+      "pitchMin": 0.97,
+      "pitchMax": 1.03,
+      "minimumInterval": 3.0,
+      "priority": 140,
+      "loop": false
+    },
+    {
+      "id": "OdysseusHurt",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/Characters/OdysseusHurt_01.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Characters/OdysseusHurt_02.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Characters/OdysseusHurt_03.wav"
+      ],
+      "bus": "Voices",
+      "volume": 0.42,
+      "pitchMin": 0.97,
+      "pitchMax": 1.03,
+      "minimumInterval": 1.0,
+      "priority": 90,
+      "loop": false
+    },
+    {
+      "id": "OdysseusDeath",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/Characters/OdysseusDeath.wav"
+      ],
+      "bus": "Voices",
+      "volume": 0.52,
+      "pitchMin": 1.0,
+      "pitchMax": 1.0,
+      "minimumInterval": 0.0,
+      "priority": 25,
+      "loop": false
+    },
+    {
+      "id": "CyclopsAttack",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/Characters/CyclopsVoice_01.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Characters/CyclopsVoice_02.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Characters/CyclopsVoice_03.wav"
+      ],
+      "bus": "Voices",
+      "volume": 0.48,
+      "pitchMin": 0.92,
+      "pitchMax": 1.0,
+      "minimumInterval": 3.0,
+      "priority": 130,
+      "loop": false
+    },
+    {
+      "id": "CyclopsHurt",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/Characters/CyclopsVoice_01.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Characters/CyclopsVoice_02.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Characters/CyclopsVoice_03.wav"
+      ],
+      "bus": "Voices",
+      "volume": 0.48,
+      "pitchMin": 0.92,
+      "pitchMax": 1.0,
+      "minimumInterval": 1.0,
+      "priority": 85,
+      "loop": false
+    },
+    {
+      "id": "CyclopsDeath",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/Characters/CyclopsDeath.wav"
+      ],
+      "bus": "Voices",
+      "volume": 0.48,
+      "pitchMin": 0.92,
+      "pitchMax": 1.0,
+      "minimumInterval": 0.0,
+      "priority": 25,
+      "loop": false
+    },
+    {
+      "id": "HeavyCyclopsAttack",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/Characters/CyclopsVoice_01.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Characters/CyclopsVoice_02.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Characters/CyclopsVoice_03.wav"
+      ],
+      "bus": "Voices",
+      "volume": 0.55,
+      "pitchMin": 0.72,
+      "pitchMax": 0.8,
+      "minimumInterval": 3.0,
+      "priority": 130,
+      "loop": false
+    },
+    {
+      "id": "HeavyCyclopsHurt",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/Characters/CyclopsVoice_01.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Characters/CyclopsVoice_02.wav",
+        "Assets/AttackOnTroy/Audio/SFX/Characters/CyclopsVoice_03.wav"
+      ],
+      "bus": "Voices",
+      "volume": 0.55,
+      "pitchMin": 0.72,
+      "pitchMax": 0.8,
+      "minimumInterval": 1.0,
+      "priority": 85,
+      "loop": false
+    },
+    {
+      "id": "HeavyCyclopsDeath",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/Characters/CyclopsDeath.wav"
+      ],
+      "bus": "Voices",
+      "volume": 0.55,
+      "pitchMin": 0.72,
+      "pitchMax": 0.8,
+      "minimumInterval": 0.0,
+      "priority": 25,
+      "loop": false
+    },
+    {
+      "id": "UIClick",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/UI/UIClick_01.wav",
+        "Assets/AttackOnTroy/Audio/SFX/UI/UIClick_02.wav",
+        "Assets/AttackOnTroy/Audio/SFX/UI/UIClick_03.wav"
+      ],
+      "bus": "UI",
+      "volume": 0.3,
+      "pitchMin": 1.0,
+      "pitchMax": 1.0,
+      "minimumInterval": 0.05,
+      "priority": 120,
+      "loop": false
+    },
+    {
+      "id": "UIConfirm",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/UI/UIConfirm_01.wav",
+        "Assets/AttackOnTroy/Audio/SFX/UI/UIConfirm_02.wav",
+        "Assets/AttackOnTroy/Audio/SFX/UI/UIConfirm_03.wav"
+      ],
+      "bus": "UI",
+      "volume": 0.35,
+      "pitchMin": 1.0,
+      "pitchMax": 1.0,
+      "minimumInterval": 0.05,
+      "priority": 120,
+      "loop": false
+    },
+    {
+      "id": "UIBack",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/UI/UIBack_01.wav",
+        "Assets/AttackOnTroy/Audio/SFX/UI/UIBack_02.wav",
+        "Assets/AttackOnTroy/Audio/SFX/UI/UIBack_03.wav"
+      ],
+      "bus": "UI",
+      "volume": 0.3,
+      "pitchMin": 1.0,
+      "pitchMax": 1.0,
+      "minimumInterval": 0.05,
+      "priority": 120,
+      "loop": false
+    },
+    {
+      "id": "UIUnavailable",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/UI/UIUnavailable_01.wav",
+        "Assets/AttackOnTroy/Audio/SFX/UI/UIUnavailable_02.wav",
+        "Assets/AttackOnTroy/Audio/SFX/UI/UIUnavailable_03.wav"
+      ],
+      "bus": "UI",
+      "volume": 0.25,
+      "pitchMin": 1.0,
+      "pitchMax": 1.0,
+      "minimumInterval": 0.05,
+      "priority": 120,
+      "loop": false
+    },
+    {
+      "id": "PlayerTurn",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/UI/UIConfirm_01.wav"
+      ],
+      "bus": "UI",
+      "volume": 0.18,
+      "pitchMin": 1.12,
+      "pitchMax": 1.12,
+      "minimumInterval": 0.3,
+      "priority": 180,
+      "loop": false
+    },
+    {
+      "id": "Victory",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/UI/Victory.wav"
+      ],
+      "bus": "UI",
+      "volume": 0.55,
+      "pitchMin": 1.0,
+      "pitchMax": 1.0,
+      "minimumInterval": 1.0,
+      "priority": 10,
+      "loop": false
+    },
+    {
+      "id": "Defeat",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/UI/Defeat.wav"
+      ],
+      "bus": "UI",
+      "volume": 0.5,
+      "pitchMin": 0.88,
+      "pitchMax": 0.88,
+      "minimumInterval": 1.0,
+      "priority": 10,
+      "loop": false
+    },
+    {
+      "id": "SplashSting",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/UI/Magic_01.wav"
+      ],
+      "bus": "UI",
+      "volume": 0.22,
+      "pitchMin": 0.9,
+      "pitchMax": 0.9,
+      "minimumInterval": 1.0,
+      "priority": 100,
+      "loop": false
+    },
+    {
+      "id": "BeachAmbience",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/Environment/BeachAmbience.ogg"
+      ],
+      "bus": "Ambience",
+      "volume": 0.65,
+      "pitchMin": 1.0,
+      "pitchMax": 1.0,
+      "minimumInterval": 0.0,
+      "priority": 10,
+      "loop": true
+    },
+    {
+      "id": "RiverAmbience",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/Environment/RiverAmbience.ogg"
+      ],
+      "bus": "Ambience",
+      "volume": 0.65,
+      "pitchMin": 1.0,
+      "pitchMax": 1.0,
+      "minimumInterval": 0.0,
+      "priority": 10,
+      "loop": true
+    },
+    {
+      "id": "WallAmbience",
+      "clips": [
+        "Assets/AttackOnTroy/Audio/SFX/Environment/WallAmbience.ogg"
+      ],
+      "bus": "Ambience",
+      "volume": 0.65,
+      "pitchMin": 1.0,
+      "pitchMax": 1.0,
+      "minimumInterval": 0.0,
+      "priority": 10,
+      "loop": true
+    }
+  ],
+  "files": [
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Weapons/SpearLaunch_01.wav",
+      "loop": false,
+      "duration": 0.0973,
+      "sha256": "dbd25652d4520eb831313347232de1a4e179ec8f028bf42da715382581b2be2b",
+      "sources": [
+        {
+          "pack": "artisticdude_rpg",
+          "originalFile": "extracted/RPG Sound Pack/battle/swing.wav",
+          "author": "artisticdude",
+          "url": "https://opengameart.org/content/rpg-sound-pack",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Weapons/SpearLaunch_02.wav",
+      "loop": false,
+      "duration": 0.0792,
+      "sha256": "180bc917713b1cf8cd94208bde1f6ec54acbcd4f62d6e06ec3d767a39be8b16e",
+      "sources": [
+        {
+          "pack": "artisticdude_rpg",
+          "originalFile": "extracted/RPG Sound Pack/battle/swing2.wav",
+          "author": "artisticdude",
+          "url": "https://opengameart.org/content/rpg-sound-pack",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Weapons/SpearLaunch_03.wav",
+      "loop": false,
+      "duration": 0.0988,
+      "sha256": "c90cf2463ab83c5aa74ee19cd66bab1ffe677508d764c3e7bb3f0eda643a9d98",
+      "sources": [
+        {
+          "pack": "artisticdude_rpg",
+          "originalFile": "extracted/RPG Sound Pack/battle/swing3.wav",
+          "author": "artisticdude",
+          "url": "https://opengameart.org/content/rpg-sound-pack",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Weapons/ArrowLaunch_01.wav",
+      "loop": false,
+      "duration": 0.2463,
+      "sha256": "8d182c1b1847a239e2b0fa2684a94de350fadc57159778b8407c48b9dc61dd33",
+      "sources": [
+        {
+          "pack": "artisticdude_battle",
+          "originalFile": "extracted/battle_sound_effects/Bow.wav",
+          "author": "artisticdude (submitted by Ogrebane)",
+          "url": "https://opengameart.org/content/battle-sound-effects",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 0.97"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Weapons/ArrowLaunch_02.wav",
+      "loop": false,
+      "duration": 0.24,
+      "sha256": "429ad5cc1339063bc735a046a0e1ad472dc641e2569a776ff8e6db4062deace6",
+      "sources": [
+        {
+          "pack": "artisticdude_battle",
+          "originalFile": "extracted/battle_sound_effects/Bow.wav",
+          "author": "artisticdude (submitted by Ogrebane)",
+          "url": "https://opengameart.org/content/battle-sound-effects",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Weapons/ArrowLaunch_03.wav",
+      "loop": false,
+      "duration": 0.2326,
+      "sha256": "00e41ee640b6b16c54e53a286ca96193e927e9f36431a41dcb85ba5de04a0bed",
+      "sources": [
+        {
+          "pack": "artisticdude_battle",
+          "originalFile": "extracted/battle_sound_effects/Bow.wav",
+          "author": "artisticdude (submitted by Ogrebane)",
+          "url": "https://opengameart.org/content/battle-sound-effects",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.03"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Weapons/HeavyThrow_01.wav",
+      "loop": false,
+      "duration": 0.1191,
+      "sha256": "ad0763edab1acfdec346e559df54965ba12b95ce3c159b0b058544f3226e2c3d",
+      "sources": [
+        {
+          "pack": "artisticdude_rpg",
+          "originalFile": "extracted/RPG Sound Pack/battle/swing.wav",
+          "author": "artisticdude",
+          "url": "https://opengameart.org/content/rpg-sound-pack",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 0.8"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Weapons/HeavyThrow_02.wav",
+      "loop": false,
+      "duration": 0.0965,
+      "sha256": "f6c2f9f77221279ea78e4c1f5afc66d788488a51b103b89ea6b766b871fbb5ee",
+      "sources": [
+        {
+          "pack": "artisticdude_rpg",
+          "originalFile": "extracted/RPG Sound Pack/battle/swing2.wav",
+          "author": "artisticdude",
+          "url": "https://opengameart.org/content/rpg-sound-pack",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 0.8"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Weapons/HeavyThrow_03.wav",
+      "loop": false,
+      "duration": 0.121,
+      "sha256": "a0a6fb1832f33abce76e21f2c27306a77281b50fd8405623192a1fe63420c21c",
+      "sources": [
+        {
+          "pack": "artisticdude_rpg",
+          "originalFile": "extracted/RPG Sound Pack/battle/swing3.wav",
+          "author": "artisticdude",
+          "url": "https://opengameart.org/content/rpg-sound-pack",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 0.8"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Weapons/FleshImpact_01.wav",
+      "loop": false,
+      "duration": 0.3552,
+      "sha256": "05134a44c145df880d3e194c5b8cd6ab51076d1fe83a0b66b59f3a23979fd9d0",
+      "sources": [
+        {
+          "pack": "kenney_impact",
+          "originalFile": "extracted/Audio/impactPunch_heavy_000.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/impact-sounds",
+          "license": "CC0-1.0"
+        },
+        {
+          "pack": "artisticdude_rpg",
+          "originalFile": "extracted/RPG Sound Pack/NPC/beetle/bite-small.wav",
+          "author": "artisticdude",
+          "url": "https://opengameart.org/content/rpg-sound-pack",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/2ms attack/8ms release/mono, peak -6 dBFS, playback speed 0.97; high-pass 140 Hz; layered bite-small.wav at gain 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Weapons/FleshImpact_02.wav",
+      "loop": false,
+      "duration": 0.3056,
+      "sha256": "d13c2c931339c68579720a73158b7c0e59f0c8689ef18fbfaccfc568cadb66af",
+      "sources": [
+        {
+          "pack": "kenney_impact",
+          "originalFile": "extracted/Audio/impactPunch_heavy_001.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/impact-sounds",
+          "license": "CC0-1.0"
+        },
+        {
+          "pack": "artisticdude_rpg",
+          "originalFile": "extracted/RPG Sound Pack/NPC/beetle/bite-small2.wav",
+          "author": "artisticdude",
+          "url": "https://opengameart.org/content/rpg-sound-pack",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/2ms attack/8ms release/mono, peak -6 dBFS, playback speed 1.0; high-pass 140 Hz; layered bite-small2.wav at gain 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Weapons/FleshImpact_03.wav",
+      "loop": false,
+      "duration": 0.3753,
+      "sha256": "bcfc7ebf26447580332071c43154d16ae9d71ea0751c7ac5f51591048f9f9b7b",
+      "sources": [
+        {
+          "pack": "kenney_impact",
+          "originalFile": "extracted/Audio/impactPunch_heavy_002.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/impact-sounds",
+          "license": "CC0-1.0"
+        },
+        {
+          "pack": "artisticdude_rpg",
+          "originalFile": "extracted/RPG Sound Pack/NPC/beetle/bite-small3.wav",
+          "author": "artisticdude",
+          "url": "https://opengameart.org/content/rpg-sound-pack",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/2ms attack/8ms release/mono, peak -6 dBFS, playback speed 1.03; high-pass 140 Hz; layered bite-small3.wav at gain 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Weapons/GroundImpact_01.wav",
+      "loop": false,
+      "duration": 0.2118,
+      "sha256": "50dfcb387a59d486d7f079c861345d96b0f9827025f1cb2883e1cb26a698965d",
+      "sources": [
+        {
+          "pack": "kenney_impact",
+          "originalFile": "extracted/Audio/impactGeneric_light_000.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/impact-sounds",
+          "license": "CC0-1.0"
+        },
+        {
+          "pack": "artisticdude_rpg",
+          "originalFile": "extracted/RPG Sound Pack/inventory/wood-small.wav",
+          "author": "artisticdude",
+          "url": "https://opengameart.org/content/rpg-sound-pack",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/2ms attack/8ms release/mono, peak -6 dBFS, playback speed 0.97; high-pass 140 Hz; layered wood-small.wav at gain 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Weapons/GroundImpact_02.wav",
+      "loop": false,
+      "duration": 0.2056,
+      "sha256": "5532416972a325217fd0d2e8920995ca80c67e787927573c6aab6eb063ac65ca",
+      "sources": [
+        {
+          "pack": "kenney_impact",
+          "originalFile": "extracted/Audio/impactGeneric_light_001.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/impact-sounds",
+          "license": "CC0-1.0"
+        },
+        {
+          "pack": "artisticdude_rpg",
+          "originalFile": "extracted/RPG Sound Pack/inventory/wood-small.wav",
+          "author": "artisticdude",
+          "url": "https://opengameart.org/content/rpg-sound-pack",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/2ms attack/8ms release/mono, peak -6 dBFS, playback speed 1.0; high-pass 140 Hz; layered wood-small.wav at gain 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Weapons/GroundImpact_03.wav",
+      "loop": false,
+      "duration": 0.1997,
+      "sha256": "b677521122c8ca65e1be58dc01fc5410baa8b659a4f5ea9ec894111a735637f3",
+      "sources": [
+        {
+          "pack": "kenney_impact",
+          "originalFile": "extracted/Audio/impactGeneric_light_002.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/impact-sounds",
+          "license": "CC0-1.0"
+        },
+        {
+          "pack": "artisticdude_rpg",
+          "originalFile": "extracted/RPG Sound Pack/inventory/wood-small.wav",
+          "author": "artisticdude",
+          "url": "https://opengameart.org/content/rpg-sound-pack",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/2ms attack/8ms release/mono, peak -6 dBFS, playback speed 1.03; high-pass 140 Hz; layered wood-small.wav at gain 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Weapons/StoneImpact_01.wav",
+      "loop": false,
+      "duration": 0.5154,
+      "sha256": "70fa67c7e01ad260089ebbc8857642b5edcaa52a005fd017eed652b93b7dfb69",
+      "sources": [
+        {
+          "pack": "kenney_impact",
+          "originalFile": "extracted/Audio/impactMining_000.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/impact-sounds",
+          "license": "CC0-1.0"
+        },
+        {
+          "pack": "kenney_impact",
+          "originalFile": "extracted/Audio/impactMetal_light_000.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/impact-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/2ms attack/8ms release/mono, peak -6 dBFS, playback speed 0.97; high-pass 140 Hz; layered impactMetal_light_000.ogg at gain 0.9"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Weapons/StoneImpact_02.wav",
+      "loop": false,
+      "duration": 0.4701,
+      "sha256": "e460fd4c74b64652faed4965ca281ab83b69dd08af44a595b1a808cbbc90955e",
+      "sources": [
+        {
+          "pack": "kenney_impact",
+          "originalFile": "extracted/Audio/impactMining_001.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/impact-sounds",
+          "license": "CC0-1.0"
+        },
+        {
+          "pack": "kenney_impact",
+          "originalFile": "extracted/Audio/impactMetal_light_001.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/impact-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/2ms attack/8ms release/mono, peak -6 dBFS, playback speed 1.0; high-pass 140 Hz; layered impactMetal_light_001.ogg at gain 0.9"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Weapons/StoneImpact_03.wav",
+      "loop": false,
+      "duration": 0.3994,
+      "sha256": "f830f19d25081ac22abc55b9c071816ecc866ba3088d9bc3a0683b327e9678e4",
+      "sources": [
+        {
+          "pack": "kenney_impact",
+          "originalFile": "extracted/Audio/impactMining_002.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/impact-sounds",
+          "license": "CC0-1.0"
+        },
+        {
+          "pack": "kenney_impact",
+          "originalFile": "extracted/Audio/impactMetal_light_002.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/impact-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/2ms attack/8ms release/mono, peak -6 dBFS, playback speed 1.03; high-pass 140 Hz; layered impactMetal_light_002.ogg at gain 0.9"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Weapons/BombExplosion_01.wav",
+      "loop": false,
+      "duration": 2.4892,
+      "sha256": "67072628227952718f02b0b6f97619af876e5f2f5a3aabe30d327d8825afbb16",
+      "sources": [
+        {
+          "pack": "ezduzziteh_explosions",
+          "originalFile": "explosion1_0.ogg",
+          "author": "EZduzziteh",
+          "url": "https://opengameart.org/content/explosions-4",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Weapons/BombExplosion_02.wav",
+      "loop": false,
+      "duration": 0.6129,
+      "sha256": "adfe52b3c4ce03d9242306992eda493d275dc3c0ff152d15dca6616e60d52501",
+      "sources": [
+        {
+          "pack": "ezduzziteh_explosions",
+          "originalFile": "explosion2.ogg",
+          "author": "EZduzziteh",
+          "url": "https://opengameart.org/content/explosions-4",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Weapons/BombExplosion_03.wav",
+      "loop": false,
+      "duration": 1.6233,
+      "sha256": "b9301385af8099e7a82c32b62f10e559a2143e5d963ac1319b41227994ab175d",
+      "sources": [
+        {
+          "pack": "ezduzziteh_explosions",
+          "originalFile": "explosion3.ogg",
+          "author": "EZduzziteh",
+          "url": "https://opengameart.org/content/explosions-4",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Weapons/JarBreak_01.wav",
+      "loop": false,
+      "duration": 0.1624,
+      "sha256": "568a4a6e7b543278ce4bed0701355116b1b7d93813f5485163070b0cf5a1989c",
+      "sources": [
+        {
+          "pack": "kenney_impact",
+          "originalFile": "extracted/Audio/impactGlass_light_000.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/impact-sounds",
+          "license": "CC0-1.0"
+        },
+        {
+          "pack": "kenney_impact",
+          "originalFile": "extracted/Audio/impactWood_heavy_000.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/impact-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0; layered"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Weapons/JarBreak_02.wav",
+      "loop": false,
+      "duration": 0.1585,
+      "sha256": "3e525a1d621d8ac8c424f9de4998e9042538de245b7a3d1bb51d109e386a5c52",
+      "sources": [
+        {
+          "pack": "kenney_impact",
+          "originalFile": "extracted/Audio/impactGlass_light_001.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/impact-sounds",
+          "license": "CC0-1.0"
+        },
+        {
+          "pack": "kenney_impact",
+          "originalFile": "extracted/Audio/impactWood_heavy_001.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/impact-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0; layered"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Weapons/JarBreak_03.wav",
+      "loop": false,
+      "duration": 0.1536,
+      "sha256": "6632ca3746c8b9fc3b8685d133e8d8de5bac563d5074baca1fb2190e7849d299",
+      "sources": [
+        {
+          "pack": "kenney_impact",
+          "originalFile": "extracted/Audio/impactGlass_light_002.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/impact-sounds",
+          "license": "CC0-1.0"
+        },
+        {
+          "pack": "kenney_impact",
+          "originalFile": "extracted/Audio/impactWood_heavy_002.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/impact-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0; layered"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Environment/FireLoop.ogg",
+      "loop": true,
+      "duration": 2.5706,
+      "sha256": "e9e3994f95c45c03500043f890baaf81e0e7b7b59b350e4060c09b652fb06c7e",
+      "sources": [
+        {
+          "pack": "antumdeluge_fire",
+          "originalFile": "fire-1.wav",
+          "author": "AntumDeluge",
+          "url": "https://opengameart.org/content/fire-crackling",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, seam crossfade/stereo, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Weapons/FireIgnite.wav",
+      "loop": false,
+      "duration": 0.7,
+      "sha256": "c6f851298f9acfc1c6562064ddd6b513dbae70d758f97c65140471c2c8fc2776",
+      "sources": [
+        {
+          "pack": "antumdeluge_fire",
+          "originalFile": "fire-1.wav",
+          "author": "AntumDeluge",
+          "url": "https://opengameart.org/content/fire-crackling",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Weapons/ChargeLoop.ogg",
+      "loop": true,
+      "duration": 0.7,
+      "sha256": "4a534e75bea96a5adffd0aad3212b73f4f3a8133e6aadc9651b14bd3b62e4ec4",
+      "sources": [
+        {
+          "pack": "artisticdude_rpg",
+          "originalFile": "extracted/RPG Sound Pack/battle/magic1.wav",
+          "author": "artisticdude",
+          "url": "https://opengameart.org/content/rpg-sound-pack",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, seam crossfade/stereo, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/UI/WeaponSelect.wav",
+      "loop": false,
+      "duration": 0.3429,
+      "sha256": "5cff2f60fb9ba9d42ced0927f7ecf380d2e010afa3ad732c0beaa4097803c2a8",
+      "sources": [
+        {
+          "pack": "kenney_rpg",
+          "originalFile": "extracted/Audio/metalClick.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/rpg-audio",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Characters/HumanLand.wav",
+      "loop": false,
+      "duration": 0.1738,
+      "sha256": "75cf4587113347613e289d07badf0d158c80642f66b60ac157e03ab4f98c8a81",
+      "sources": [
+        {
+          "pack": "kenney_rpg",
+          "originalFile": "extracted/Audio/footstep00.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/rpg-audio",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/UI/Magic_01.wav",
+      "loop": false,
+      "duration": 0.5924,
+      "sha256": "3a724103f9e4fe83f40c438a3f82490c3027d7a0893e4869f65acb9282b233b4",
+      "sources": [
+        {
+          "pack": "artisticdude_rpg",
+          "originalFile": "extracted/RPG Sound Pack/battle/magic1.wav",
+          "author": "artisticdude",
+          "url": "https://opengameart.org/content/rpg-sound-pack",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/UI/Magic_02.wav",
+      "loop": false,
+      "duration": 1.419,
+      "sha256": "d6cc3326c99074b0f0f42a752989c9d62ebd27beee35255e09a97305bdd87e39",
+      "sources": [
+        {
+          "pack": "artisticdude_rpg",
+          "originalFile": "extracted/RPG Sound Pack/battle/spell.wav",
+          "author": "artisticdude",
+          "url": "https://opengameart.org/content/rpg-sound-pack",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Characters/FootstepSand_01.wav",
+      "loop": false,
+      "duration": 0.0794,
+      "sha256": "87f72a6d08abc13dd33d4f128e6708de66de580eb284fcfa74ba81175a473d5f",
+      "sources": [
+        {
+          "pack": "kenney_impact",
+          "originalFile": "extracted/Audio/footstep_grass_000.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/impact-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Characters/FootstepSand_02.wav",
+      "loop": false,
+      "duration": 0.1358,
+      "sha256": "2d7f87eb4615aa95e789fceefcb6f2aa4de3ed6beedda0350748d17d06ea4c5f",
+      "sources": [
+        {
+          "pack": "kenney_impact",
+          "originalFile": "extracted/Audio/footstep_grass_001.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/impact-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Characters/FootstepSand_03.wav",
+      "loop": false,
+      "duration": 0.1346,
+      "sha256": "5e3aa9f90c03910104e0e5bd548c5b9e361ccf9f956d4ab8180e36ccc650ce5e",
+      "sources": [
+        {
+          "pack": "kenney_impact",
+          "originalFile": "extracted/Audio/footstep_grass_002.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/impact-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Characters/FootstepStone_01.wav",
+      "loop": false,
+      "duration": 0.1059,
+      "sha256": "e9a2637078e89686c74c8ac7fb92c9caae8926d3e9ddb2389c6f386cb61eded8",
+      "sources": [
+        {
+          "pack": "kenney_impact",
+          "originalFile": "extracted/Audio/footstep_concrete_000.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/impact-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Characters/FootstepStone_02.wav",
+      "loop": false,
+      "duration": 0.1076,
+      "sha256": "4a2ad21f6fd5e58888b983c9c5b272c048cd4689536318f0646040f5ae0047cd",
+      "sources": [
+        {
+          "pack": "kenney_impact",
+          "originalFile": "extracted/Audio/footstep_concrete_001.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/impact-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Characters/FootstepStone_03.wav",
+      "loop": false,
+      "duration": 0.0719,
+      "sha256": "e312f3029c37878e744c0df2f1270e9b5d3634aaa8298e276fe292a969d44d93",
+      "sources": [
+        {
+          "pack": "kenney_impact",
+          "originalFile": "extracted/Audio/footstep_concrete_002.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/impact-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Characters/GiantFootstep_01.wav",
+      "loop": false,
+      "duration": 0.4808,
+      "sha256": "6d6a1428f88d2c3c8414cb20dd4b8cc9dcbae49cbd37979b06d9ca430680b019",
+      "sources": [
+        {
+          "pack": "kenney_impact",
+          "originalFile": "extracted/Audio/impactSoft_heavy_000.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/impact-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 0.78"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Characters/GiantFootstep_02.wav",
+      "loop": false,
+      "duration": 0.5357,
+      "sha256": "c67112640be0ad9b2081a50049f196975ff4ee9f00659b34aeafdf1caf72b75b",
+      "sources": [
+        {
+          "pack": "kenney_impact",
+          "originalFile": "extracted/Audio/impactSoft_heavy_001.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/impact-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 0.78"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Characters/GiantFootstep_03.wav",
+      "loop": false,
+      "duration": 0.5428,
+      "sha256": "8df43f53ea196d3634a712c756f0cb7ab07b5077ebb8885248ee694b0fe01031",
+      "sources": [
+        {
+          "pack": "kenney_impact",
+          "originalFile": "extracted/Audio/impactSoft_heavy_002.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/impact-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 0.78"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Characters/AchillesGrunt_01.wav",
+      "loop": false,
+      "duration": 0.1837,
+      "sha256": "73d6a98213508acb360f1647898d8196b0df0acc276cc24b5049e9f0c0ed5c1e",
+      "sources": [
+        {
+          "pack": "haeldb_vocals",
+          "originalFile": "extracted/yelling sounds/3grunt1.wav",
+          "author": "HaelDB",
+          "url": "https://opengameart.org/content/male-gruntyelling-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Characters/AchillesGrunt_02.wav",
+      "loop": false,
+      "duration": 0.4145,
+      "sha256": "0a85aba7d503e5c222e128f9b8f308fc121badd2623607531603328d162da0be",
+      "sources": [
+        {
+          "pack": "haeldb_vocals",
+          "originalFile": "extracted/yelling sounds/3grunt2.wav",
+          "author": "HaelDB",
+          "url": "https://opengameart.org/content/male-gruntyelling-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Characters/AchillesGrunt_03.wav",
+      "loop": false,
+      "duration": 0.4703,
+      "sha256": "80abf27351eb3eae05197ed73008e9313156921eb52734cbc719f050d40f742e",
+      "sources": [
+        {
+          "pack": "haeldb_vocals",
+          "originalFile": "extracted/yelling sounds/3grunt3.wav",
+          "author": "HaelDB",
+          "url": "https://opengameart.org/content/male-gruntyelling-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Characters/AchillesHurt_01.wav",
+      "loop": false,
+      "duration": 0.2358,
+      "sha256": "51d01c3e9b045cda21c9c8dc445a291745d24bc901e1816e895ac8a8023573f3",
+      "sources": [
+        {
+          "pack": "haeldb_vocals",
+          "originalFile": "extracted/yelling sounds/3grunt4.wav",
+          "author": "HaelDB",
+          "url": "https://opengameart.org/content/male-gruntyelling-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Characters/AchillesHurt_02.wav",
+      "loop": false,
+      "duration": 0.3563,
+      "sha256": "9934913cd268a615bec7cbf0352efb98dd4e767836f3c5322b02cdbbc615d8ee",
+      "sources": [
+        {
+          "pack": "haeldb_vocals",
+          "originalFile": "extracted/yelling sounds/3grunt5.wav",
+          "author": "HaelDB",
+          "url": "https://opengameart.org/content/male-gruntyelling-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Characters/AchillesHurt_03.wav",
+      "loop": false,
+      "duration": 0.4188,
+      "sha256": "4d530a62b08c693c3d87db7cb3216ad5e42181f021da377d532b8997da9c935e",
+      "sources": [
+        {
+          "pack": "haeldb_vocals",
+          "originalFile": "extracted/yelling sounds/3grunt6.wav",
+          "author": "HaelDB",
+          "url": "https://opengameart.org/content/male-gruntyelling-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Characters/AchillesDeath.wav",
+      "loop": false,
+      "duration": 0.8773,
+      "sha256": "fdf39617024ce733842c33945e43a8e131015c7d5d82df847b5b2afbba1cb25a",
+      "sources": [
+        {
+          "pack": "haeldb_vocals",
+          "originalFile": "extracted/yelling sounds/3yell7.wav",
+          "author": "HaelDB",
+          "url": "https://opengameart.org/content/male-gruntyelling-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Characters/OdysseusGrunt_01.wav",
+      "loop": false,
+      "duration": 0.4141,
+      "sha256": "85c6e6ca00c6bc5061faff86b284550539b563974c7ddc7e64ce8277a8b1bf9b",
+      "sources": [
+        {
+          "pack": "haeldb_vocals",
+          "originalFile": "extracted/yelling sounds/1yell1.wav",
+          "author": "HaelDB",
+          "url": "https://opengameart.org/content/male-gruntyelling-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Characters/OdysseusGrunt_02.wav",
+      "loop": false,
+      "duration": 0.5518,
+      "sha256": "fa6133605c7948b273accb249d0b5533977f4324e7bd626f0e250117a58d9085",
+      "sources": [
+        {
+          "pack": "haeldb_vocals",
+          "originalFile": "extracted/yelling sounds/1yell2.wav",
+          "author": "HaelDB",
+          "url": "https://opengameart.org/content/male-gruntyelling-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Characters/OdysseusGrunt_03.wav",
+      "loop": false,
+      "duration": 0.7,
+      "sha256": "323a163b6a3b999431ab2ee6c751071ae3e7271e906e4967417972e716c737e1",
+      "sources": [
+        {
+          "pack": "haeldb_vocals",
+          "originalFile": "extracted/yelling sounds/1yell3.wav",
+          "author": "HaelDB",
+          "url": "https://opengameart.org/content/male-gruntyelling-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Characters/OdysseusHurt_01.wav",
+      "loop": false,
+      "duration": 0.5929,
+      "sha256": "c1405e7c755dcb47799c2879836e6a0e1dd48dfe244f9635a96e8db2dfc21055",
+      "sources": [
+        {
+          "pack": "haeldb_vocals",
+          "originalFile": "extracted/yelling sounds/1yell4.wav",
+          "author": "HaelDB",
+          "url": "https://opengameart.org/content/male-gruntyelling-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Characters/OdysseusHurt_02.wav",
+      "loop": false,
+      "duration": 0.4366,
+      "sha256": "7d861fa6a3b5504c5091e1e9acac09208c31d074b74b49f8bf0bc494ccb668f4",
+      "sources": [
+        {
+          "pack": "haeldb_vocals",
+          "originalFile": "extracted/yelling sounds/1yell5.wav",
+          "author": "HaelDB",
+          "url": "https://opengameart.org/content/male-gruntyelling-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Characters/OdysseusHurt_03.wav",
+      "loop": false,
+      "duration": 0.3092,
+      "sha256": "f73e5aaba9d79dfe7d2f4d9c0741c6e0c5f4bb5ca0d4fa2dd5fa1a62084bf5b9",
+      "sources": [
+        {
+          "pack": "haeldb_vocals",
+          "originalFile": "extracted/yelling sounds/1yell6.wav",
+          "author": "HaelDB",
+          "url": "https://opengameart.org/content/male-gruntyelling-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Characters/OdysseusDeath.wav",
+      "loop": false,
+      "duration": 0.5085,
+      "sha256": "e736d3cca4d9be3b4d90bde6e14e07360a1fe5c5e0e5f7151f99e25dc6bca225",
+      "sources": [
+        {
+          "pack": "haeldb_vocals",
+          "originalFile": "extracted/yelling sounds/1yell7.wav",
+          "author": "HaelDB",
+          "url": "https://opengameart.org/content/male-gruntyelling-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Characters/CyclopsVoice_01.wav",
+      "loop": false,
+      "duration": 0.4707,
+      "sha256": "66aa0a08d576677614a3c5cf987d17f7e10732a220b0b7448764fc04709c5a9a",
+      "sources": [
+        {
+          "pack": "artisticdude_rpg",
+          "originalFile": "extracted/RPG Sound Pack/NPC/giant/giant1.wav",
+          "author": "artisticdude",
+          "url": "https://opengameart.org/content/rpg-sound-pack",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Characters/CyclopsVoice_02.wav",
+      "loop": false,
+      "duration": 0.5811,
+      "sha256": "359f875bd5dcf2672c9d7c4e3e692bad4722c8ac783692b69e2dcb38dfe2d612",
+      "sources": [
+        {
+          "pack": "artisticdude_rpg",
+          "originalFile": "extracted/RPG Sound Pack/NPC/giant/giant2.wav",
+          "author": "artisticdude",
+          "url": "https://opengameart.org/content/rpg-sound-pack",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Characters/CyclopsVoice_03.wav",
+      "loop": false,
+      "duration": 0.3864,
+      "sha256": "18b3b763fe1e6d1644994aed1732713ef6cb7d0e4456db6f14317f5bb64c9bd7",
+      "sources": [
+        {
+          "pack": "artisticdude_rpg",
+          "originalFile": "extracted/RPG Sound Pack/NPC/giant/giant3.wav",
+          "author": "artisticdude",
+          "url": "https://opengameart.org/content/rpg-sound-pack",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Characters/CyclopsDeath.wav",
+      "loop": false,
+      "duration": 0.5296,
+      "sha256": "9cbce221dfb62b4e5f691eb1a7855d68f1be45130926ba2823a5dfc626428af6",
+      "sources": [
+        {
+          "pack": "artisticdude_rpg",
+          "originalFile": "extracted/RPG Sound Pack/NPC/giant/giant5.wav",
+          "author": "artisticdude",
+          "url": "https://opengameart.org/content/rpg-sound-pack",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/UI/UIClick_01.wav",
+      "loop": false,
+      "duration": 0.0198,
+      "sha256": "bd17ecf08a6a542cc1c3cf20dd2b76a621b629aefaefde2aaab58f2e24135536",
+      "sources": [
+        {
+          "pack": "kenney_interface",
+          "originalFile": "extracted/Audio/click_001.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/interface-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/UI/UIClick_02.wav",
+      "loop": false,
+      "duration": 0.01,
+      "sha256": "ef70b47aeac91ac6b454e845c96e084a2921d01d09eeb0781e69283efa6b9246",
+      "sources": [
+        {
+          "pack": "kenney_interface",
+          "originalFile": "extracted/Audio/click_002.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/interface-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/UI/UIClick_03.wav",
+      "loop": false,
+      "duration": 0.01,
+      "sha256": "c5946fc61a19aabd9ef5387242fb94aea013bdae6554017d2b792aea9281a0a0",
+      "sources": [
+        {
+          "pack": "kenney_interface",
+          "originalFile": "extracted/Audio/click_003.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/interface-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/UI/UIConfirm_01.wav",
+      "loop": false,
+      "duration": 0.2882,
+      "sha256": "0ff8170b0fe73f0011ef769bbbcd389a8cd0e5aa8caf06fd990ff1ee5daa14fe",
+      "sources": [
+        {
+          "pack": "kenney_interface",
+          "originalFile": "extracted/Audio/confirmation_001.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/interface-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/UI/UIConfirm_02.wav",
+      "loop": false,
+      "duration": 0.5047,
+      "sha256": "effda3ac433b3b3a238dce8c1f555a1ba936429e719b4046aabf805fcd61280e",
+      "sources": [
+        {
+          "pack": "kenney_interface",
+          "originalFile": "extracted/Audio/confirmation_002.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/interface-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/UI/UIConfirm_03.wav",
+      "loop": false,
+      "duration": 0.3097,
+      "sha256": "04b54b30af5e7e5a6afa92342c950611b29fbe1ec7a5223e742c8d4e9b2a94fb",
+      "sources": [
+        {
+          "pack": "kenney_interface",
+          "originalFile": "extracted/Audio/confirmation_003.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/interface-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/UI/UIBack_01.wav",
+      "loop": false,
+      "duration": 0.0589,
+      "sha256": "06515e299165dc6d4724e9e9ab90c647a2a3af50164dcd43b4f07bfcc6630853",
+      "sources": [
+        {
+          "pack": "kenney_interface",
+          "originalFile": "extracted/Audio/back_001.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/interface-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/UI/UIBack_02.wav",
+      "loop": false,
+      "duration": 0.0595,
+      "sha256": "e04fd5103aed3a9193ed38c48eec4199cfaa04bffa938d4b03994f7d6c2db79d",
+      "sources": [
+        {
+          "pack": "kenney_interface",
+          "originalFile": "extracted/Audio/back_002.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/interface-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/UI/UIBack_03.wav",
+      "loop": false,
+      "duration": 0.0606,
+      "sha256": "36f5cd5c69a4b1a8289ee3ee8aea02386d98c2073e2171ecd0cbd00ec1c3090c",
+      "sources": [
+        {
+          "pack": "kenney_interface",
+          "originalFile": "extracted/Audio/back_003.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/interface-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/UI/UIUnavailable_01.wav",
+      "loop": false,
+      "duration": 0.1441,
+      "sha256": "e3c54296a0f7d7a358c8510acb2c21d727ba4fd1ba5302ee594931387f31ceae",
+      "sources": [
+        {
+          "pack": "kenney_interface",
+          "originalFile": "extracted/Audio/error_001.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/interface-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/UI/UIUnavailable_02.wav",
+      "loop": false,
+      "duration": 0.1646,
+      "sha256": "81466accb067b172a06164d7cf6230b09fa70df333c200c7b32e94eef8638e65",
+      "sources": [
+        {
+          "pack": "kenney_interface",
+          "originalFile": "extracted/Audio/error_002.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/interface-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/UI/UIUnavailable_03.wav",
+      "loop": false,
+      "duration": 0.3064,
+      "sha256": "eb1662b3602e655b83cf9d60e49e3822fb564081b697d0c18d77bc617a82b426",
+      "sources": [
+        {
+          "pack": "kenney_interface",
+          "originalFile": "extracted/Audio/error_003.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/interface-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/UI/Victory.wav",
+      "loop": false,
+      "duration": 0.4938,
+      "sha256": "50ec1c7e4be7f15ac5c74bc44485eb41903496196c984c05f57182bd3117826a",
+      "sources": [
+        {
+          "pack": "kenney_jingles",
+          "originalFile": "extracted/Audio/Pizzicato jingles/jingles_PIZZI00.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/music-jingles",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/UI/Defeat.wav",
+      "loop": false,
+      "duration": 0.9918,
+      "sha256": "60ee9d7ee6c1a7146b292553cb708b968122257dd562ca03754a0cec2fc94d20",
+      "sources": [
+        {
+          "pack": "kenney_jingles",
+          "originalFile": "extracted/Audio/Pizzicato jingles/jingles_PIZZI01.ogg",
+          "author": "Kenney",
+          "url": "https://kenney.nl/assets/music-jingles",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, trim/8ms fades/mono, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Environment/BeachAmbience.ogg",
+      "loop": true,
+      "duration": 3.7,
+      "sha256": "305d39b828b156a1ddeee258575250bc8266c9753513ae929079f744478dc9ba",
+      "sources": [
+        {
+          "pack": "jasinski_beach",
+          "originalFile": "wave_01_cc0-18363__jasinski__alkaibeach.flac",
+          "author": "jasinski (submitted by qubodup)",
+          "url": "https://opengameart.org/content/beach-ocean-waves",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, seam crossfade/stereo, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Environment/RiverAmbience.ogg",
+      "loop": true,
+      "duration": 23.7,
+      "sha256": "7bfab6a9bfdf632463cd6c45af319a92884b4b968d18f0ee575886d3c8a2bd01",
+      "sources": [
+        {
+          "pack": "randommind_water",
+          "originalFile": "VistulaShort_0.mp3",
+          "author": "RandomMind",
+          "url": "https://opengameart.org/content/sea-and-river-wave-sounds",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, seam crossfade/stereo, peak -6 dBFS, playback speed 1.0"
+    },
+    {
+      "assetPath": "Assets/AttackOnTroy/Audio/SFX/Environment/WallAmbience.ogg",
+      "loop": true,
+      "duration": 23.7,
+      "sha256": "13d89cc47802e7549c4ac247efc0cb912e4cdf4a09fd50f82b9b96046a7e7a76",
+      "sources": [
+        {
+          "pack": "luke_wind",
+          "originalFile": "wind1.wav",
+          "author": "Luke.RUSTLTD",
+          "url": "https://opengameart.org/content/wind1",
+          "license": "CC0-1.0"
+        }
+      ],
+      "changes": "DC removal, 44.1 kHz, seam crossfade/stereo, peak -6 dBFS, playback speed 1.0"
+    }
+  ]
+}

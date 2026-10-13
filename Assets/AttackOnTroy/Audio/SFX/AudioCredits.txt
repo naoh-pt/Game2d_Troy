@@ -1,0 +1,54 @@
+ATTACK ON TROY - SOUND EFFECT CREDITS
+
+New SFX recordings: CC0 1.0 (selected from multi-license sources under CC0).
+https://creativecommons.org/publicdomain/zero/1.0/
+Edits: trimming, fades, resampling, normalization, looping and layering.
+Existing menu and battle music are unchanged and are not covered by this SFX notice.
+
+AntumDeluge - antumdeluge_fire
+https://opengameart.org/content/fire-crackling
+License: CC0 1.0
+
+artisticdude (submitted by Ogrebane) - artisticdude_battle
+https://opengameart.org/content/battle-sound-effects
+License: CC0 1.0
+
+artisticdude - artisticdude_rpg
+https://opengameart.org/content/rpg-sound-pack
+License: CC0 1.0
+
+EZduzziteh - ezduzziteh_explosions
+https://opengameart.org/content/explosions-4
+License: CC0 1.0
+
+HaelDB - haeldb_vocals
+https://opengameart.org/content/male-gruntyelling-sounds
+License: CC0 1.0
+
+jasinski (submitted by qubodup) - jasinski_beach
+https://opengameart.org/content/beach-ocean-waves
+License: CC0 1.0
+
+Kenney - kenney_impact
+https://kenney.nl/assets/impact-sounds
+License: CC0 1.0
+
+Kenney - kenney_interface
+https://kenney.nl/assets/interface-sounds
+License: CC0 1.0
+
+Kenney - kenney_jingles
+https://kenney.nl/assets/music-jingles
+License: CC0 1.0
+
+Kenney - kenney_rpg
+https://kenney.nl/assets/rpg-audio
+License: CC0 1.0
+
+Luke.RUSTLTD - luke_wind
+https://opengameart.org/content/wind1
+License: CC0 1.0
+
+RandomMind - randommind_water
+https://opengameart.org/content/sea-and-river-wave-sounds
+License: CC0 1.0
