@@ -43,7 +43,12 @@ namespace AttackOnTroy.Audio
                     if (button.GetComponent<ButtonAudioFeedback>() == null) button.gameObject.AddComponent<ButtonAudioFeedback>();
                 if (energy == null) energy = root.GetComponentInChildren<PlayerEnergySystem>(true);
                 if (turns == null) turns = root.GetComponentInChildren<Level01TurnManager>(true);
-                if (root.GetComponentInChildren<Level01BattleUI>(true) != null) hasBattleUI = true;
+                Level01BattleUI battleUI = root.GetComponentInChildren<Level01BattleUI>(true);
+                if (battleUI != null)
+                {
+                    hasBattleUI = true;
+                    AudioSettingsControls.InstallPause(battleUI.PausePanel);
+                }
             }
             if (energy != null)
             {

@@ -36,7 +36,6 @@ namespace AttackOnTroy.Menus
         [SerializeField] private Button playButton;
         [SerializeField] private Button exitButton;
         [SerializeField] private Button soundButton;
-        [SerializeField] private TextMeshProUGUI soundButtonText;
 
         [Header("Level Select Buttons & Cards")]
         [SerializeField] private Button backButton;
@@ -116,10 +115,6 @@ namespace AttackOnTroy.Menus
                 {
                     Transform btn = homePanel.transform.Find("SoundButton");
                     if (btn != null) soundButton = btn.GetComponent<Button>();
-                }
-                if (soundButton != null && soundButtonText == null)
-                {
-                    soundButtonText = soundButton.GetComponentInChildren<TextMeshProUGUI>();
                 }
             }
 
@@ -236,18 +231,11 @@ namespace AttackOnTroy.Menus
             }
             UpdateCharacterSelectionVisuals();
             UpdateLevelSelectVisuals();
-            if (Audio.AudioManager.Instance != null)
-            {
-                Audio.AudioManager.Instance.OnSoundToggled -= OnSoundToggledCallback;
-                Audio.AudioManager.Instance.OnSoundToggled += OnSoundToggledCallback;
-            }
-            UpdateSoundButtonVisual();
         }
 
         private void OnEnable()
         {
             UpdateLevelSelectVisuals();
-            UpdateSoundButtonVisual();
         }
 
         private void HookButtons()
@@ -267,7 +255,7 @@ namespace AttackOnTroy.Menus
             if (soundButton != null)
             {
                 soundButton.onClick.RemoveListener(OnSoundButtonClicked);
-                soundButton.onClick.AddListener(OnSoundButtonClicked);
+                Audio.AudioSettingsControls.InstallHome(soundButton);
             }
 
             if (backButton != null)
@@ -376,43 +364,8 @@ namespace AttackOnTroy.Menus
 
         public void OnSoundButtonClicked()
         {
-            if (Audio.AudioManager.Instance != null)
-            {
-                Audio.AudioManager.Instance.ToggleSound();
-            }
-            else
-            {
-                bool muted = PlayerPrefs.GetInt("AttackOnTroy_SoundMuted", 0) == 1;
-                muted = !muted;
-                PlayerPrefs.SetInt("AttackOnTroy_SoundMuted", muted ? 1 : 0);
-                PlayerPrefs.Save();
-                AudioListener.volume = muted ? 0f : 1f;
-            }
-            UpdateSoundButtonVisual();
-        }
-
-        public void UpdateSoundButtonVisual()
-        {
-            if (soundButtonText == null) return;
-            bool isMuted = Audio.AudioManager.Instance != null 
-                ? Audio.AudioManager.Instance.IsSoundMuted 
-                : PlayerPrefs.GetInt("AttackOnTroy_SoundMuted", 0) == 1;
-            soundButtonText.text = isMuted
-                ? "<b><color=#D32F2F>SOUND: OFF</color></b>"
-                : "<b><color=#4CAF50>SOUND: ON</color></b>";
-        }
-
-        private void OnSoundToggledCallback(bool isMuted)
-        {
-            UpdateSoundButtonVisual();
-        }
-
-        private void OnDestroy()
-        {
-            if (Audio.AudioManager.Instance != null)
-            {
-                Audio.AudioManager.Instance.OnSoundToggled -= OnSoundToggledCallback;
-            }
+            // Retain the public entry point for older scenes; the new UI binds the two channels.
+            Audio.AudioManager.EnsureInstance().ToggleMusic();
         }
 
         public void OnLevel01Clicked()

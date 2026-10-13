@@ -125,7 +125,7 @@ namespace AttackOnTroy.Audio
 
         public bool PlaySFX(SoundId id, Object emitter = null)
         {
-            if (!TryGetSound(id, out SoundDefinition definition) || definition.loop || isMuted ||
+            if (!TryGetSound(id, out SoundDefinition definition) || definition.loop || effectsMuted ||
                 (gameplayPaused && definition.bus != SoundBus.UI)) return false;
             ThrottleKey key = new ThrottleKey { id = id, emitter = emitter != null ? emitter.GetHashCode() : 0 };
             double now = Time.realtimeSinceStartupAsDouble;
@@ -233,6 +233,7 @@ namespace AttackOnTroy.Audio
             voice.source.clip = definition.clips[index];
             voice.source.loop = definition.loop;
             voice.source.volume = definition.volume;
+            voice.source.mute = effectsMuted;
             voice.source.pitch = Mathf.Clamp(Mathf.Lerp(definition.pitch.x, definition.pitch.y, (float)soundRandom.NextDouble()), 0.25f, 2f);
             voice.source.priority = definition.priority;
             voice.source.ignoreListenerPause = definition.bus == SoundBus.UI;

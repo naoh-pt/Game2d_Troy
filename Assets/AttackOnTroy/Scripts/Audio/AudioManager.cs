@@ -8,13 +8,15 @@ namespace AttackOnTroy.Audio
     /// <summary>
     /// Central audio manager for Attack on Troy.
     /// Manages persistent background music, smooth crossfading between menu and battle tracks,
-    /// master sound mute state (persisted via PlayerPrefs), and opening sting slots.
+    /// separate music/effects preferences (persisted via PlayerPrefs), and opening sting slots.
     /// Operates as a persistent DontDestroyOnLoad singleton.
     /// </summary>
     [DisallowMultipleComponent]
     public sealed partial class AudioManager : MonoBehaviour
     {
         private const string SoundMutedPrefKey = "AttackOnTroy_SoundMuted";
+        private const string MusicMutedPrefKey = "AttackOnTroy_MusicMuted";
+        private const string EffectsMutedPrefKey = "AttackOnTroy_EffectsMuted";
 
         public static AudioManager Instance { get; private set; }
 
@@ -44,15 +46,20 @@ namespace AttackOnTroy.Audio
         private AudioSource inactiveSource;
         private Coroutine crossfadeCoroutine;
         private bool isMuted;
+        private bool musicMuted;
+        private bool effectsMuted;
 
         public event Action<bool> OnSoundToggled;
+        public event Action OnAudioSettingsChanged;
+        public bool IsMusicMuted => musicMuted;
+        public bool IsEffectsMuted => effectsMuted;
 
         public bool IsSoundMuted
         {
             get => isMuted;
             set
             {
-                if (isMuted != value)
+                if (musicMuted != value || effectsMuted != value)
                 {
                     SetSoundMuted(value);
                 }
@@ -157,48 +164,62 @@ namespace AttackOnTroy.Audio
             source.loop = true;
             source.spatialBlend = 0f; // 2D stereo
             source.volume = defaultMusicVolume;
+            source.mute = musicMuted;
         }
 
         private void LoadSoundSettings()
         {
-            isMuted = PlayerPrefs.GetInt(SoundMutedPrefKey, 0) == 1;
-            ApplyMasterVolume(isMuted);
+            // Preserve the old all-sound choice for players without separate preferences yet.
+            int legacyMute = PlayerPrefs.GetInt(SoundMutedPrefKey, 0);
+            musicMuted = PlayerPrefs.GetInt(MusicMutedPrefKey, legacyMute) == 1;
+            effectsMuted = PlayerPrefs.GetInt(EffectsMutedPrefKey, legacyMute) == 1;
+            ApplySoundSettings();
+            OnAudioSettingsChanged?.Invoke();
         }
 
         public void SetSoundMuted(bool muted)
         {
-            isMuted = muted;
+            SetChannelSettings(muted, muted);
+        }
+
+        public void SetMusicMuted(bool muted) => SetChannelSettings(muted, effectsMuted);
+        public void SetEffectsMuted(bool muted) => SetChannelSettings(musicMuted, muted);
+        public void ToggleMusic() => SetMusicMuted(!musicMuted);
+        public void ToggleEffects() => SetEffectsMuted(!effectsMuted);
+        public void ToggleSound() => SetSoundMuted(!isMuted);
+
+        private void SetChannelSettings(bool muteMusic, bool muteEffects)
+        {
+            if (muteEffects && !effectsMuted)
+            {
+                // Old one-shots must not burst back in when effects are enabled again.
+                if (sfxSource != null) sfxSource.Stop();
+                if (oneShots != null) foreach (Voice voice in oneShots) ReleaseVoice(voice);
+            }
+            musicMuted = muteMusic;
+            effectsMuted = muteEffects;
+            ApplySoundSettings();
+            PlayerPrefs.SetInt(MusicMutedPrefKey, musicMuted ? 1 : 0);
+            PlayerPrefs.SetInt(EffectsMutedPrefKey, effectsMuted ? 1 : 0);
             PlayerPrefs.SetInt(SoundMutedPrefKey, isMuted ? 1 : 0);
             PlayerPrefs.Save();
-
-            ApplyMasterVolume(isMuted);
-
-            if (!isMuted)
-            {
-                // When unmuted, guarantee music is actively playing
-                if (activeSource == null || !activeSource.isPlaying || activeSource.clip == null)
-                {
-                    HandleSceneMusic(SceneManager.GetActiveScene().name);
-                }
-                else if (activeSource.volume < 0.1f)
-                {
-                    activeSource.volume = defaultMusicVolume;
-                }
-            }
-
+            if (!musicMuted && (activeSource == null || !activeSource.isPlaying || activeSource.clip == null))
+                HandleSceneMusic(SceneManager.GetActiveScene().name);
             OnSoundToggled?.Invoke(isMuted);
-            Debug.Log($"[AudioManager] Sound muted state set to: {isMuted}. AudioListener.volume={AudioListener.volume}, ActiveSource playing={activeSource?.isPlaying}, Clip={activeSource?.clip?.name}");
+            OnAudioSettingsChanged?.Invoke();
         }
 
-        public void ToggleSound()
+        private void ApplySoundSettings()
         {
-            SetSoundMuted(!isMuted);
-        }
-
-        private void ApplyMasterVolume(bool muted)
-        {
-            AudioListener.volume = muted ? 0f : 1f;
-            AudioListener.pause = muted;
+            isMuted = musicMuted && effectsMuted;
+            AudioListener.volume = isMuted ? 0f : 1f;
+            AudioListener.pause = isMuted;
+            if (musicSourceA != null) musicSourceA.mute = musicMuted;
+            if (musicSourceB != null) musicSourceB.mute = musicMuted;
+            if (sfxSource != null) sfxSource.mute = effectsMuted;
+            if (oneShots != null) foreach (Voice voice in oneShots) voice.source.mute = effectsMuted;
+            // Keep owned loops alive while muted, so fire/ambience return when enabled.
+            if (loops != null) foreach (Voice voice in loops) voice.source.mute = effectsMuted;
         }
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -331,7 +352,7 @@ namespace AttackOnTroy.Audio
 
         public void PlaySplashSting()
         {
-            if (splashIntroStingClip != null && !isMuted && sfxSource != null)
+            if (splashIntroStingClip != null && !effectsMuted && sfxSource != null)
             {
                 sfxSource.PlayOneShot(splashIntroStingClip);
             }
@@ -343,7 +364,7 @@ namespace AttackOnTroy.Audio
 
         public void PlaySFX(AudioClip clip, float volumeScale = 1.0f)
         {
-            if (clip != null && !isMuted && sfxSource != null)
+            if (clip != null && !effectsMuted && sfxSource != null)
             {
                 sfxSource.PlayOneShot(clip, volumeScale);
             }

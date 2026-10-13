@@ -68,10 +68,13 @@ namespace AttackOnTroy.Editor.Audio
         public static void ResetSoundSettings()
         {
             PlayerPrefs.DeleteKey("AttackOnTroy_SoundMuted");
+            PlayerPrefs.DeleteKey("AttackOnTroy_MusicMuted");
+            PlayerPrefs.DeleteKey("AttackOnTroy_EffectsMuted");
             PlayerPrefs.Save();
+            if (Application.isPlaying) AttackOnTroy.Audio.AudioManager.EnsureInstance().SetSoundMuted(false);
             AudioListener.volume = 1f;
             AudioListener.pause = false;
-            Debug.Log("[AudioSetup] Reset AttackOnTroy_SoundMuted to Unmuted (AudioListener.volume = 1f).");
+            Debug.Log("[AudioSetup] Reset music and effects to enabled.");
         }
 
         [MenuItem("AttackOnTroy/Audio/Configure Music Importers (Preload and 2D)")]
